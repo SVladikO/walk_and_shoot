@@ -26,6 +26,12 @@
             color: red;
 
         }
+        .secondary_btn {
+            border: solid 2px rgba(255, 255, 255, 0.54);
+            padding: 10px;
+            margin: 30px 0 0 ;
+            color: rgba(255, 255, 255, 0.54);
+        }
 
         body {
             overflow: hidden;
@@ -61,9 +67,23 @@
             align-items: center;
         }
 
+        .level_wrapper {
+            border: solid 1px white;
+            background: white;
+            color: black;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .level_wrapper > h2 {
+            text-align: center;
+            padding: 5px;
+        }
+
         #game_levels_board {
-            display: none;
-            /*display: flex;*/
+            /*display: none;*/
+            display: flex;
             color: red;
             flex-direction: column;
             gap: 40px;
@@ -74,6 +94,7 @@
             background: black;
             justify-content: center;
             align-items: center;
+            overflow-y: auto;
         }
 
         #game_over_notification {
@@ -126,6 +147,7 @@
 
         #game_levels_to_choose {
             display: flex;
+            justify-content: center;
             gap: 10px;
             flex-wrap: wrap;
             width: 1000px;
@@ -139,6 +161,7 @@
             align-items: center;
             gap: 10px;
             padding: 20px;
+            background: white;
         }
 
         #game_level_wrapper > div {
@@ -195,19 +218,17 @@
 <!--            <h1>TWO PLAYERS</h1>-->
 <!--            <h1>SETTINGS</h1>-->
         </div>
+        <div id="game_over_notification">
+            <h2 id="game_over_level"></h2>
+            <h1>GAME OWER</h1>
+            <h2 class="primary_btn" onclick="tryAgain()">TRY AGAIN</h2>
+            <h4 class="secondary_btn" onclick="showAllLevels()">Choose other level</h4>
+        </div>
         <div id="game_levels_board">
             <h1 class="game_title">WALK AND SHOOT</h1>
             <h1>CHOOSE LEVEL</h1>
-            <h2 onclick="showAvaliableLevels()">
-                click here
-            </h2>
             <div id="game_levels_to_choose"></div>
         </div>
-    </div>
-    <div id="game_over_notification">
-        <h2 id="game_over_level"></h2>
-        <h1>GAME OWER</h1>
-        <h2 class="primary_btn" onclick="tryAgain()">TRY AGAIN</h2>
     </div>
     <h1 id="no_bullets_notification"></h1>
 </div>
@@ -229,8 +250,6 @@
     <div>8</div>
     <div>9</div>
     <div>10</div>
-</div>
-<!--    </div>-->
 </div>
 <div class="gun_images">
     <img id="gunIconId1" src="./public/img/unit_gun1.webp" alt="gun1" width="220" height="277">
@@ -299,7 +318,7 @@
 
             .forEach(unit => unit.render(user.x, user.y))
 
-        units = units.filter(unit => unit.isAlive())
+        units = units.filter(unit => !unit.isDead())
 
         showGameOver();
 
@@ -337,10 +356,11 @@
             return;
         }
 
-        restartGame();
         const currentLevel = e.target.innerHTML;
         const index = currentLevel - 1;
         selectedLevel.innerHTML = `Level: ${currentLevel}/10`;
+
+        restartGame();
         changeLevel(index);
     });
 

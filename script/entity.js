@@ -278,8 +278,8 @@ class Unit {
         ctx.stroke();
     }
 
-    isAlive() {
-        return this.health > 0;
+    isDead() {
+        return this.health < 0;
     }
 
     /**

@@ -99,7 +99,6 @@ function showAvaliableLevels() {
         const canvasId = getGameLevelId(index);
         const canvas = document.getElementById(canvasId)
         const ctx = canvas.getContext("2d");
-        debugger
         const canvasScreen = getScreen(canvas.width, canvas.height);
         const rectangles = level.getRectangles(canvasScreen);
 
@@ -123,14 +122,27 @@ function showAvaliableLevels() {
     function addCanvasLevel(levelIndex, parentId) {
         var newCanvas = document.createElement('canvas');
         newCanvas.id = getGameLevelId(levelIndex);
-        newCanvas.width = 300;
-        newCanvas.height = 150;
+        newCanvas.width = 200;
+        newCanvas.height = 100;
         newCanvas.style.zIndex = 8;
         // newCanvas.style.position = "absolute";
         // newCanvas.style.border = "1px solid";
 
-        const parent = document.getElementById(parentId)
-        parent.append(newCanvas);
+        var title = document.createElement('h2');
+        title.innerHTML = `Level ${levelIndex + 1}`;
+        var wrapper = document.createElement('div');
+        wrapper.classList.add("level_wrapper");
+        wrapper.append(newCanvas)
+        wrapper.append(title)
+        wrapper.onclick = function () {
+            game_over_notification.style.display  = 'none';
+            game_levels_board.style.display  = 'none';
+            restartGame();
+            changeLevel(levelIndex);
+        }
+
+        const parent = document.getElementById(parentId);
+        parent.append(wrapper);
     }
 
     function styleBoard(levelIndex) {
@@ -157,16 +169,18 @@ function getScreen(width, height) {
 }
 
 function showGameOver() {
-    if (!user.isAlive()) {
+    if (user.isDead()) {
         game_over_notification.style.display = 'flex';
         game_over_level.textContent = `Level ${levelId + 1}`
     }
 }
 
 function restartGame() {
-    if (!user.isAlive()) {
-        notification.textContent = '';
-        notification.style.display = 'none';
+    flyBullets=[];
+    if (user.isDead()) {
+        no_bullets_notification.textContent = '';
+        no_bullets_notification.style.display = 'none';
+
     }
 }
 
@@ -175,6 +189,10 @@ function tryAgain() {
     game_over_notification.style.display = 'none';
 }
 
+function showAllLevels() {
+    game_over_notification.style.display = 'none';
+    game_levels_board.style.display = 'flex';
+}
 
 function renderMoveDirectionCenter() {
     const width = ctx.canvas.width;
