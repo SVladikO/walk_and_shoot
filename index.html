@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Walker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <style>
+        * {
+            cursor: cell;
+            touch-action: manipulation;
+            font-family: Arial;
+            padding: 0;
+            margin: 0;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        .guns > img {
+            height: 80px;
+            border: solid 1px black;
+            margin: 10px;
+        }
+
+        .wrapper {
+            display: flex;
+
+        }
+
+        #notification {
+            display: none;
+            position: absolute;
+            top: 0;
+            border: solid 1px red;
+            width: 100%;
+            height: 100%;
+            background: #ff0000e3;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #no_bullets_notification {
+            display: none;
+            background: #ff00001c;
+            color: white;
+            height: 40px;
+            padding: 10px 0;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .themes {
+            padding: 10px;
+        }
+
+        .themes > button {
+            font-size: 30px;
+            padding: 4px 8px;
+            margin: 4px;
+        }
+
+        #user_walk_btn,
+        #user_direction_btn {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: solid 2px red;
+            position: absolute;
+        }
+
+        #user_walk_btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            bottom: 40px;
+            left: 40px;
+        }
+
+        #reload_gun_btn,
+        #shoot_gun_btn {
+            border-radius: 50%;
+            border: solid 2px red;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            right: 200px;
+        }
+
+        #page_reload_btn {
+            position: absolute;
+            right: 300px;
+            bottom: 50px;
+            border-radius: 20%;
+            border: solid 2px red;
+        }
+
+        #reload_gun_btn {
+            bottom: 150px;
+        }
+
+        #shoot_gun_btn {
+            bottom: 50px;
+        }
+
+        #health {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .gun_images > img {
+            display: none;
+        }
+
+        #user_direction_btn {
+            bottom: 40px;
+            right: 40px;
+        }
+
+        .move_button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: red;
+            display: block;
+        }
+
+        .move_button_not_active {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: block;
+            margin: auto;
+        }
+
+        #game_level_wrapper {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 20px;
+        }
+
+        #game_level_wrapper > div {
+            border: solid 2px black;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #available_guns {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        #policeCarId {
+            position: absolute;
+            top: -25px;
+            left: -63px;
+            width: 200px;
+            height: 100px;
+            transform: rotate(-25deg);
+        }
+
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div class="board">
+        <canvas id="canvas" width="1000" height="600" style="border:1px solid #000000;"></canvas>
+
+        <!--        <div id="user_walk_btn">-->
+        <!--            <div class="move_button move-left-btn">a</div>-->
+        <!--            <div>-->
+        <!--                <div class="move_button">w</div>-->
+        <!--                <div class="move_button_not_active"></div>-->
+        <!--                <div class="move_button">s</div>-->
+        <!--            </div>-->
+        <!--            <div class="move_button">d</div>-->
+        <!--        </div>-->
+        <!--        <div id="user_direction_btn"></div>-->
+        <!--        <div id="reload_gun_btn">reload</div>-->
+        <!--        <div id="shoot_gun_btn">shoot</div>-->
+        <!--        <div id="page_reload_btn">page reload</div>-->
+
+        <img id="policeCarId" src="./public/img/police_car.webp" alt="gun3" width="220" height="277">
+        <h1 id="health" class="themes"></h1>
+        <h1 id="notification"></h1>
+        <h1 id="no_bullets_notification"></h1>
+    </div>
+    <div id="available_guns" class="guns themes">
+        <h1>Available guns:</h1>
+        <img onclick="updateWeapon('weapon_gun1')" src="public/img/list_gun1.png" alt="">
+        <img onclick="updateWeapon('weapon_gun2')" src="public/img/list_gun2.png" alt="">
+        <img onclick="updateWeapon('weapon_gun3')" src="public/img/list_gun3.png" alt="">
+    </div>
+
+    <!--    <div class="control_panel">-->
+    <!--        <div class="guns themes">-->
+    <!--            <h1>Available guns:</h1>-->
+    <!--            <img onclick="updateWeapon('weapon_gun1')" src="./public/img/gun1.jpeg" alt="">-->
+    <!--            <img onclick="updateWeapon('weapon_gun2')" src="./public/img/list_gun2.png" alt="">-->
+    <!--            <img onclick="updateWeapon('weapon_gun3')" src="./public/img/gun3.jpeg" alt="">-->
+    <!--        </div>-->
+    <!--        <div class="themes">-->
+    <!--            <h1>Themes:</h1>-->
+    <!--            <button onclick="changeStyleToWinter()">winter</button>-->
+    <!--            <button onclick="changeStyleToSummer()">summer</button>-->
+    <!--            <button onclick="changeStyleToSpring()">spring</button>-->
+    <!--        </div>-->
+
+    <!--        <div class="themes">-->
+    <!--            <h1>Sound control:</h1>-->
+    <!--            <button onclick="mute()">Mute</button>-->
+    <!--            <button onclick="unmute()">Unmute</button>-->
+    <!--        </div>-->
+    <div id="game_level_wrapper">
+        <h1 id="selectedLevel">Level: 1/10</h1>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+        <div>7</div>
+        <div>8</div>
+        <div>9</div>
+        <div>10</div>
+    </div>
+    <!--    </div>-->
+</div>
+<div class="gun_images">
+    <img id="gunIconId1" src="public/img/unit_gun1.webp" alt="gun1" width="220" height="277">
+    <img id="gunIconId2" src="public/img/unit_gun2.webp" alt="gun2" width="220" height="277">
+    <img id="gunIconId3" src="public/img/unit_gun3.webp" alt="gun3" width="220" height="277">
+    <img id="gunFireIconId1" src="./public/img/gun-fire.webp" alt="gun3" width="220" height="277">
+
+    <img id="userIconId1" src="./public/img/user1.webp" alt="gun3" width="100" height="100">
+    <img id="userIconId2" src="./public/img/user2.webp" alt="gun3" width="100" height="100">
+    <img id="userIconId3" src="./public/img/user3.webp" alt="gun3" width="100" height="100">
+</div>
+
+<!--SCRIPTS-->
+
+<script src="./script/calculation.js"></script>
+<script src="./script/entity.js"></script>
+<script src="./script/global_var.js"></script>
+<script src="./script/render.js"></script>
+<script src="./script/style.js"></script>
+
+<script>
+    const ctx = canvas.getContext("2d");
+    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+
+    let mousePositionX = 0;
+    let mousePositionY = 0;
+
+    let isMute = false;
+
+    function mute() {
+        isMute = true;
+    }
+
+    function unmute() {
+        isMute = false;
+    }
+
+    function reloadUserGun(e) {
+        user.reloadGun();
+    }
+
+    function updateWeapon(n) {
+        const weapons = {
+            weapon_gun1,
+            weapon_gun2,
+            weapon_gun3,
+        }
+
+        user.weapon = weapons[n]
+    }
+
+    function drawAll() {
+        clearCanvas();
+        prepareCanvas();
+        renderRectangles()
+
+        health.textContent = 'Health: ' + user.health + ' / Bullets amount: ' + user.bulletAmount
+
+        flyBullets.forEach(bullet => bullet.move());
+        flyBullets.forEach(bullet => bullet.render());
+        flyBullets = flyBullets.filter(bullet => !bullet.isDead);
+
+        user.isShootEnabled && user.shoot();
+        user.render(mousePositionX, mousePositionY);
+
+        units.forEach(unit => (user.isShootEnabled || unit.isShootEnabled) && unit.shoot())
+        units.forEach(unit => unit.unitRandomDirection())
+        units.forEach(unit => unit.move())
+        units
+            // .filter(unit => user.isVisibleForMe(unit.x, unit.y))
+
+            .forEach(unit => unit.render(user.x, user.y))
+
+        units = units.filter(unit => unit.isAlive())
+
+        showGameOver();
+
+        renderEnd(finishCoordinates)
+        // renderMoveDirectionCenter()
+    }
+
+    const moveTabletDirectionCenter = {
+        x: 120,
+        y: 120,
+    }
+
+    function showGameOver() {
+        if (!user.isAlive()) {
+            notification.textContent = 'GAME OVER';
+            notification.style.display = 'flex';
+        }
+    }
+
+    function restartGame() {
+        if (!user.isAlive()) {
+            notification.textContent = '';
+            notification.style.display = 'none';
+        }
+    }
+
+    function renderMoveDirectionCenter() {
+        const width = ctx.canvas.width;
+        const height = ctx.canvas.height;
+        const x = width - moveTabletDirectionCenter.x;
+        const y = height - moveTabletDirectionCenter.y;
+
+        ctx.moveTo(x, y);
+        ctx.beginPath();
+        ctx.arc(x, y, 10, 0, 300);
+        ctx.fillStyle = "red";
+        ctx.fill();
+    }
+
+    function renderEnd(c) {
+        ctx.beginPath();
+        ctx.font = "30px Arial";
+        ctx.fillText('FINISH', c.x, c.y);
+    }
+
+    // enableMobileNavigation();
+
+    window.addEventListener("mousedown", () => user.isShootEnabled = true);
+    window.addEventListener("mouseup", () => user.isShootEnabled = false);
+
+    window.addEventListener("keypress", (event) => {
+        user.enableMove(event.key)
+        event.key === ' ' && user.reloadGun()
+
+        drawAll();
+    });
+
+    window.addEventListener("keyup", (event) => user.disableMove(event.key));
+    window.addEventListener("mousemove", e => {
+        mousePositionX = e.clientX;
+        mousePositionY = e.clientY
+    });
+
+    game_level_wrapper.addEventListener("click", e => {
+        if (e.target.localName !== 'div' || e.target.id === 'game_level_wrapper') {
+            return;
+        }
+
+        restartGame();
+        const currentLevel = e.target.innerHTML;
+        const index = currentLevel - 1;
+        selectedLevel.innerHTML = `Level: ${currentLevel}/10`;
+        changeLevel(index);
+    });
+
+
+    function loop() {
+        user.move();
+        drawAll();
+        window.requestAnimationFrame(loop);
+    }
+
+    loop();
+
+
+    setInterval(() => {
+        units.forEach(unit => unit.isShootEnabled = true);
+
+        setTimeout(() => {
+            units.forEach(unit => unit.isShootEnabled = false);
+        }, 1000);
+
+    }, 2000)
+
+    function showNoBulletNotification() {
+        window.no_bullets_notification.textContent = 'Press "SPACE" to reload. No bullets. ';
+        window.no_bullets_notification.style.display = 'flex';
+    }
+
+    function hideNoBulletNotification() {
+        window.no_bullets_notification.textContent = 'Press "SPACE" to reload. No bullets. ';
+        window.no_bullets_notification.style.display = 'none';
+
+    }
+
+    //MOBILE NAVIGATION BUTTONS
+    function enableMobileNavigation() {
+        // user_walk_btn.addEventListener('mousedown', e => {
+        //     e.stopPropagation();
+        //     e.preventDefault();
+        //     user.enableMove(e.target.innerText)
+        // });
+        // user_walk_btn.addEventListener('mouseup', e => {
+        //     e.stopPropagation();
+        //     e.preventDefault();
+        //     user.disableMove(e.target.innerText)
+        // });
+
+        user_walk_btn.addEventListener("touchstart", e => {
+            e.stopPropagation()
+            e.preventDefault();
+            user.enableMove(e.target.innerText)
+        });
+        user_walk_btn.addEventListener("touchend", e => {
+            e.stopPropagation()
+            e.preventDefault();
+            user.disableMove(e.target.innerText)
+        });
+
+        reload_gun_btn.addEventListener("touchstart", e => {
+            e.stopPropagation()
+            e.preventDefault();
+            user.reloadGun()
+        });
+        shoot_gun_btn.addEventListener("touchstart", e => {
+            e.stopPropagation()
+            e.preventDefault();
+            user.shoot()
+        });
+
+        // user_direction_btn.addEventListener('click', function (e) {
+        //     e.stopPropagation()
+        //     user.updateAngleForMobile(e.clientX, e.clientY);
+        //     user.shoot();
+        // });
+
+        user_direction_btn.addEventListener('touchmove', function (e) {
+            e.stopPropagation()
+            e.preventDefault();
+            user.updateAngleForMobile(e.clientX, e.clientY);
+            user.shoot();
+        });
+
+        page_reload_btn.addEventListener('click', function (e) {
+            e.stopPropagation()
+            e.preventDefault();
+            window.location.reload(true);
+            location.replace(location.href);
+        });
+
+    }
+</script>
+</body>
+</html>
