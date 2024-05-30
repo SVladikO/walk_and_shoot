@@ -19,7 +19,6 @@ let style = {
 }
 
 
-let flyBullets = [];
 
 const GUN_TYPE = {
     PISTOL: 'PISTOL',
@@ -109,42 +108,8 @@ const UNIT_TYPE = {
     'UNIT': 'UNIT'
 }
 
-function getUser(weapon = weapon_gun1) {
-    return new Unit(70, 70, 20, UNIT_TYPE.USER, weapon, 'userIconId1')
-}
-
-function getUnit(x, y, health, weapon, unitImageId) {
-    return new Unit(x, y, health, UNIT_TYPE.UNIT, weapon, unitImageId);
-}
-
-function getPistolUnit(x, y, health = 3) {
-    return getUnit(x, y, health, weapon_gun1, 'userIconId2');
-}
-
-function getAkUnit(x, y, health = 4) {
-    return getUnit(x, y, health, weapon_gun2, 'userIconId2');
-}
-
-function getGunUnit(x, y, health = 4) {
-    return getUnit(x, y, health, weapon_gun3, 'userIconId2');
-}
-
-// new Unit(getRandom(20, 40), getRandom(10, 550), 10, UNIT_TYPE.UNIT, weapon_gun1),
-// new Unit(getRandom(20, 40), getRandom(300, 600), 10, UNIT_TYPE.UNIT, weapon_gun2),
-// new Unit(getRandom(10, 300), getRandom(100, 500), 20, UNIT_TYPE.UNIT, weapon_gun1),
-// new Unit(getRandom(10, 300), getRandom(100, 500), 20, UNIT_TYPE.UNIT, weapon_gun1),
-// new Unit(getRandom(700, 800), getRandom(100, 500), 40, UNIT_TYPE.UNIT, weapon_gun2),
-// new Unit(getRandom(700, 800), getRandom(400, 550), 30, UNIT_TYPE.UNIT, weapon_gun1),
-
-
-const mouse = {
-    x: 200,
-    y: 200,
-}
-
 const horizontalStep = canvas.width / 10;
 const verticalStep = canvas.height / 10;
-
 
 const levels = [
     // level 1
