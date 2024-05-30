@@ -107,41 +107,27 @@ const UNIT_TYPE = {
     'UNIT': 'UNIT'
 }
 
-/**
- * We need this one to build block per level.
- * We cut bord on 20 horizontally, 10 vertically.
- * Our goal is make the same map on different screens.
- * That's why we need this function.
- * @type {{screenStepY: number, screenStepX: number, getHorizontalSide(), getVerticalSide()}}
- */
-const screen = {
-    screenStepX: window.innerWidth / 20,
-    screenStepY: window.innerHeight / 10,
 
-
-    getHorizontalSide(pice) {
-        return this.screenStepX * pice;
-    },
-    getVerticalSide(pice) {
-        return this.screenStepY * pice;
-    }
-}
 
 const isUnitRandomWalkDisabled = false;
 
 const levels = [
     // level 1
     {
-        finish: {
-            x: screen.getHorizontalSide(18),
-            y: screen.getVerticalSide(6)
+        getFinishCoordinates(screen) {
+            return {
+                x: screen.getHorizontalSide(18),
+                y: screen.getVerticalSide(6)
+            }
         },
-        recs: [
-            [0, screen.getVerticalSide(3), screen.getHorizontalSide(15), screen.getVerticalSide(10)],
-            [screen.getHorizontalSide(3), 0, screen.getHorizontalSide(1), screen.getVerticalSide(3)/2],
-            [screen.getHorizontalSide(10), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        ],
-        getUnits: () => ([
+        getRectangles(screen) {
+            return [
+                [0, screen.getVerticalSide(3), screen.getHorizontalSide(15), screen.getVerticalSide(10)],
+                [screen.getHorizontalSide(3), 0, screen.getHorizontalSide(1), screen.getVerticalSide(3) / 2],
+                [screen.getHorizontalSide(10), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+            ]
+        },
+        getUnits: (screen) => ([
             getPistolUnit(screen.getHorizontalSide(5), screen.getVerticalSide(1)),
             // getPistolUnit(screen.getHorizontalSide(13), screen.getVerticalSide(1)),
             getPistolUnit(screen.getHorizontalSide(16), screen.getVerticalSide(4)),
@@ -149,23 +135,27 @@ const levels = [
     },
     // level 2
     {
-        finish: {
-            x: screen.getHorizontalSide(18),
-            y: screen.getVerticalSide(5)
+        getFinishCoordinates(screen) {
+            return {
+                x: screen.getHorizontalSide(18),
+                y: screen.getVerticalSide(5)
+            }
         },
-        recs: [
-            [screen.getHorizontalSide(2), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-            [0, screen.getVerticalSide(2), screen.getHorizontalSide(8), screen.getVerticalSide(10)],
-            [0, screen.getVerticalSide(2), screen.getHorizontalSide(8), screen.getVerticalSide(10)],
-            [screen.getHorizontalSide(6), screen.getVerticalSide(1), screen.getHorizontalSide(2), screen.getVerticalSide(1)],
-            [screen.getHorizontalSide(10), screen.getVerticalSide(1) / 2, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-            [screen.getHorizontalSide(11), screen.getVerticalSide(3), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-            [screen.getHorizontalSide(10), screen.getVerticalSide(10) / 2, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-            [screen.getHorizontalSide(13), screen.getVerticalSide(11) / 2, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-            [screen.getHorizontalSide(14), 0, screen.getHorizontalSide(6), screen.getVerticalSide(4)],
-        ],
-        getUnits: () => ([
-            getPistolUnit(screen.getHorizontalSide(5), screen.getVerticalSide(1)/2),
+        getRectangles(screen) {
+            return [
+                [screen.getHorizontalSide(2), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+                [0, screen.getVerticalSide(2), screen.getHorizontalSide(8), screen.getVerticalSide(10)],
+                [0, screen.getVerticalSide(2), screen.getHorizontalSide(8), screen.getVerticalSide(10)],
+                [screen.getHorizontalSide(6), screen.getVerticalSide(1), screen.getHorizontalSide(2), screen.getVerticalSide(1)],
+                [screen.getHorizontalSide(10), screen.getVerticalSide(1) / 2, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+                [screen.getHorizontalSide(11), screen.getVerticalSide(3), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+                [screen.getHorizontalSide(10), screen.getVerticalSide(10) / 2, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+                [screen.getHorizontalSide(13), screen.getVerticalSide(11) / 2, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+                [screen.getHorizontalSide(14), 0, screen.getHorizontalSide(6), screen.getVerticalSide(4)],
+            ]
+        },
+        getUnits: (screen) => ([
+            getPistolUnit(screen.getHorizontalSide(5), screen.getVerticalSide(1) / 2),
             getPistolUnit(screen.getHorizontalSide(9), screen.getVerticalSide(2)),
             getGunUnit(screen.getHorizontalSide(11), screen.getVerticalSide(2)),
             getPistolUnit(screen.getHorizontalSide(15), screen.getVerticalSide(5)),
@@ -177,30 +167,34 @@ const levels = [
     },
     // levels 3
     {
-        finish: {
-            x: screen.getHorizontalSide(1),
-            y: screen.getVerticalSide(8)
+        getFinishCoordinates(screen) {
+            return {
+                x: screen.getHorizontalSide(1),
+                y: screen.getVerticalSide(8)
+            }
         },
-        recs: [
-            [0, screen.getVerticalSide(3) / 2, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-            [screen.getHorizontalSide(3), 0, screen.getHorizontalSide(2), screen.getVerticalSide(3) / 2],
-            [0, screen.getHorizontalSide(4), screen.getHorizontalSide(11), screen.getVerticalSide(4)],
-            [screen.getHorizontalSide(6), screen.getHorizontalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-            [screen.getHorizontalSide(11), screen.getHorizontalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(2)],
-            [screen.getHorizontalSide(11), screen.getHorizontalSide(6), screen.getHorizontalSide(4), screen.getVerticalSide(3) / 2],
-            [screen.getHorizontalSide(13), screen.getHorizontalSide(7), screen.getHorizontalSide(2), screen.getVerticalSide(3) / 2],
-            [screen.getHorizontalSide(13), 0, screen.getHorizontalSide(3), screen.getVerticalSide(9) / 2],
-            [screen.getHorizontalSide(16), screen.getVerticalSide(5)/2, screen.getHorizontalSide(2), screen.getVerticalSide(2)],
-            [screen.getHorizontalSide(18), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(7)/2],
-        ],
-        getUnits: () => ([
-            getPistolUnit(screen.getHorizontalSide(1)/2, screen.getVerticalSide(3)),
-            getPistolUnit(screen.getHorizontalSide(6), screen.getVerticalSide(3)/2),
-            getPistolUnit(screen.getHorizontalSide(12), screen.getVerticalSide(1)/2),
-            getPistolUnit(screen.getHorizontalSide(10), screen.getVerticalSide(1)/2, isUnitRandomWalkDisabled),
+        getRectangles(screen) {
+            return [
+                [0, screen.getVerticalSide(3) / 2, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+                [screen.getHorizontalSide(3), 0, screen.getHorizontalSide(2), screen.getVerticalSide(3) / 2],
+                [0, screen.getHorizontalSide(4), screen.getHorizontalSide(11), screen.getVerticalSide(4)],
+                [screen.getHorizontalSide(6), screen.getHorizontalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+                [screen.getHorizontalSide(11), screen.getHorizontalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(2)],
+                [screen.getHorizontalSide(11), screen.getHorizontalSide(6), screen.getHorizontalSide(4), screen.getVerticalSide(3) / 2],
+                [screen.getHorizontalSide(13), screen.getHorizontalSide(7), screen.getHorizontalSide(2), screen.getVerticalSide(3) / 2],
+                [screen.getHorizontalSide(13), 0, screen.getHorizontalSide(3), screen.getVerticalSide(9) / 2],
+                [screen.getHorizontalSide(16), screen.getVerticalSide(5) / 2, screen.getHorizontalSide(2), screen.getVerticalSide(2)],
+                [screen.getHorizontalSide(18), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(7) / 2],
+            ]
+        },
+        getUnits: (screen) => ([
+            getPistolUnit(screen.getHorizontalSide(1) / 2, screen.getVerticalSide(3)),
+            getPistolUnit(screen.getHorizontalSide(6), screen.getVerticalSide(3) / 2),
+            getPistolUnit(screen.getHorizontalSide(12), screen.getVerticalSide(1) / 2),
+            getPistolUnit(screen.getHorizontalSide(10), screen.getVerticalSide(1) / 2, isUnitRandomWalkDisabled),
             getAkUnit(screen.getHorizontalSide(14), screen.getVerticalSide(5)),
-            getAkUnit(screen.getHorizontalSide(18), screen.getVerticalSide(1)/2),
-            getAkUnit(screen.getHorizontalSide(18), screen.getVerticalSide(1)/2, isUnitRandomWalkDisabled),
+            getAkUnit(screen.getHorizontalSide(18), screen.getVerticalSide(1) / 2),
+            getAkUnit(screen.getHorizontalSide(18), screen.getVerticalSide(1) / 2, isUnitRandomWalkDisabled),
             getGunUnit(screen.getHorizontalSide(17), screen.getVerticalSide(2), isUnitRandomWalkDisabled),
             getPistolUnit(screen.getHorizontalSide(12), screen.getVerticalSide(8)),
             // getPistolUnit(10, 168),
@@ -219,30 +213,34 @@ const levels = [
     },
     // level 4
     {
-        finish: {
-            x: 510,
-            y: 340
+        getFinishCoordinates(screen) {
+            return {
+                x: 510,
+                y: 340
+            }
         },
-        recs: [
-            [65, 90, 10, 10],
-            [120, 0, 70, 200],
-            [50, 200, 70, 100],
-            [95, 300, 25, 100],
-            [50, 360, 70, 50],
-            [0, 490, 500, 110],
-            [225, 360, 275, 145],
-            [320, 240, 180, 145],
-            [200, 250, 50, 50],
-            [400, 90, 300, 200],
-            [700, 220, 180, 50],
-            [610, 290, 90, 200],
-            [780, 70, 90, 70],
-            [960, 150, 90, 70],
-            [940, 280, 90, 70],
-            [800, 400, 80, 70],
-            [915, 515, 40, 40],
-        ],
-        getUnits: () => ([
+        getRectangles(screen) {
+            return [
+                [65, 90, 10, 10],
+                [120, 0, 70, 200],
+                [50, 200, 70, 100],
+                [95, 300, 25, 100],
+                [50, 360, 70, 50],
+                [0, 490, 500, 110],
+                [225, 360, 275, 145],
+                [320, 240, 180, 145],
+                [200, 250, 50, 50],
+                [400, 90, 300, 200],
+                [700, 220, 180, 50],
+                [610, 290, 90, 200],
+                [780, 70, 90, 70],
+                [960, 150, 90, 70],
+                [940, 280, 90, 70],
+                [800, 400, 80, 70],
+                [915, 515, 40, 40],
+            ]
+        },
+        getUnits: (screen) => ([
             getPistolUnit(88, 165),
             getGunUnit(72, 330),
             getPistolUnit(198, 458),
@@ -259,21 +257,25 @@ const levels = [
     },
     // level 5
     {
-        finish: {
-            x: 0,
-            y: 550
+        getFinishCoordinates(screen) {
+            return {
+                x: 0,
+                y: 550
+            }
         },
-        recs: [
-            [0, 140, 80, 300],
-            [150, 0, 80, 300],
-            [80, 440, 600, 100],
-            [400, 100, 150, 350],
-            [680, 240, 200, 80],
-            [780, 300, 100, 240],
-            [680, 0, 200, 80],
-            [960, 280, 50, 80],
-        ],
-        getUnits: () => ([
+        getRectangles(screen) {
+            return [
+                [0, 140, 80, 300],
+                [150, 0, 80, 300],
+                [80, 440, 600, 100],
+                [400, 100, 150, 350],
+                [680, 240, 200, 80],
+                [780, 300, 100, 240],
+                [680, 0, 200, 80],
+                [960, 280, 50, 80],
+            ]
+        },
+        getUnits: (screen) => ([
             getPistolUnit(96, 205),
             getAkUnit(126, 380),
             getPistolUnit(220, 325),
@@ -292,20 +294,24 @@ const levels = [
     },
     // level 6
     {
-        finish: {
-            x: 630,
-            y: 420
+        getFinishCoordinates(screen) {
+            return {
+                x: 630,
+                y: 420
+            }
         },
-        recs: [
-            [60, 160, 150, 80],
-            [140, 60, 70, 110],
-            [210, 180, 450, 150],
-            [580, 100, 80, 100],
-            [900, 255, 100, 50],
-            [650, 500, 150, 100],
-            [0, 350, 100, 100],
-        ],
-        getUnits: () => ([
+        getRectangles(screen) {
+            return [
+                [60, 160, 150, 80],
+                [140, 60, 70, 110],
+                [210, 180, 450, 150],
+                [580, 100, 80, 100],
+                [900, 255, 100, 50],
+                [650, 500, 150, 100],
+                [0, 350, 100, 100],
+            ]
+        },
+        getUnits: (screen) => ([
             getAkUnit(940, 540),
             getAkUnit(420, 520),
             getPistolUnit(860, 270),
@@ -322,20 +328,24 @@ const levels = [
     },
     // level 7
     {
-        finish: {
-            x: 825,
-            y: 450
+        getFinishCoordinates(screen) {
+            return {
+                x: 825,
+                y: 450
+            }
         },
-        recs: [
-            [60, 160, 100, 80],
-            [170, 40, 70, 70],
-            [340, 40, 70, 70],
-            [500, 40, 70, 70],
-            [680, 40, 100, 300],
-            [580, 260, 100, 200],
-            [350, 450, 100, 100],
-        ],
-        getUnits: () => ([
+        getRectangles(screen) {
+            return [
+                [60, 160, 100, 80],
+                [170, 40, 70, 70],
+                [340, 40, 70, 70],
+                [500, 40, 70, 70],
+                [680, 40, 100, 300],
+                [580, 260, 100, 200],
+                [350, 450, 100, 100],
+            ]
+        },
+        getUnits: (screen) => ([
             getPistolUnit(30, 150),
             getAkUnit(30, 270),
             getPistolUnit(200, 130),
@@ -352,15 +362,19 @@ const levels = [
     },
 // level 8
     {
-        finish: {
-            x: 825,
-            y: 450
+        getFinishCoordinates(screen) {
+            return {
+                x: 825,
+                y: 450
+            }
         },
-        recs: [
-            [250, 70, 100, 100],
-            [580, 190, 100, 100],
-        ],
-        getUnits: () => ([
+        getRectangles(screen) {
+            return [
+                [250, 70, 100, 100],
+                [580, 190, 100, 100],
+            ]
+        },
+        getUnits: (screen) => ([
             getAkUnit(60, 280),
             getAkUnit(90, 280),
             getGunUnit(80, 250),
@@ -376,16 +390,20 @@ const levels = [
 
 // level 9
     {
-        finish: {
-            x: 850,
-            y: 235
+        getFinishCoordinates(screen) {
+            return {
+                x: 850,
+                y: 235
+            }
         },
-        recs: [
-            [150, 180, 100, 100],
-            [460, 60, 100, 100],
-            [520, 410, 100, 100],
-        ],
-        getUnits: () => ([
+        getRectangles(screen) {
+            return [
+                [150, 180, 100, 100],
+                [460, 60, 100, 100],
+                [520, 410, 100, 100],
+            ]
+        },
+        getUnits: (screen) => ([
             getAkUnit(610, 120),
             getAkUnit(725, 40),
             getPistolUnit(875, 160),
@@ -411,19 +429,23 @@ const levels = [
     },
     // level 10
     {
-        finish: {
-            x: 400,
-            y: 100
+        getFinishCoordinates(screen) {
+            return {
+                x: 400,
+                y: 100
+            }
         },
-        recs: [
-            [0, 140, 100, 100],
-            [0, 350, 100, 100],
-            [215, 145, 100, 100],
-            [225, 350, 100, 100],
-            [500, 300, 100, 200],
-            [600, 300, 100, 100],
-        ],
-        getUnits: () => ([
+        getRectangles(screen) {
+            return [
+                [0, 140, 100, 100],
+                [0, 350, 100, 100],
+                [215, 145, 100, 100],
+                [225, 350, 100, 100],
+                [500, 300, 100, 200],
+                [600, 300, 100, 100],
+            ]
+        },
+        getUnits: (screen) => ([
             getAkUnit(840, 80),
             getPistolUnit(750, 80),
             getAkUnit(755, 200),
@@ -450,17 +472,28 @@ const levels = [
 // getAkUnit
 // getGunUnit
 
+
+/**
+ * We need this one to build block per level.
+ * We cut bord on 20 horizontally, 10 vertically.
+ * Our goal is make the same map on different screens.
+ * That's why we need this function.
+ * @type {{screenStepY: number, screenStepX: number, getHorizontalSide(), getVerticalSide()}}
+ */
+const screenMainCanvas = getScreen(window.innerWidth, window.innerHeight);
+
+
 let levelId = 2;
-let units = levels[levelId].getUnits();
-let rectangles = levels[levelId].recs;
-let finishCoordinates = levels[levelId].finish;
+let units = levels[levelId].getUnits(screenMainCanvas);
+let rectangles = levels[levelId].getRectangles(screenMainCanvas);
+let finishCoordinates = levels[levelId].getFinishCoordinates(screenMainCanvas);
 let user = getUser();
 
 function changeLevel(levelIndex) {
     user = getUser(user.weapon);
-    rectangles = levels[levelIndex].recs;
-    units = levels[levelIndex].getUnits();
-    finishCoordinates = levels[levelIndex].finish;
+    rectangles = levels[levelIndex].getRectangles(screenMainCanvas);
+    units = levels[levelIndex].getUnits(screenMainCanvas);
+    finishCoordinates = levels[levelIndex].getFinishCoordinates(screenMainCanvas);
     levelId = levelIndex;
 }
 

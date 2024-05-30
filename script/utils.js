@@ -93,23 +93,27 @@ function showAvaliableLevels() {
 
     });
 
-    // levels.map(renderRecatangle())
+    levels.map(renderRecatangle)
 
-    function renderRecatangle(block, index) {
+    function renderRecatangle(level, index) {
         const canvasId = getGameLevelId(index);
-        debugger
         const canvas = document.getElementById(canvasId)
         const ctx = canvas.getContext("2d");
-        const [x, y, width, height] = block;
+        debugger
+        const canvasScreen = getScreen(canvas.width, canvas.height);
+        const rectangles = level.getRectangles(canvasScreen);
 
-        ctx.rect(x, y, width, height);
-        ctx.fillStyle = style.box.bgColor;
-        ctx.fill()
-        ctx.strokeStyle = style.box.borderColor;
-        ctx.lineWidth = style.box.borderLineWidth;
-        ctx.stroke();
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 1;
+        rectangles.forEach(rec => {
+            const [x, y, width, height] = rec;
+            ctx.rect(x, y, width, height);
+            ctx.fillStyle = style.box.bgColor;
+            ctx.fill()
+            ctx.strokeStyle = style.box.borderColor;
+            ctx.lineWidth = style.box.borderLineWidth;
+            ctx.stroke();
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = 1;
+        })
     }
 
     function getGameLevelId(levelIndex) {
@@ -137,6 +141,20 @@ function showAvaliableLevels() {
     }
 }
 
+function getScreen(width, height) {
+    return {
+        screenStepX: width / 20,
+        screenStepY: height / 10,
+
+
+        getHorizontalSide(pice) {
+            return this.screenStepX * pice;
+        },
+        getVerticalSide(pice) {
+            return this.screenStepY * pice;
+        }
+    }
+}
 
 function showGameOver() {
     if (!user.isAlive()) {
@@ -172,7 +190,7 @@ function renderMoveDirectionCenter() {
 }
 
 function getUser(weapon = weapon_gun1) {
-    return new Unit(screen.getHorizontalSide(1), screen.getVerticalSide(1), 20, UNIT_TYPE.USER, weapon, 'userIconId1')
+    return new Unit(screenMainCanvas.getHorizontalSide(1), screenMainCanvas.getVerticalSide(1), 20, UNIT_TYPE.USER, weapon, 'userIconId1')
 }
 
 function getUnit(x, y, health, weapon, unitImageId, isRandomWalkDisabled) {

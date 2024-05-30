@@ -31,12 +31,6 @@
             overflow: hidden;
         }
 
-        .guns > img {
-            height: 80px;
-            border: solid 1px black;
-            margin: 10px;
-        }
-
         .wrapper {
             display: flex;
 
@@ -55,7 +49,7 @@
 
         #game_menu {
             color: red;
-            display: flex;
+            display: none;
             flex-direction: column;
             gap: 40px;
             position: absolute;
@@ -69,8 +63,8 @@
 
         #game_levels_board {
             display: none;
-            color: red;
             /*display: flex;*/
+            color: red;
             flex-direction: column;
             gap: 40px;
             position: absolute;
@@ -123,6 +117,7 @@
             position: absolute;
             top: 0;
             right: 0;
+            background: rgba(255, 255, 255, 0.24);
         }
 
         .gun_images > img {
@@ -135,6 +130,7 @@
             flex-wrap: wrap;
             width: 1000px;
         }
+
         #game_level_wrapper {
             position: absolute;
             bottom: 0;
@@ -148,9 +144,9 @@
         #game_level_wrapper > div {
             border: solid 2px red;
             color: red;
-            width: 50px;
-            height: 50px;
-            font-size: 20px;
+            width: 30px;
+            height: 30px;
+            font-size: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -160,6 +156,14 @@
             position: absolute;
             bottom: 0;
             left: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        #available_guns > img {
+            height: 40px;
+            border: solid 1px black;
+            margin: 10px;
         }
 
         #policeCarId {
@@ -178,19 +182,19 @@
     <div class="board">
         <canvas id="canvas" width="1000" height="600" style="border:1px solid #000000;"></canvas>
         <img id="policeCarId" src="./public/img/police_car.webp" alt="gun3" width="220" height="277">
-        <h1 id="health" class="themes"></h1>
-        <div id="available_guns" class="guns themes">
-            <h1>Available guns:</h1>
+        <h4 id="health" class="themes"></h4>
+        <div id="available_guns" class="themes">
+            <h4>Available guns:</h4>
             <img onclick="updateWeapon('weapon_gun1')" src="public/img/list_gun1.png" alt="">
             <img onclick="updateWeapon('weapon_gun2')" src="public/img/list_gun2.png" alt="">
             <img onclick="updateWeapon('weapon_gun3')" src="public/img/list_gun3.png" alt="">
         </div>
-        <!--        <div id="game_menu">-->
-        <!--            <h1 class="game_title">WALK AND SHOOT</h1>-->
-        <!--            <h1>ONE PLAYER</h1>-->
-        <!--            <h1>TWO PLAYERS</h1>-->
-        <!--            <h1>SETTINGS</h1>-->
-        <!--        </div>-->
+        <div id="game_menu">
+            <h1 class="game_title">WALK AND SHOOT</h1>
+            <h1>ONE PLAYER</h1>
+<!--            <h1>TWO PLAYERS</h1>-->
+<!--            <h1>SETTINGS</h1>-->
+        </div>
         <div id="game_levels_board">
             <h1 class="game_title">WALK AND SHOOT</h1>
             <h1>CHOOSE LEVEL</h1>
@@ -214,7 +218,7 @@
 <!--            <button onclick="unmute()">Unmute</button>-->
 <!--        </div>-->
 <div id="game_level_wrapper">
-    <h1 id="selectedLevel">Level: 1/10</h1>
+    <h4 id="selectedLevel">Level: 1/10</h4>
     <div>1</div>
     <div>2</div>
     <div>3</div>
