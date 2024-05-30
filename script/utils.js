@@ -82,6 +82,7 @@ function updateWeapon(n) {
 
     user.weapon = weapons[n]
     user.bulletAmount = weapons[n].bulletAmount;
+    hideNoBulletNotification();
 }
 
 function showAvaliableLevels() {
@@ -171,21 +172,21 @@ function renderMoveDirectionCenter() {
 }
 
 function getUser(weapon = weapon_gun1) {
-    return new Unit(70, 70, 20, UNIT_TYPE.USER, weapon, 'userIconId1')
+    return new Unit(screen.getHorizontalSide(1), screen.getVerticalSide(1), 20, UNIT_TYPE.USER, weapon, 'userIconId1')
 }
 
-function getUnit(x, y, health, weapon, unitImageId) {
-    return new Unit(x, y, health, UNIT_TYPE.UNIT, weapon, unitImageId);
+function getUnit(x, y, health, weapon, unitImageId, isRandomWalkDisabled) {
+    return new Unit(x, y, health, UNIT_TYPE.UNIT, weapon, unitImageId, isRandomWalkDisabled);
 }
 
-function getPistolUnit(x, y, health = 3) {
-    return getUnit(x, y, health, weapon_gun1, 'userIconId2');
+function getPistolUnit(x, y, isRandomWalkDisabled, health = 3) {
+    return getUnit(x, y, health, weapon_gun1, 'userIconId2', isRandomWalkDisabled);
 }
 
-function getAkUnit(x, y, health = 4) {
-    return getUnit(x, y, health, weapon_gun2, 'userIconId2');
+function getAkUnit(x, y, isRandomWalkDisabled, health = 4) {
+    return getUnit(x, y, health, weapon_gun2, 'userIconId2', isRandomWalkDisabled);
 }
 
-function getGunUnit(x, y, health = 4) {
-    return getUnit(x, y, health, weapon_gun3, 'userIconId2');
+function getGunUnit(x, y, isRandomWalkDisabled, health = 4) {
+    return getUnit(x, y, health, weapon_gun3, 'userIconId2', isRandomWalkDisabled);
 }

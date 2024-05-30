@@ -19,7 +19,6 @@ let style = {
 }
 
 
-
 const GUN_TYPE = {
     PISTOL: 'PISTOL',
     AK: 'AK',
@@ -33,7 +32,7 @@ const weapon_gun1 = {
     bulletAmount: 8,
     shootSpeedStep: 30,
     reloadBulletAmount: 8,
-    maxDistance: 300,
+    maxDistance: 500,
     damage: 2,
     sound: {
         reload: './public/sound/gun1_recharge.mp3',
@@ -52,7 +51,7 @@ const weapon_gun2 = {
     bulletAmount: 30,
     shootSpeedStep: 15,
     reloadBulletAmount: 30,
-    maxDistance: 350,
+    maxDistance: 500,
     damage: 2,
     sound: {
         reload: './public/sound/gun1_recharge.mp3',
@@ -66,18 +65,18 @@ const weapon_gun2 = {
             getBullet(angle),
         ];
 
-        const isFlyUp2 = getRandom(1,5)% 2 > 0;
-        const isBulletFlyUp2 = getRandom(1,5)% 2 > 0;
+        const isFlyUp2 = getRandom(1, 5) % 2 > 0;
+        const isBulletFlyUp2 = getRandom(1, 5) % 2 > 0;
 
         // if(isFlyUp1) {
         //     isBulletFlyUp1
         //         ? bullets.push(getBullet(angle + .1 ))
         //         : bullets.push(getBullet(angle - .1 ))
         // }
-        if(isFlyUp2) {
+        if (isFlyUp2) {
             isBulletFlyUp2
-                ? bullets.push(getBullet(angle + getRandom(1, 5) / 10 ))
-                : bullets.push(getBullet(angle - getRandom(1,5)/10 ))
+                ? bullets.push(getBullet(angle + getRandom(1, 5) / 10))
+                : bullets.push(getBullet(angle - getRandom(1, 5) / 10))
         }
 
         return bullets;
@@ -91,7 +90,7 @@ const weapon_gun3 = {
     bulletAmount: 2,
     shootSpeedStep: 40,
     reloadBulletAmount: 2,
-    maxDistance: 200,
+    maxDistance: 350,
     damage: 4,
     sound: {
         reload: './public/sound/gun3_recharge.mp3',
@@ -100,7 +99,7 @@ const weapon_gun3 = {
     bulletDeadRadius: 15,
     distanceStep: 2,
     rechargeTime: 2,
-    shoot: (angle, getBullet) => ([getBullet(angle-0.3), getBullet(angle), getBullet(angle+0.3)]),
+    shoot: (angle, getBullet) => ([getBullet(angle - 0.3), getBullet(angle), getBullet(angle + 0.3)]),
 }
 
 const UNIT_TYPE = {
@@ -108,81 +107,114 @@ const UNIT_TYPE = {
     'UNIT': 'UNIT'
 }
 
-const horizontalStep = canvas.width / 10;
-const verticalStep = canvas.height / 10;
+/**
+ * We need this one to build block per level.
+ * We cut bord on 20 horizontally, 10 vertically.
+ * Our goal is make the same map on different screens.
+ * That's why we need this function.
+ * @type {{screenStepY: number, screenStepX: number, getHorizontalSide(), getVerticalSide()}}
+ */
+const screen = {
+    screenStepX: window.innerWidth / 20,
+    screenStepY: window.innerHeight / 10,
+
+
+    getHorizontalSide(pice) {
+        return this.screenStepX * pice;
+    },
+    getVerticalSide(pice) {
+        return this.screenStepY * pice;
+    }
+}
+
+const isUnitRandomWalkDisabled = false;
 
 const levels = [
     // level 1
     {
         finish: {
-            x: 840,
-            y: 450
+            x: screen.getHorizontalSide(18),
+            y: screen.getVerticalSide(6)
         },
         recs: [
-            [0, 250, 800, 350],
-            [150, 0, 100, 100],
-            [450, 50, 100, 100],
+            [0, screen.getVerticalSide(3), screen.getHorizontalSide(15), screen.getVerticalSide(10)],
+            [screen.getHorizontalSide(3), 0, screen.getHorizontalSide(1), screen.getVerticalSide(3)/2],
+            [screen.getHorizontalSide(10), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
         ],
         getUnits: () => ([
-            getPistolUnit(220, 130),
-            getPistolUnit(600, 60),
-            getPistolUnit(830, 320),
+            getPistolUnit(screen.getHorizontalSide(5), screen.getVerticalSide(1)),
+            // getPistolUnit(screen.getHorizontalSide(13), screen.getVerticalSide(1)),
+            getPistolUnit(screen.getHorizontalSide(16), screen.getVerticalSide(4)),
         ]),
     },
     // level 2
     {
         finish: {
-            x: 810,
-            y: 450
+            x: screen.getHorizontalSide(18),
+            y: screen.getVerticalSide(5)
         },
         recs: [
-            [110, 35, 20, 20],
-            [0, 250, 350, 350],
-            [150, 100, 150, 150],
-            [600, 0, 400, 300],
-            [400, 50, 80, 80],
-            [450, 200, 80, 80],
-            [420, 380, 80, 80],
-            [580, 430, 80, 80],
+            [screen.getHorizontalSide(2), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+            [0, screen.getVerticalSide(2), screen.getHorizontalSide(8), screen.getVerticalSide(10)],
+            [0, screen.getVerticalSide(2), screen.getHorizontalSide(8), screen.getVerticalSide(10)],
+            [screen.getHorizontalSide(6), screen.getVerticalSide(1), screen.getHorizontalSide(2), screen.getVerticalSide(1)],
+            [screen.getHorizontalSide(10), screen.getVerticalSide(1) / 2, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+            [screen.getHorizontalSide(11), screen.getVerticalSide(3), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+            [screen.getHorizontalSide(10), screen.getVerticalSide(10) / 2, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+            [screen.getHorizontalSide(13), screen.getVerticalSide(11) / 2, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+            [screen.getHorizontalSide(14), 0, screen.getHorizontalSide(6), screen.getVerticalSide(4)],
         ],
         getUnits: () => ([
-            getPistolUnit(190, 20),
-            getPistolUnit(330, 190),
-            getGunUnit(450, 164),
-            getPistolUnit(620, 325),
+            getPistolUnit(screen.getHorizontalSide(5), screen.getVerticalSide(1)/2),
+            getPistolUnit(screen.getHorizontalSide(9), screen.getVerticalSide(2)),
+            getGunUnit(screen.getHorizontalSide(11), screen.getVerticalSide(2)),
+            getPistolUnit(screen.getHorizontalSide(15), screen.getVerticalSide(5)),
+            // getPistolUnit(190, 20),
+            // getPistolUnit(330, 190),
+            // getGunUnit(450, 164),
+            // getPistolUnit(620, 325),
         ])
     },
     // levels 3
     {
         finish: {
-            x: 70,
-            y: 520
+            x: screen.getHorizontalSide(1),
+            y: screen.getVerticalSide(8)
         },
         recs: [
-            [0, 90, 50, 50],
-            [190, 0, 100, 80],
-            [0, 200, 500, 250],
-            [500, 80, 50, 50],
-            [620, 0, 180, 300],
-            [500, 365, 50, 180],
-            [550, 365, 100, 130],
-            [650, 365, 100, 180],
-            [800, 150, 100, 150],
-            [900, 90, 50, 210],
+            [0, screen.getVerticalSide(3) / 2, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+            [screen.getHorizontalSide(3), 0, screen.getHorizontalSide(2), screen.getVerticalSide(3) / 2],
+            [0, screen.getHorizontalSide(4), screen.getHorizontalSide(11), screen.getVerticalSide(4)],
+            [screen.getHorizontalSide(6), screen.getHorizontalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+            [screen.getHorizontalSide(11), screen.getHorizontalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(2)],
+            [screen.getHorizontalSide(11), screen.getHorizontalSide(6), screen.getHorizontalSide(4), screen.getVerticalSide(3) / 2],
+            [screen.getHorizontalSide(13), screen.getHorizontalSide(7), screen.getHorizontalSide(2), screen.getVerticalSide(3) / 2],
+            [screen.getHorizontalSide(13), 0, screen.getHorizontalSide(3), screen.getVerticalSide(9) / 2],
+            [screen.getHorizontalSide(16), screen.getVerticalSide(5)/2, screen.getHorizontalSide(2), screen.getVerticalSide(2)],
+            [screen.getHorizontalSide(18), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(7)/2],
         ],
         getUnits: () => ([
-            getPistolUnit(10, 168),
-            getPistolUnit(310, 96),
-            getGunUnit(510, 30),
-            getAkUnit(590, 40),
-            getAkUnit(920, 340),
-            getAkUnit(920, 340),
-            getAkUnit(970, 50),
-            getAkUnit(910, 50),
-            getGunUnit(834, 50),
-            getGunUnit(690, 570),
-            getPistolUnit(690, 570),
-            getGunUnit(600, 510),
+            getPistolUnit(screen.getHorizontalSide(1)/2, screen.getVerticalSide(3)),
+            getPistolUnit(screen.getHorizontalSide(6), screen.getVerticalSide(3)/2),
+            getPistolUnit(screen.getHorizontalSide(12), screen.getVerticalSide(1)/2),
+            getPistolUnit(screen.getHorizontalSide(10), screen.getVerticalSide(1)/2, isUnitRandomWalkDisabled),
+            getAkUnit(screen.getHorizontalSide(14), screen.getVerticalSide(5)),
+            getAkUnit(screen.getHorizontalSide(18), screen.getVerticalSide(1)/2),
+            getAkUnit(screen.getHorizontalSide(18), screen.getVerticalSide(1)/2, isUnitRandomWalkDisabled),
+            getGunUnit(screen.getHorizontalSide(17), screen.getVerticalSide(2), isUnitRandomWalkDisabled),
+            getPistolUnit(screen.getHorizontalSide(12), screen.getVerticalSide(8)),
+            // getPistolUnit(10, 168),
+            // getPistolUnit(310, 96),
+            // getGunUnit(510, 30),
+            // getAkUnit(590, 40),
+            // getAkUnit(920, 340),
+            // getAkUnit(920, 340),
+            // getAkUnit(970, 50),
+            // getAkUnit(910, 50),
+            // getGunUnit(834, 50),
+            // getGunUnit(690, 570),
+            // getPistolUnit(690, 570),
+            // getGunUnit(600, 510),
         ]),
     },
     // level 4
@@ -418,7 +450,7 @@ const levels = [
 // getAkUnit
 // getGunUnit
 
-let levelId = 0;
+let levelId = 2;
 let units = levels[levelId].getUnits();
 let rectangles = levels[levelId].recs;
 let finishCoordinates = levels[levelId].finish;

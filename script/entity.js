@@ -12,6 +12,7 @@ class Unit {
         unitType,
         weapon = weapon_gun3,
         userIconId,
+        isRandomMoveDisabled = true,
         step = 1,
         dorRadius = 15,
         visibilityRadius = 200,
@@ -21,6 +22,7 @@ class Unit {
         this.y = y;
         this.unitType = unitType;
 
+        this.isRandomMoveDisabled = isRandomMoveDisabled;
         this.isShootEnabled = false;
         this.shootSpeedIndicator = weapon.shootSpeedStep;
         this.showFireFromGunImage = 0;
@@ -57,6 +59,10 @@ class Unit {
      * Let unit(gangster) move randomly.
      */
     unitRandomDirection() {
+        if (this.isRandomMoveDisabled) {
+            return
+        }
+
         if (!this.randomMoveDedline) {
             const randomIndex = getRandom(0, 4);
             const buttons = Object.keys(this.moveDirection)
