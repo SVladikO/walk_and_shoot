@@ -11,7 +11,7 @@ function renderRectangle(block) {
     ctx.strokeStyle = style.box.borderColor;
     ctx.lineWidth = style.box.borderLineWidth;
     ctx.stroke();
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = style.box.borderColor;
     ctx.lineWidth = 1;
 }
 

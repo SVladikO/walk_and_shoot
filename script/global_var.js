@@ -4,8 +4,8 @@ let style = {
     },
     box: {
         bgColor: '#000',
-        borderColor: "#00",
-        borderLineWidth: 4,
+        borderColor: "#000",
+        borderLineWidth: 6,
     },
     user: {
         bgColor: '#000',
@@ -107,7 +107,39 @@ const UNIT_TYPE = {
     'UNIT': 'UNIT'
 }
 
+function getBoxes(screen, ids) {
+    const boxes = [
+        //row 1
+        [0, 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(1), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(2), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(3), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(4), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(5), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(6), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(7), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        // row 2
+        [0, screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(1), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(2), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(3), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(4), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(5), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(6), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(7), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        // row 3
+        [0, screen.getVerticalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(1), screen.getVerticalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(2), screen.getVerticalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(3), screen.getVerticalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(4), screen.getVerticalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(5), screen.getVerticalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(6), screen.getVerticalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+        [screen.getHorizontalSide(7), screen.getVerticalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
+    ];
 
+    return ids.map(id => boxes[id])
+}
 
 const isUnitRandomWalkDisabled = false;
 
@@ -121,11 +153,7 @@ const levels = [
             }
         },
         getRectangles(screen) {
-            return [
-                [0, screen.getVerticalSide(3), screen.getHorizontalSide(15), screen.getVerticalSide(10)],
-                [screen.getHorizontalSide(3), 0, screen.getHorizontalSide(1), screen.getVerticalSide(3) / 2],
-                [screen.getHorizontalSide(10), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-            ]
+            return getBoxes(screen, [2, 13, 16, 17, 18, 19, 20, 21, 22, 23])
         },
         getUnits: (screen) => ([
             getPistolUnit(screen.getHorizontalSide(5), screen.getVerticalSide(1)),
@@ -142,27 +170,14 @@ const levels = [
             }
         },
         getRectangles(screen) {
-            return [
-                [screen.getHorizontalSide(2), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-                [0, screen.getVerticalSide(2), screen.getHorizontalSide(8), screen.getVerticalSide(10)],
-                [0, screen.getVerticalSide(2), screen.getHorizontalSide(8), screen.getVerticalSide(10)],
-                [screen.getHorizontalSide(6), screen.getVerticalSide(1), screen.getHorizontalSide(2), screen.getVerticalSide(1)],
-                [screen.getHorizontalSide(10), screen.getVerticalSide(1) / 2, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-                [screen.getHorizontalSide(11), screen.getVerticalSide(3), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-                [screen.getHorizontalSide(10), screen.getVerticalSide(10) / 2, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-                [screen.getHorizontalSide(13), screen.getVerticalSide(11) / 2, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-                [screen.getHorizontalSide(14), 0, screen.getHorizontalSide(6), screen.getVerticalSide(4)],
-            ]
+            return getBoxes(screen, [2, 6, 12, 16, 17, 18, 19, 20, 21, 22, 23])
         },
         getUnits: (screen) => ([
             getPistolUnit(screen.getHorizontalSide(5), screen.getVerticalSide(1) / 2),
             getPistolUnit(screen.getHorizontalSide(9), screen.getVerticalSide(2)),
             getGunUnit(screen.getHorizontalSide(11), screen.getVerticalSide(2)),
             getPistolUnit(screen.getHorizontalSide(15), screen.getVerticalSide(5)),
-            // getPistolUnit(190, 20),
-            // getPistolUnit(330, 190),
-            // getGunUnit(450, 164),
-            // getPistolUnit(620, 325),
+
         ])
     },
     // levels 3
@@ -174,18 +189,7 @@ const levels = [
             }
         },
         getRectangles(screen) {
-            return [
-                [0, screen.getVerticalSide(3) / 2, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-                [screen.getHorizontalSide(3), 0, screen.getHorizontalSide(2), screen.getVerticalSide(3) / 2],
-                [0, screen.getHorizontalSide(4), screen.getHorizontalSide(11), screen.getVerticalSide(4)],
-                [screen.getHorizontalSide(6), screen.getHorizontalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-                [screen.getHorizontalSide(11), screen.getHorizontalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(2)],
-                [screen.getHorizontalSide(11), screen.getHorizontalSide(6), screen.getHorizontalSide(4), screen.getVerticalSide(3) / 2],
-                [screen.getHorizontalSide(13), screen.getHorizontalSide(7), screen.getHorizontalSide(2), screen.getVerticalSide(3) / 2],
-                [screen.getHorizontalSide(13), 0, screen.getHorizontalSide(3), screen.getVerticalSide(9) / 2],
-                [screen.getHorizontalSide(16), screen.getVerticalSide(5) / 2, screen.getHorizontalSide(2), screen.getVerticalSide(2)],
-                [screen.getHorizontalSide(18), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(7) / 2],
-            ]
+            return getBoxes(screen, [1, 6, 11, 12, 17, 22])
         },
         getUnits: (screen) => ([
             getPistolUnit(screen.getHorizontalSide(1) / 2, screen.getVerticalSide(3)),
@@ -197,275 +201,138 @@ const levels = [
             getAkUnit(screen.getHorizontalSide(18), screen.getVerticalSide(1) / 2, isUnitRandomWalkDisabled),
             getGunUnit(screen.getHorizontalSide(17), screen.getVerticalSide(2), isUnitRandomWalkDisabled),
             getPistolUnit(screen.getHorizontalSide(12), screen.getVerticalSide(8)),
-            // getPistolUnit(10, 168),
-            // getPistolUnit(310, 96),
-            // getGunUnit(510, 30),
-            // getAkUnit(590, 40),
-            // getAkUnit(920, 340),
-            // getAkUnit(920, 340),
-            // getAkUnit(970, 50),
-            // getAkUnit(910, 50),
-            // getGunUnit(834, 50),
-            // getGunUnit(690, 570),
-            // getPistolUnit(690, 570),
-            // getGunUnit(600, 510),
         ]),
     },
     // level 4
     {
         getFinishCoordinates(screen) {
             return {
-                x: 510,
-                y: 340
+                x: screen.getHorizontalSide(1),
+                y: screen.getVerticalSide(8)
             }
         },
         getRectangles(screen) {
-            return [
-                [65, 90, 10, 10],
-                [120, 0, 70, 200],
-                [50, 200, 70, 100],
-                [95, 300, 25, 100],
-                [50, 360, 70, 50],
-                [0, 490, 500, 110],
-                [225, 360, 275, 145],
-                [320, 240, 180, 145],
-                [200, 250, 50, 50],
-                [400, 90, 300, 200],
-                [700, 220, 180, 50],
-                [610, 290, 90, 200],
-                [780, 70, 90, 70],
-                [960, 150, 90, 70],
-                [940, 280, 90, 70],
-                [800, 400, 80, 70],
-                [915, 515, 40, 40],
-            ]
+            return getBoxes(screen, [2, 6, 8, 12, 18, 22])
         },
         getUnits: (screen) => ([
-            getPistolUnit(88, 165),
-            getGunUnit(72, 330),
-            getPistolUnit(198, 458),
-            getAkUnit(216, 171),
-            getPistolUnit(532, 20),
-            getPistolUnit(936, 36),
-            getPistolUnit(950, 102),
-            getGunUnit(986, 87),
-            getGunUnit(836, 340),
-            getGunUnit(763, 429),
-            getGunUnit(980, 536),
-            getGunUnit(937, 583),
+            // getPistolUnit(88, 165),
+            // getGunUnit(72, 330),
+            // getPistolUnit(198, 458),
+            // getAkUnit(216, 171),
+            // getPistolUnit(532, 20),
+            // getPistolUnit(936, 36),
+            // getPistolUnit(950, 102),
+            // getGunUnit(986, 87),
+            // getGunUnit(836, 340),
+            // getGunUnit(763, 429),
+            // getGunUnit(980, 536),
+            // getGunUnit(937, 583),
         ]),
     },
     // level 5
     {
         getFinishCoordinates(screen) {
             return {
-                x: 0,
-                y: 550
+                x: screen.getHorizontalSide(1),
+                y: screen.getVerticalSide(8)
             }
         },
         getRectangles(screen) {
-            return [
-                [0, 140, 80, 300],
-                [150, 0, 80, 300],
-                [80, 440, 600, 100],
-                [400, 100, 150, 350],
-                [680, 240, 200, 80],
-                [780, 300, 100, 240],
-                [680, 0, 200, 80],
-                [960, 280, 50, 80],
-            ]
+            return getBoxes(screen, [2, 3, 6, 7, 16, 17, 20, 21])
         },
         getUnits: (screen) => ([
-            getPistolUnit(96, 205),
-            getAkUnit(126, 380),
-            getPistolUnit(220, 325),
-            getPistolUnit(420, 30),
-            getPistolUnit(580, 140),
-            getPistolUnit(570, 315),
-            getAkUnit(610, 315),
-            getAkUnit(750, 355),
-            getGunUnit(700, 460),
-            getPistolUnit(915, 35),
-            getPistolUnit(915, 427),
-            getAkUnit(360, 400),
-            getAkUnit(650, 320),
-            getAkUnit(520, 570),
+            // getPistolUnit(88, 165),
+            // getGunUnit(72, 330),
+            // getPistolUnit(198, 458),
+            // getAkUnit(216, 171),
+            // getPistolUnit(532, 20),
+            // getPistolUnit(936, 36),
+            // getPistolUnit(950, 102),
+            // getGunUnit(986, 87),
+            // getGunUnit(836, 340),
+            // getGunUnit(763, 429),
+            // getGunUnit(980, 536),
+            // getGunUnit(937, 583),
         ]),
     },
     // level 6
     {
         getFinishCoordinates(screen) {
             return {
-                x: 630,
-                y: 420
+                x: screen.getHorizontalSide(1),
+                y: screen.getVerticalSide(8)
             }
         },
         getRectangles(screen) {
-            return [
-                [60, 160, 150, 80],
-                [140, 60, 70, 110],
-                [210, 180, 450, 150],
-                [580, 100, 80, 100],
-                [900, 255, 100, 50],
-                [650, 500, 150, 100],
-                [0, 350, 100, 100],
-            ]
+            return getBoxes(screen, [4, 5, 8, 9, 12, 13, 16, 17])
         },
         getUnits: (screen) => ([
-            getAkUnit(940, 540),
-            getAkUnit(420, 520),
-            getPistolUnit(860, 270),
-            getPistolUnit(730, 40),
-            getPistolUnit(140, 330),
-            getPistolUnit(190, 30),
-            getAkUnit(30, 200),
-            getAkUnit(950, 100),
-            getAkUnit(180, 270),
-            getAkUnit(180, 340),
-            getGunUnit(240, 130),
-            getGunUnit(130, 280),
+            // getPistolUnit(88, 165),
+            // getGunUnit(72, 330),
+            // getPistolUnit(198, 458),
+            // getAkUnit(216, 171),
+            // getPistolUnit(532, 20),
+            // getPistolUnit(936, 36),
+            // getPistolUnit(950, 102),
+            // getGunUnit(986, 87),
+            // getGunUnit(836, 340),
+            // getGunUnit(763, 429),
+            // getGunUnit(980, 536),
+            // getGunUnit(937, 583),
         ]),
     },
     // level 7
     {
         getFinishCoordinates(screen) {
             return {
-                x: 825,
-                y: 450
+                x: screen.getHorizontalSide(1),
+                y: screen.getVerticalSide(8)
             }
         },
         getRectangles(screen) {
-            return [
-                [60, 160, 100, 80],
-                [170, 40, 70, 70],
-                [340, 40, 70, 70],
-                [500, 40, 70, 70],
-                [680, 40, 100, 300],
-                [580, 260, 100, 200],
-                [350, 450, 100, 100],
-            ]
+            return getBoxes(screen, [2, 6, 8, 10, 12, 14, 16, 20])
         },
         getUnits: (screen) => ([
-            getPistolUnit(30, 150),
-            getAkUnit(30, 270),
-            getPistolUnit(200, 130),
-            getGunUnit(290, 140),
-            getAkUnit(255, 235),
-            getAkUnit(410, 240),
-            getGunUnit(460, 130),
-            getGunUnit(540, 200),
-            getPistolUnit(630, 200),
-            getGunUnit(630, 100),
-            getPistolUnit(880, 100),
-            getPistolUnit(900, 490),
+            // getPistolUnit(88, 165),
+            // getGunUnit(72, 330),
+            // getPistolUnit(198, 458),
+            // getAkUnit(216, 171),
+            // getPistolUnit(532, 20),
+            // getPistolUnit(936, 36),
+            // getPistolUnit(950, 102),
+            // getGunUnit(986, 87),
+            // getGunUnit(836, 340),
+            // getGunUnit(763, 429),
+            // getGunUnit(980, 536),
+            // getGunUnit(937, 583),
         ]),
     },
-// level 8
+    // level 7
     {
         getFinishCoordinates(screen) {
             return {
-                x: 825,
-                y: 450
+                x: screen.getHorizontalSide(1),
+                y: screen.getVerticalSide(8)
             }
         },
         getRectangles(screen) {
-            return [
-                [250, 70, 100, 100],
-                [580, 190, 100, 100],
-            ]
+            return getBoxes(screen, [3, 9, 11, 13, 21])
         },
         getUnits: (screen) => ([
-            getAkUnit(60, 280),
-            getAkUnit(90, 280),
-            getGunUnit(80, 250),
-            getPistolUnit(80, 280),
-            getPistolUnit(120, 280),
-            getAkUnit(360, 280),
-            getAkUnit(300, 210),
-            getAkUnit(480, 333),
-            getPistolUnit(630, 350),
-            getPistolUnit(900, 490),
+            // getPistolUnit(88, 165),
+            // getGunUnit(72, 330),
+            // getPistolUnit(198, 458),
+            // getAkUnit(216, 171),
+            // getPistolUnit(532, 20),
+            // getPistolUnit(936, 36),
+            // getPistolUnit(950, 102),
+            // getGunUnit(986, 87),
+            // getGunUnit(836, 340),
+            // getGunUnit(763, 429),
+            // getGunUnit(980, 536),
+            // getGunUnit(937, 583),
         ]),
     },
-
-// level 9
-    {
-        getFinishCoordinates(screen) {
-            return {
-                x: 850,
-                y: 235
-            }
-        },
-        getRectangles(screen) {
-            return [
-                [150, 180, 100, 100],
-                [460, 60, 100, 100],
-                [520, 410, 100, 100],
-            ]
-        },
-        getUnits: (screen) => ([
-            getAkUnit(610, 120),
-            getAkUnit(725, 40),
-            getPistolUnit(875, 160),
-            getAkUnit(675, 430),
-            getAkUnit(750, 520),
-            getPistolUnit(830, 350),
-            getPistolUnit(550, 260),
-            getGunUnit(425, 205),
-            getGunUnit(425, 250),
-            getGunUnit(380, 230),
-            getPistolUnit(360, 375),
-            getAkUnit(325, 80),
-            getPistolUnit(195, 80),
-
-            // getGunUnit(80, 250),
-            // getAkUnit(360, 280),
-            // getAkUnit(300, 210),
-            // getAkUnit(480, 333),
-            // getPistolUnit(630, 350),
-            //
-            // getPistolUnit(900, 490),
-        ]),
-    },
-    // level 10
-    {
-        getFinishCoordinates(screen) {
-            return {
-                x: 400,
-                y: 100
-            }
-        },
-        getRectangles(screen) {
-            return [
-                [0, 140, 100, 100],
-                [0, 350, 100, 100],
-                [215, 145, 100, 100],
-                [225, 350, 100, 100],
-                [500, 300, 100, 200],
-                [600, 300, 100, 100],
-            ]
-        },
-        getUnits: (screen) => ([
-            getAkUnit(840, 80),
-            getPistolUnit(750, 80),
-            getAkUnit(755, 200),
-            getAkUnit(265, 45),
-            getAkUnit(370, 300),
-            getPistolUnit(635, 90),
-            getPistolUnit(390, 410),
-            getPistolUnit(635, 150),
-            getAkUnit(50, 530),
-            getAkUnit(50, 300),
-            getAkUnit(551, 40),
-            getAkUnit(500, 110),
-            getAkUnit(450, 120),
-            getAkUnit(440, 60),
-            getPistolUnit(270, 300),
-            getPistolUnit(30, 20),
-            getPistolUnit(160, 20),
-            getGunUnit(340, 163),
-        ]),
-    }
 ]
 //
 // getPistolUnit
@@ -482,8 +349,7 @@ const levels = [
  */
 const screenMainCanvas = getScreen(window.innerWidth, window.innerHeight);
 
-
-let levelId = 2;
+let levelId = 3;
 let units = levels[levelId].getUnits(screenMainCanvas);
 let rectangles = levels[levelId].getRectangles(screenMainCanvas);
 let finishCoordinates = levels[levelId].getFinishCoordinates(screenMainCanvas);
@@ -496,101 +362,3 @@ function changeLevel(levelIndex) {
     finishCoordinates = levels[levelIndex].getFinishCoordinates(screenMainCanvas);
     levelId = levelIndex;
 }
-
-// [horizontalStep * 2, 0],
-// [horizontalStep * 3, 0],
-// [horizontalStep * 4, 0],
-// [horizontalStep * 5, 0],
-// [horizontalStep * 6, 0],
-// [horizontalStep * 7, 0],
-// [horizontalStep * 8, 0],
-// [horizontalStep * 9, 0],
-//
-// [horizontalStep, verticalStep],
-// [horizontalStep * 2, verticalStep],
-// [horizontalStep * 3, verticalStep],
-// [horizontalStep * 4, verticalStep],
-// [horizontalStep * 5, verticalStep],
-// [horizontalStep * 6, verticalStep],
-// [horizontalStep * 7, verticalStep],
-// [horizontalStep * 8, verticalStep],
-// [horizontalStep * 9, verticalStep],
-//
-// [horizontalStep, verticalStep * 2],
-// [horizontalStep * 2, verticalStep * 2],
-// [horizontalStep * 3, verticalStep * 2],
-// [horizontalStep * 4, verticalStep * 2],
-// [horizontalStep * 5, verticalStep * 2],
-// [horizontalStep * 6, verticalStep * 2],
-// [horizontalStep * 7, verticalStep * 2],
-// [horizontalStep * 8, verticalStep * 2],
-// [horizontalStep * 9, verticalStep * 2],
-//
-// [horizontalStep, verticalStep * 3],
-// [horizontalStep * 2, verticalStep * 3],
-// [horizontalStep * 3, verticalStep * 3],
-// [horizontalStep * 4, verticalStep * 3],
-// [horizontalStep * 5, verticalStep * 3],
-// [horizontalStep * 6, verticalStep * 3],
-// [horizontalStep * 7, verticalStep * 3],
-// [horizontalStep * 8, verticalStep * 3],
-// [horizontalStep * 9, verticalStep * 3],
-//
-// [horizontalStep, verticalStep * 4],
-// [horizontalStep * 2, verticalStep * 4],
-// [horizontalStep * 3, verticalStep * 4],
-// [horizontalStep * 4, verticalStep * 4],
-// [horizontalStep * 5, verticalStep * 4],
-// [horizontalStep * 6, verticalStep * 4],
-// [horizontalStep * 7, verticalStep * 4],
-// [horizontalStep * 8, verticalStep * 4],
-// [horizontalStep * 9, verticalStep * 4],
-//
-// [horizontalStep, verticalStep * 5],
-// [horizontalStep * 2, verticalStep * 5],
-// [horizontalStep * 3, verticalStep * 5],
-// [horizontalStep * 4, verticalStep * 5],
-// [horizontalStep * 5, verticalStep * 5],
-// [horizontalStep * 6, verticalStep * 5],
-// [horizontalStep * 7, verticalStep * 5],
-// [horizontalStep * 8, verticalStep * 5],
-// [horizontalStep * 9, verticalStep * 5],
-//
-// [horizontalStep, verticalStep * 6],
-// [horizontalStep * 2, verticalStep * 6],
-// [horizontalStep * 3, verticalStep * 6],
-// [horizontalStep * 4, verticalStep * 6],
-// [horizontalStep * 5, verticalStep * 6],
-// [horizontalStep * 6, verticalStep * 6],
-// [horizontalStep * 7, verticalStep * 6],
-// [horizontalStep * 8, verticalStep * 6],
-// [horizontalStep * 9, verticalStep * 6],
-//
-// [horizontalStep, verticalStep * 7],
-// [horizontalStep * 2, verticalStep * 7],
-// [horizontalStep * 3, verticalStep * 7],
-// [horizontalStep * 4, verticalStep * 7],
-// [horizontalStep * 5, verticalStep * 7],
-// [horizontalStep * 6, verticalStep * 7],
-// [horizontalStep * 7, verticalStep * 7],
-// [horizontalStep * 8, verticalStep * 7],
-// [horizontalStep * 9, verticalStep * 7],
-// const rectangles = [
-//     [getRandom(20, 100), getRandom(100, 200)],
-//     [getRandom(20, 100), getRandom(100, 200)],
-//     [getRandom(20, 100), getRandom(100, 200)],
-//     [getRandom(100, 300), getRandom(20, 200)],
-//
-//     [getRandom(20, 200), getRandom(400, 600)],
-//     [getRandom(20, 200), getRandom(400, 600)],
-//
-//     [getRandom(400, 1000), getRandom(20, 100)],
-//     [getRandom(400, 1000), getRandom(20, 100)],
-//     [getRandom(400, 1000), getRandom(100, 200)],
-//
-//     [getRandom(400, 1000), getRandom(400, 500)],
-//     [getRandom(400, 1000), getRandom(400, 500)],
-//     [getRandom(400, 1000), getRandom(500, 600)],
-//     [getRandom(400, 1000), getRandom(500, 600)],
-// ]
-

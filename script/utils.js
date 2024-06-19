@@ -60,7 +60,7 @@ function showNoBulletNotification() {
 }
 
 function hideNoBulletNotification() {
-    window.no_bullets_notification.textContent = 'Press "SPACE" to reload. No bullets. ';
+    window.no_bullets_notification.textContent = '';
     window.no_bullets_notification.style.display = 'none';
 
 }
@@ -155,8 +155,8 @@ function showAvaliableLevels() {
 
 function getScreen(width, height) {
     return {
-        screenStepX: width / 20,
-        screenStepY: height / 10,
+        screenStepX: width / 8,
+        screenStepY: height / 3,
 
 
         getHorizontalSide(pice) {
@@ -170,21 +170,19 @@ function getScreen(width, height) {
 
 function showGameOver() {
     if (user.isDead()) {
+        hideNoBulletNotification();
         game_over_notification.style.display = 'flex';
         game_over_level.textContent = `Level ${levelId + 1}`
+        flyBullets=[];
     }
 }
 
 function restartGame() {
-    flyBullets=[];
-    if (user.isDead()) {
-        no_bullets_notification.textContent = '';
-        no_bullets_notification.style.display = 'none';
-
-    }
+    hideNoBulletNotification()
 }
 
 function tryAgain() {
+    restartGame()
     changeLevel(levelId)
     game_over_notification.style.display = 'none';
 }
@@ -208,7 +206,7 @@ function renderMoveDirectionCenter() {
 }
 
 function getUser(weapon = weapon_gun1) {
-    return new Unit(screenMainCanvas.getHorizontalSide(1), screenMainCanvas.getVerticalSide(1), 20, UNIT_TYPE.USER, weapon, 'userIconId1')
+    return new Unit(screenMainCanvas.getHorizontalSide(1)/2, screenMainCanvas.getVerticalSide(1)/2, 20, UNIT_TYPE.USER, weapon, 'userIconId1')
 }
 
 function getUnit(x, y, health, weapon, unitImageId, isRandomWalkDisabled) {
