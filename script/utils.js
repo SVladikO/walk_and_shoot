@@ -5,6 +5,12 @@ function getRadianAngle(fromX, toX, fromY, toY) {
     return Math.atan2(dy, dx);
 }
 
+function getDistance(fromX, toX, fromY, toY) {
+    const X = toX - fromX;
+    const Y = toY - fromY;
+    return Math.sqrt(X * X + Y * Y);
+}
+
 function isInCanvas(modifiedPosition, max) {
     return !isOutOfRange(modifiedPosition, 0 + style.user.dorRadius, max - style.user.dorRadius)
 }
@@ -135,8 +141,8 @@ function showAvaliableLevels() {
         wrapper.append(newCanvas)
         wrapper.append(title)
         wrapper.onclick = function () {
-            game_over_notification.style.display  = 'none';
-            game_levels_board.style.display  = 'none';
+            game_over_notification.style.display = 'none';
+            game_levels_board.style.display = 'none';
             restartGame();
             changeLevel(levelIndex);
         }
@@ -173,7 +179,7 @@ function showGameOver() {
         hideNoBulletNotification();
         game_over_notification.style.display = 'flex';
         game_over_level.textContent = `Level ${levelId + 1}`
-        flyBullets=[];
+        flyBullets = [];
     }
 }
 
@@ -206,21 +212,21 @@ function renderMoveDirectionCenter() {
 }
 
 function getUser(weapon = weapon_gun1) {
-    return new Unit(screenMainCanvas.getHorizontalSide(1)/2, screenMainCanvas.getVerticalSide(1)/2, 20, UNIT_TYPE.USER, weapon, 'userIconId1')
+    return new Unit(screenMainCanvas.getHorizontalSide(1) / 2, screenMainCanvas.getVerticalSide(1) / 2, 20, UNIT_TYPE.USER, weapon, 'userIconId1')
 }
 
-function getUnit(x, y, health, weapon, unitImageId, isRandomWalkDisabled) {
-    return new Unit(x, y, health, UNIT_TYPE.UNIT, weapon, unitImageId, isRandomWalkDisabled);
+function getUnit(x, y, health, weapon, unitImageId, isRandomWalkEnable) {
+    return new Unit(x, y, health, UNIT_TYPE.UNIT, weapon, unitImageId, isRandomWalkEnable);
 }
 
-function getPistolUnit(x, y, isRandomWalkDisabled, health = 3) {
-    return getUnit(x, y, health, weapon_gun1, 'userIconId2', isRandomWalkDisabled);
+function getPistolUnit(x, y, isRandomWalkEnable, health = 3) {
+    return getUnit(x, y, health, weapon_gun1, 'userIconId2', isRandomWalkEnable);
 }
 
-function getAkUnit(x, y, isRandomWalkDisabled, health = 4) {
-    return getUnit(x, y, health, weapon_gun2, 'userIconId2', isRandomWalkDisabled);
+function getAkUnit(x, y, isRandomWalkEnable, health = 4) {
+    return getUnit(x, y, health, weapon_gun2, 'userIconId2', isRandomWalkEnable);
 }
 
-function getGunUnit(x, y, isRandomWalkDisabled, health = 4) {
-    return getUnit(x, y, health, weapon_gun3, 'userIconId2', isRandomWalkDisabled);
+function getGunUnit(x, y, isRandomWalkEnable, health = 4) {
+    return getUnit(x, y, health, weapon_gun3, 'userIconId2', isRandomWalkEnable);
 }

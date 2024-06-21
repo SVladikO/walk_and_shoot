@@ -12,7 +12,7 @@ class Unit {
         unitType,
         weapon = weapon_gun3,
         userIconId,
-        isRandomMoveDisabled = true,
+        isRandomMoveEnable,
         step = 1,
         dorRadius = 15,
         visibilityRadius = 200,
@@ -22,7 +22,7 @@ class Unit {
         this.y = y;
         this.unitType = unitType;
 
-        this.isRandomMoveDisabled = isRandomMoveDisabled;
+        this.isRandomMoveEnable = isRandomMoveEnable;
         this.isShootEnabled = false;
         this.shootSpeedIndicator = weapon.shootSpeedStep;
         this.showFireFromGunImage = 0;
@@ -33,7 +33,7 @@ class Unit {
         this.randomMoveDedline = 10;
         this.health = health;
         this.radius = radius;
-        this.visibilityRadius = weapon.maxDistance;
+        this.visibilityRadius = 300;
         this.angle = 0;
 
         this.moveDirection = {
@@ -59,7 +59,7 @@ class Unit {
      * Let unit(gangster) move randomly.
      */
     unitRandomDirection() {
-        if (this.isRandomMoveDisabled) {
+        if (!this.isRandomMoveEnable) {
             return
         }
 
@@ -246,10 +246,7 @@ class Unit {
     }
 
     updateAngle(toX, toY) {
-        var dx = toX - this.x;
-        var dy = toY - this.y;
-
-        this.angle = Math.atan2(dy, dx);
+        this.angle =  getRadianAngle(this.x, toX, this.y, toY)
     }
 
     updateAngleForMobile(fromX, fromY) {
@@ -316,15 +313,8 @@ class Bullet {
     }
 
     isMaxDistance() {
-        const distance = calcDistance(this.startX, this.startY, this.lastX, this.lastY)
-
+        const distance = getDistance(this.startX,  this.lastX, this.startY, this.lastY)
         return distance > this.weapon.maxDistance;
-
-        function calcDistance(x1, y1, x2, y2) {
-            const X = x2 - x1;
-            const Y = y2 - y1;
-            return Math.sqrt(X * X + Y * Y);
-        }
     }
 
     move() {
