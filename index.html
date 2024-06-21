@@ -181,7 +181,7 @@
         }
 
         #header {
-            height: 80px;
+            height: 60px;
             background: white;
             display: flex;
             align-items: center;
@@ -274,6 +274,7 @@
     <img id="userIconId1" src="./public/img/user1.webp" alt="gun3" width="100" height="100">
     <img id="userIconId2" src="./public/img/user2.webp" alt="gun3" width="100" height="100">
     <img id="userIconId3" src="./public/img/user3.webp" alt="gun3" width="100" height="100">
+    <img id="unitDeadIconId" src="./public/img/unit-dead.png" alt="gun3" width="100" height="100">
 </div>
 
 <!--SCRIPTS-->
@@ -333,10 +334,10 @@
         units.forEach(unit => unit.move())
         units
             // .filter(unit => user.isVisibleForMe(unit.x, unit.y))
-            .filter(isUnutVisiable)
+            .filter(unit => isUnutVisiable(unit) || unit.isDead())
             .forEach(unit => unit.render(user.x, user.y))
 
-        units = units.filter(unit => !unit.isDead())
+        // units = units.filter(unit => !unit.isDead())
 
         showGameOver();
 

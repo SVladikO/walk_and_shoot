@@ -76,6 +76,10 @@ class Unit {
     }
 
     move() {
+        if (this.isDead()) {
+            return;
+        }
+
         if (this.moveDirection.w) {
             const modifiedY = this.y - this.step;
             this.disableOppositeMove(this.moveDirectionOpposite['w'])
@@ -134,6 +138,10 @@ class Unit {
     }
 
     shoot() {
+        if (this.isDead()) {
+            return;
+        }
+
         if (!this.shootSpeedIndicator) {
             this.shootSpeedIndicator = this.weapon.shootSpeedStep;
 
@@ -214,18 +222,22 @@ class Unit {
         ctx.rotate(this.angle)             // 2. Rotate
         ctx.translate(-this.x, -this.y)    // 3. Move back coordinates to (HZ)
 
-        // 4. Draw gun
-        const weaponImg = document.getElementById(this.weapon.imageId);
-        ctx.drawImage(weaponImg, this.x, this.y - 5, 75, 40);
+        if (!this.isDead()) {
+             // 4. Draw gun
+            const weaponImg = document.getElementById(this.weapon.imageId);
+            ctx.drawImage(weaponImg, this.x, this.y - 5, 75, 40);
 
-        // 4. Draw fire
-        if (this.showFireFromGunImage) {
-            const weaponImgg = document.getElementById('gunFireIconId1');
-            ctx.drawImage(weaponImgg, this.x + 20, this.y - 23, 75, 40);
-            this.showFireFromGunImage -= 1;
+            // 4. Draw fire
+            if (this.showFireFromGunImage) {
+                const weaponImgg = document.getElementById('gunFireIconId1');
+                ctx.drawImage(weaponImgg, this.x + 20, this.y - 23, 75, 40);
+                this.showFireFromGunImage -= 1;
+            }
         }
 
-        const userIconId1 = document.getElementById(this.userIconId);
+
+        const userIconId1 = document.getElementById(this.isDead() ? 'unitDeadIconId' : this.userIconId);
+
         ctx.drawImage(userIconId1, this.x - 30, this.y - 25, 50, 50);
 
         ctx.rotate(-this.angle)             // 5. Rotate back
@@ -246,7 +258,7 @@ class Unit {
     }
 
     updateAngle(toX, toY) {
-        this.angle =  getRadianAngle(this.x, toX, this.y, toY)
+        this.angle = getRadianAngle(this.x, toX, this.y, toY)
     }
 
     updateAngleForMobile(fromX, fromY) {
@@ -313,7 +325,7 @@ class Bullet {
     }
 
     isMaxDistance() {
-        const distance = getDistance(this.startX,  this.lastX, this.startY, this.lastY)
+        const distance = getDistance(this.startX, this.lastX, this.startY, this.lastY)
         return distance > this.weapon.maxDistance;
     }
 
@@ -342,6 +354,9 @@ class Bullet {
         //For unit bullet check does it kick UNIT
         if (this.ownerType === UNIT_TYPE.USER) {
             units.forEach(unit => {
+                if (unit.isDead()) {
+                    return;
+                }
                 if (unit.isBulletOn(this.lastX, this.lastY)) {
                     unit.health -= this.weapon.damage;
                     this.isDead = true;
