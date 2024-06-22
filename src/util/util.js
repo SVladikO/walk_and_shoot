@@ -59,9 +59,9 @@ export function clearCanvas(ctx) {
     window.ctx.fillRect(0, 0, window.canvas_game_board.width, window.canvas_game_board.height);
 }
 
-export function prepareCanvas(ctx) {
+export function prepareCanvas(ctx, canvas_game_board) {
     ctx.fillStyle = style.board.bgColor;
-    ctx.fillRect(0, 0, window.canvas_game_board.width, window.canvas_game_board.height)
+    ctx.fillRect(0, 0, canvas_game_board.width, canvas_game_board.height)
 }
 
 export function showNoBulletNotification() {
@@ -112,15 +112,15 @@ export function getScreen(width, height) {
         }
     }
 }
-//
-// export function showGameOver() {
-//     if (window.user.isDead()) {
-//         hideNoBulletNotification();
-//         game_over_notification.style.display = 'flex';
-//         game_over_level.textContent = `Level ${levelId + 1}`
-//         flyBullets = [];
-//     }
-// }
+
+export function showGameOver(game) {
+    if (game.user.isDead()) {
+        hideNoBulletNotification();
+        // game_over_notification.style.display = 'flex';
+        // game_over_level.textContent = `Level ${levelId + 1}`
+        game.flyBullets = [];
+    }
+}
 
 export function restartGame() {
     hideNoBulletNotification()
@@ -190,4 +190,21 @@ export function getBoxes(screen, ids) {
     ];
 
     return ids.map(id => boxes[id])
+}
+
+export function renderRectangles(rectangles) {
+    rectangles.forEach(renderRectangle)
+}
+
+export function renderRectangle(ctx, block) {
+    const [x, y, width, height] = block;
+
+    ctx.rect(x, y, width, height);
+    ctx.fillStyle = style.box.bgColor;
+    ctx.fill()
+    ctx.strokeStyle = style.box.borderColor;
+    ctx.lineWidth = style.box.borderLineWidth;
+    ctx.stroke();
+    ctx.strokeStyle = style.box.borderColor;
+    ctx.lineWidth = 1;
 }

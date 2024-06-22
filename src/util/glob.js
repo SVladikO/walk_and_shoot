@@ -14,6 +14,7 @@ export const screenMainCanvas = getScreen(window.innerWidth, window.innerHeight 
 
 class Game {
     constructor() {
+        this.inPlay = false;
         this.levelId = 0;
         this.user = null; //getUser();
         this.units = null;// levels[this.levelId].getUnits(screenMainCanvas);
