@@ -3,9 +3,6 @@ import './App.css';
 
 import {Header, LineGroup} from './App.style.js';
 
-import {game} from './util/glob';
-import {run} from './script/run.js';
-
 import Health from "./components/health/health";
 import Bullets from "./components/bullets/bullets";
 import GunList from "./components/gun-list/gun-list";
@@ -16,17 +13,14 @@ import Menu from "./components/menu/menu";
 
 function App() {
     const [showMenu, setShowMenu] = useState(true);
-
-    useEffect(() => {
-        run(game);
-    })
+    const [userBulletAmount, setUserBulletAmount] = useState(8);
 
     return (
         <div>
             <Header>
                 <LineGroup>
                     <Health/>
-                    <Bullets/>
+                    <Bullets amount={userBulletAmount}/>
                 </LineGroup>
                 <GunList/>
                 <LineGroup>
@@ -35,7 +29,7 @@ function App() {
                     <MenuButton showMenu={setShowMenu}/>
                 </LineGroup>
             </Header>
-            {showMenu && <Menu showMenu={setShowMenu}/>}
+            {showMenu && <Menu showMenu={setShowMenu} setUserBulletAmount={setUserBulletAmount}/>}
         </div>
     );
 }

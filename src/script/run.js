@@ -8,7 +8,7 @@ import {
     renderRectangles,
 } from '../util/util';
 
-export const run = (game) => {
+export const run = (game, setUserBulletAmount) => {
     const canvas_game_board = document.getElementById('canvas_game_board');
     const ctx = canvas_game_board.getContext("2d");
     const width = window.innerWidth;
@@ -41,19 +41,12 @@ export const run = (game) => {
         prepareCanvas(ctx, {width,height});
         renderRectangles(ctx, game.rectangles)
 
-        // health.textContent = 'Health: ' + user.health + ' / Bullets amount: ' + user.bulletAmount
-
         game.flyBullets.forEach(bullet => bullet.move());
         game.flyBullets.forEach(bullet => bullet.render());
         game.flyBullets =  game.flyBullets.filter(bullet => !bullet.isDead);
 
-        game.user.isShootEnabled && game.user.shoot();
         game.user.render(mousePositionX, mousePositionY);
 
-        game.units
-            // .filter(unit => game.user.isVisibleForMe(unit.x, unit.y))
-            .filter(isUnutVisiable)
-            .forEach(unit => (game.user.isShootEnabled || unit.isShootEnabled) && unit.shoot())
         game.units.forEach(unit => unit.unitRandomDirection())
         game.units.forEach(unit => unit.move())
         game.units
@@ -111,19 +104,22 @@ export const run = (game) => {
         ctx.fillText('FINISH', c.x, c.y);
     }
 
-// enableMobileNavigation();
-
-    canvas_game_board.addEventListener("mousedown", () => game.user.isShootEnabled = true);
-    canvas_game_board.addEventListener("mouseup", () => game.user.isShootEnabled = false);
-
     window.addEventListener("keypress", (event) => {
         game.user.enableMove(event.key)
-        event.key === ' ' && game.user.reloadGun()
+        if (event.key === ' ') {
+            game.user.reloadGun()
+            setUserBulletAmount(game.user.bulletAmount);
+        }
 
         drawAll();
     });
 
 // user_health_id.addEventListener("change", (event) => user.step = +event.target.value);
+
+    game.canvas_board.addEventListener("mousedown", () => {
+        game.user.shoot()
+        setUserBulletAmount(game.user.bulletAmount);
+    });
 
     window.addEventListener("keyup", (event) => game.inPlay && game.user.disableMove(event.key));
     canvas_game_board.addEventListener("mousemove", e => {
@@ -143,12 +139,15 @@ export const run = (game) => {
 //   restartGame();
 //   changeLevel(index);
 // });
-
-
     setInterval(() => {
         if (!game.inPlay) {
             return
         }
+
+        game.units
+            // .filter(unit => game.user.isVisibleForMe(unit.x, unit.y))
+            .filter(isUnutVisiable)
+            .forEach(unit => unit.shoot())
 
         game.units.forEach(unit => unit.isShootEnabled = true);
 

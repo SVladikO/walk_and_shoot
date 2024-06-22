@@ -154,7 +154,7 @@ export class Unit {
             return;
         }
 
-        if (!this.shootSpeedIndicator) {
+        // if (!this.shootSpeedIndicator) {
             this.shootSpeedIndicator = this.weapon.shootSpeedStep;
 
             if (this.bulletAmount <= 0 && this.unitType === UNIT_TYPE.USER) {
@@ -171,9 +171,9 @@ export class Unit {
             const bullets = this.getBullets()
             this.showFireFromGunImage = 3;
             game.flyBullets = [...game.flyBullets, ...bullets];
-        }
+        // }
 
-        this.shootSpeedIndicator--;
+        // this.shootSpeedIndicator--;
 
     }
 

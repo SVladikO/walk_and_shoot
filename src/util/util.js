@@ -51,6 +51,16 @@ export function isOnBlock(objX, objY, objRadius) {
     return !!rect;
 }
 
+export function createArrayFromLength(length) {
+    const array = [];
+
+    for(let i = 0; i < length; i++) {
+        array.push(i);
+    }
+
+    return array;
+}
+
 export function getRandom(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
