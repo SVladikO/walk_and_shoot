@@ -20,6 +20,8 @@ export default function Menu({showMenu}) {
         refLevels.forEach((ref, index) => {
             const rectangles = levels[index].getRectangles(getScreen(200, 100))
             const ctx = ref.current.getContext('2d');
+            ctx.canvas.width = 200;
+            ctx.canvas.height = 100;
             prepareCanvas(ctx, {width: 200, height: 100})
             rectangles.forEach(rec => {
                 const [x, y, width, height] = rec;
