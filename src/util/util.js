@@ -75,15 +75,6 @@ export function hideNoBulletNotification() {
 
 }
 
-//
-// export function mute() {
-//     isMute = true;
-// }
-//
-// export function unmute() {
-//     isMute = false;
-// }
-
 export function updateWeapon(n) {
     const weapons = {
         weapon_gun1,

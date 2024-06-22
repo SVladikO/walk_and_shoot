@@ -157,7 +157,7 @@ export class Unit {
             this.shootSpeedIndicator = this.weapon.shootSpeedStep;
 
             if (this.bulletAmount <= 0 && this.unitType === UNIT_TYPE.USER) {
-                !window.isMute && this.unitType === UNIT_TYPE.USER && playSound('./sound/gun-empty.mp3', 0.4)
+                !game.isMute && this.unitType === UNIT_TYPE.USER && playSound('./sound/gun-empty.mp3', 0.4)
                 showNoBulletNotification()
                 // setTimeout(() => {
                 //     this.reloadGun()
@@ -166,10 +166,9 @@ export class Unit {
             }
 
             this.bulletAmount -= 1;
-            !window.isMute && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.shoot, .1);
+            !game.isMute && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.shoot, .1);
             const bullets = this.getBullets()
             this.showFireFromGunImage = 3;
-            console.log(111, game, game.flyBullets);
             game.flyBullets = [...game.flyBullets, ...bullets];
         }
 

@@ -1,7 +1,6 @@
 import {getBoxes} from "./util";
 import {getPistolUnit, getGunUnit, getAkUnit} from '../entity/unit/index';
 const isUnitRandomWalkEnable = true;
-window.isMute = false;
 
 export const levels = [
     // level 1
