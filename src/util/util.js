@@ -35,7 +35,7 @@ export function isInRange(num, min, max) {
  * @returns {boolean}
  */
 export function isOnBlock(objX, objY, objRadius) {
-    const rect = window.rectangles.find(rec => {
+    const rect = game.rectangles.find(rec => {
         const [x, y, width, height] = rec;
         const minX = x - objRadius;
         const maxX = minX + width + objRadius * 2;
@@ -55,8 +55,8 @@ export function getRandom(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-export function clearCanvas(ctx) {
-    window.ctx.fillRect(0, 0, window.canvas_game_board.width, window.canvas_game_board.height);
+export function clearCanvas(ctx, canvas_game_board) {
+    ctx.fillRect(0, 0, canvas_game_board.width, canvas_game_board.height);
 }
 
 export function prepareCanvas(ctx, canvas_game_board) {
@@ -74,6 +74,7 @@ export function hideNoBulletNotification() {
     window.no_bullets_notification.style.display = 'none';
 
 }
+
 //
 // export function mute() {
 //     isMute = true;
@@ -100,9 +101,6 @@ export function getScreen(width, height) {
     return {
         screenStepX: width / 8,
         screenStepY: height / 3,
-
-
-
 
         getHorizontalSide(pice) {
             return this.screenStepX * pice;
@@ -157,7 +155,6 @@ export function playSound(src, volume = 0.2) {
 }
 
 
-
 export function getBoxes(screen, ids) {
     const boxes = [
         //row 1
@@ -192,19 +189,17 @@ export function getBoxes(screen, ids) {
     return ids.map(id => boxes[id])
 }
 
-export function renderRectangles(rectangles) {
-    rectangles.forEach(renderRectangle)
-}
-
-export function renderRectangle(ctx, block) {
-    const [x, y, width, height] = block;
-
-    ctx.rect(x, y, width, height);
-    ctx.fillStyle = style.box.bgColor;
-    ctx.fill()
-    ctx.strokeStyle = style.box.borderColor;
-    ctx.lineWidth = style.box.borderLineWidth;
-    ctx.stroke();
-    ctx.strokeStyle = style.box.borderColor;
-    ctx.lineWidth = 1;
+export function renderRectangles(ctx, rectangles) {
+    rectangles.forEach(block => {
+            const [x, y, width, height] = block;
+            ctx.rect(x, y, width, height);
+            ctx.fillStyle = style.box.bgColor;
+            ctx.fill()
+            ctx.strokeStyle = style.box.borderColor;
+            ctx.lineWidth = style.box.borderLineWidth;
+            ctx.stroke();
+            ctx.strokeStyle = style.box.borderColor;
+            ctx.lineWidth = 1;
+        }
+    )
 }

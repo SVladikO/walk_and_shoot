@@ -1,4 +1,3 @@
-import {game} from '../util/glob';
 import {
     isOnBlock,
     clearCanvas,
@@ -9,20 +8,17 @@ import {
     renderRectangles,
 } from '../util/util';
 
-export const run = () => {
+export const run = (game) => {
     const canvas_game_board = document.getElementById('canvas_game_board');
     const ctx = canvas_game_board.getContext("2d");
     const width = window.innerWidth;
     const height = window.innerHeight;
 
-    // ctx.canvas.width = window.innerWidth;
-    // ctx.canvas.height = window.innerHeight;
+    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
 
-    let flyBullets = [];
     let mousePositionX = 0;
     let mousePositionY = 0;
-
-    let isMute = false;
 
     const moveTabletDirectionCenter = {
         x: 120,
@@ -47,9 +43,9 @@ export const run = () => {
 
         // health.textContent = 'Health: ' + user.health + ' / Bullets amount: ' + user.bulletAmount
 
-        flyBullets.forEach(bullet => bullet.move());
-        flyBullets.forEach(bullet => bullet.render());
-        flyBullets = flyBullets.filter(bullet => !bullet.isDead);
+        game.flyBullets.forEach(bullet => bullet.move());
+        game.flyBullets.forEach(bullet => bullet.render());
+        game.flyBullets =  game.flyBullets.filter(bullet => !bullet.isDead);
 
         game.user.isShootEnabled && game.user.shoot();
         game.user.render(mousePositionX, mousePositionY);

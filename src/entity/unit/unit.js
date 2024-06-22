@@ -2,7 +2,8 @@ import {UNIT_TYPE} from "./type";
 import {GUN_TYPE} from '../gun/type';
 import {weapon_gun3} from "../gun/gun";
 import Bullet from '../bullet/bullet';
-
+import {style} from '../../util/settings';
+import {ctx, game} from '../../util/glob';
 import {
     getRadianAngle,
     getRandom,
@@ -94,7 +95,7 @@ export class Unit {
             const modifiedY = this.y - this.step;
             this.disableOppositeMove(this.moveDirectionOpposite['w'])
 
-            if (isInCanvas(modifiedY, window.canvas.height) && !isOnBlock(this.x, modifiedY, window.style.user.dorRadius)) {
+            if (isInCanvas(modifiedY, window.innerHeight - 50) && !isOnBlock(this.x, modifiedY, style.user.dorRadius)) {
                 this.y = modifiedY;
             }
         }
@@ -102,7 +103,7 @@ export class Unit {
             const modifiedY = this.y + this.step;
             this.disableOppositeMove(this.moveDirectionOpposite['s'])
 
-            if (isInCanvas(modifiedY, window.canvas.height) && !isOnBlock(this.x, modifiedY, window.style.user.dorRadius)) {
+            if (isInCanvas(modifiedY, window.innerHeight - 50) && !isOnBlock(this.x, modifiedY, style.user.dorRadius)) {
                 this.y = modifiedY;
             }
         }
@@ -110,7 +111,7 @@ export class Unit {
             const modifiedX = this.x - this.step;
             this.disableOppositeMove(this.moveDirectionOpposite['a'])
 
-            if (isInCanvas(modifiedX, window.canvas.width) && !isOnBlock(modifiedX, this.y, window.style.user.dorRadius)) {
+            if (isInCanvas(modifiedX, window.innerWidth) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
                 this.x = modifiedX;
             }
         }
@@ -118,7 +119,7 @@ export class Unit {
             const modifiedX = this.x + this.step;
             this.disableOppositeMove(this.moveDirectionOpposite['d'])
 
-            if (isInCanvas(modifiedX, window.canvas.width) && !isOnBlock(modifiedX, this.y, window.style.user.dorRadius)) {
+            if (isInCanvas(modifiedX, window.innerWidth) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
                 this.x = modifiedX;
             }
         }
@@ -143,7 +144,7 @@ export class Unit {
             return
         }
         this.bulletAmount = this.weapon.reloadBulletAmount;
-        !window.isMute && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.reload, 0.4);
+        !game.isMute && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.reload, 0.4);
         hideNoBulletNotification()
     }
 
@@ -168,7 +169,8 @@ export class Unit {
             !window.isMute && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.shoot, .1);
             const bullets = this.getBullets()
             this.showFireFromGunImage = 3;
-            window.flyBullets = [...window.flyBullets, ...bullets];
+            console.log(111, game, game.flyBullets);
+            game.flyBullets = [...game.flyBullets, ...bullets];
         }
 
         this.shootSpeedIndicator--;
@@ -205,8 +207,8 @@ export class Unit {
     render(directionX, directionY) {
         this.updateAngle(directionX, directionY)
 
-        window.ctx.beginPath();
-        window.ctx.arc(this.x, this.y, window.style.user.dorRadius, 0, 300);
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, style.user.dorRadius, 0, 300);
 
         let bg;
 
@@ -228,19 +230,19 @@ export class Unit {
 //         window.ctx.fillStyle = "blue";
 //         window.ctx.fill();
 
-        window.ctx.translate(this.x, this.y)      // 1. Set x,y where we will rotate.
-        window.ctx.rotate(this.angle)             // 2. Rotate
-        window.ctx.translate(-this.x, -this.y)    // 3. Move back coordinates to (HZ)
+        ctx.translate(this.x, this.y)      // 1. Set x,y where we will rotate.
+        ctx.rotate(this.angle)             // 2. Rotate
+        ctx.translate(-this.x, -this.y)    // 3. Move back coordinates to (HZ)
 
         if (!this.isDead()) {
             // 4. Draw gun
             const weaponImg = document.getElementById(this.weapon.imageId);
-            window.ctx.drawImage(weaponImg, this.x, this.y - 5, 75, 40);
+            ctx.drawImage(weaponImg, this.x, this.y - 5, 75, 40);
 
             // 4. Draw fire
             if (this.showFireFromGunImage) {
                 const weaponImgg = document.getElementById('gunFireIconId1');
-                window.ctx.drawImage(weaponImgg, this.x + 20, this.y - 23, 75, 40);
+                ctx.drawImage(weaponImgg, this.x + 20, this.y - 23, 75, 40);
                 this.showFireFromGunImage -= 1;
             }
         }
@@ -248,22 +250,22 @@ export class Unit {
 
         const userIconId1 = document.getElementById(this.isDead() ? 'unitDeadIconId' : this.userIconId);
 
-        window.ctx.drawImage(userIconId1, this.x - 30, this.y - 25, 50, 50);
+        ctx.drawImage(userIconId1, this.x - 30, this.y - 25, 50, 50);
 
-        window.ctx.rotate(-this.angle)             // 5. Rotate back
-        window.ctx.setTransform(1, 0, 0, 1, 0, 0); // 6. Reset center back.
+        ctx.rotate(-this.angle)             // 5. Rotate back
+        ctx.setTransform(1, 0, 0, 1, 0, 0); // 6. Reset center back.
 
-        // window.ctx.beginPath();
-        // window.ctx.arc(this.x, this.y, 10, 0, 300);
-        // window.ctx.fillStyle = 'black';
-        // window.ctx.fill();
-        // window.ctx.fillStyle = 'white';
-        // window.ctx.textAlign = "center";
-        // window.ctx.font = "14px Arial";
-        // window.ctx.fillText(this.health, this.x, this.y + 5);
+        // ctx.beginPath();
+        // ctx.arc(this.x, this.y, 10, 0, 300);
+        // ctx.fillStyle = 'black';
+        // ctx.fill();
+        // ctx.fillStyle = 'white';
+        // ctx.textAlign = "center";
+        // ctx.font = "14px Arial";
+        // ctx.fillText(this.health, this.x, this.y + 5);
 
         // const unitImage = document.getElementById(this.userIconId);
-        // window.ctx.drawImage(unitImage, this.x - 25, this.y - 25, 50, 50);
+        // ctx.drawImage(unitImage, this.x - 25, this.y - 25, 50, 50);
 
     }
 
@@ -272,8 +274,8 @@ export class Unit {
     }
 
     updateAngleForMobile(fromX, fromY) {
-        const width = window.ctx.canvas.width;
-        const height = window.ctx.canvas.height;
+        const width = ctx.canvas.width;
+        const height = ctx.canvas.height;
         const toX = 0; //width - moveTabletDirectionCenter.x;
         const toY = 0; //height - moveTabletDirectionCenter.y;
 
@@ -288,13 +290,13 @@ export class Unit {
         const circlX = this.x + Math.cos(this.angle) * this.visibilityRadius;
         const circlY = this.y + Math.sin(this.angle) * this.visibilityRadius;
 
-        window.ctx.moveTo(circlX, circlY);
-        window.ctx.arc(this.x, this.y, this.visibilityRadius, this.angle - step, this.angle + step, false);
-        window.ctx.lineTo(circlX, circlY);
-        window.ctx.strokeStyle = 'black';
-        window.ctx.lineWidth = 1;
+        ctx.moveTo(circlX, circlY);
+        ctx.arc(this.x, this.y, this.visibilityRadius, this.angle - step, this.angle + step, false);
+        ctx.lineTo(circlX, circlY);
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 1;
 
-        window.ctx.stroke();
+        ctx.stroke();
     }
 
     isDead() {
@@ -308,7 +310,7 @@ export class Unit {
      * @param y - bullet y.
      */
     isBulletOn(x, y) {
-        const radius = window.style.user.dorRadius;
+        const radius = style.user.dorRadius;
         const isInRangeX = isInRange(x, this.x - radius, this.x + radius)
         const isInRangeY = isInRange(y, this.y - radius, this.y + radius)
 

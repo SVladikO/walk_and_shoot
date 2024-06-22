@@ -1,5 +1,7 @@
 import {getDistance, isOnBlock, isOutOfRange} from '../../util/util'
 import {UNIT_TYPE} from "../unit/type";
+import {game} from '../../util/glob';
+import {style} from '../../util/settings';
 
 export default class Bullet {
     constructor(fromX, fromY, angle, weapon, ownerType) {
@@ -32,22 +34,22 @@ export default class Bullet {
             return;
         }
 
-        const _isOnBlock = isOnBlock(this.lastX, this.lastY, window.style.bullet.radius);
-        const _isOutOfX = isOutOfRange(this.lastX, 0, window.canvas.width)
-        const _isOutY = isOutOfRange(this.lastY, 0, window.canvas.height)
+        const _isOnBlock = isOnBlock(this.lastX, this.lastY, style.bullet.radius);
+        const _isOutOfX = isOutOfRange(this.lastX, 0, game.canvas_board.width)
+        const _isOutY = isOutOfRange(this.lastY, 0, game.canvas_board.height)
 
         this.isKickedBox = _isOnBlock;
         this.isDead = _isOnBlock || _isOutOfX || _isOutY;
 
         //For UNIT bullet check does it kick USER
-        if (this.ownerType === UNIT_TYPE.UNIT && window.user.isBulletOn(this.lastX, this.lastY)) {
-            window.user.health -= this.weapon.damage;
+        if (this.ownerType === UNIT_TYPE.UNIT && game.user.isBulletOn(this.lastX, this.lastY)) {
+            game.user.health -= this.weapon.damage;
             this.isDead = true;
         }
 
         //For unit bullet check does it kick UNIT
         if (this.ownerType === UNIT_TYPE.USER) {
-            window.units.forEach(unit => {
+            game.units.forEach(unit => {
                 if (unit.isDead()) {
                     return;
                 }
@@ -60,14 +62,14 @@ export default class Bullet {
     }
 
     render() {
-        window.ctx.beginPath();
-        window.ctx.arc(this.lastX, this.lastY, this.isDead ? this.bulletDeadRadius : window.style.bullet.radius, 0, 2 * Math.PI);
-        window.ctx.fillStyle = this.isDead ? window.style.bullet.bgColorCrashed : window.style.bullet.bgColor;
+        game.ctx.beginPath();
+        game.ctx.arc(this.lastX, this.lastY, this.isDead ? this.bulletDeadRadius : style.bullet.radius, 0, 2 * Math.PI);
+        game.ctx.fillStyle = this.isDead ? style.bullet.bgColorCrashed : style.bullet.bgColor;
 
         if (this.isKickedBox) {
             // !isMute && playSound('./sound/missed.mp3', 0.01);
         }
 
-        window.ctx.fill()
+        game.ctx.fill()
     }
 }
