@@ -45,6 +45,9 @@ export default class Bullet {
         if (this.ownerType === UNIT_TYPE.UNIT && game.user.isBulletOn(this.lastX, this.lastY)) {
             game.user.health -= this.weapon.damage;
             this.isDead = true;
+            const user_healt_progress = document.getElementById('user_healt_progress')
+            const healthProgres = game.user.health * 100 / game.user.maxHealth
+            user_healt_progress.value = healthProgres;
         }
 
         //For unit bullet check does it kick UNIT

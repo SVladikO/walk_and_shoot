@@ -42,6 +42,7 @@ export class Unit {
         this.userIconId = userIconId;
         this.step = step;
         this.randomMoveDedline = 10;
+        this.maxHealth = health;
         this.health = health;
         this.radius = radius;
         this.visibilityRadius = 300;
