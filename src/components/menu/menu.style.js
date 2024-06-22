@@ -15,4 +15,20 @@ export const Wrapper = styled.div`
     background: black;
     overflow-y: auto;
 `;
-export const Wrapper2 = styled.div``;
+export const Canvas = styled.canvas`
+    width: 200px;
+    height: 100px;
+`;
+export const LevelWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    background: white;
+    
+`;
+export const LevelTitle = styled.div`
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    color: black;
+`;
+

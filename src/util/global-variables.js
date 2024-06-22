@@ -1,9 +1,11 @@
-import {getScreen} from "./util";
-
+import {getScreen, getBoxes} from "./util";
+import {getPistolUnit, getGunUnit, getAkUnit} from '../entity/unit/index';
+import {getUser} from '../entity/unit';
+import {screenMainCanvas} from './glob'
 const isUnitRandomWalkEnable = true;
 window.isMute = false;
 
-const levels = [
+export const levels = [
     // level 1
     {
         getFinishCoordinates(screen) {
@@ -153,18 +155,9 @@ const levels = [
     // },
 ]
 
-const headerHeight = 50
-/**
- * We need this one to build block per level.
- * We cut bord on 20 horizontally, 10 vertically.
- * Our goal is make the same map on different screens.
- * That's why we need this function.
- * @type {{screenStepY: number, screenStepX: number, getHorizontalSide(), getVerticalSide()}}
- */
-window.screenMainCanvas = getScreen(window.innerWidth, window.innerHeight - headerHeight);
+let levelId = 0;
+export const units = levels[levelId].getUnits(screenMainCanvas);
+export const rectangles = levels[levelId].getRectangles(screenMainCanvas);
+export const finishCoordinates = levels[levelId].getFinishCoordinates(screenMainCanvas);
+export const user = getUser();
 
-let levelId = 3;
-windor.units = levels[levelId].getUnits(screenMainCanvas);
-window.rectangles = levels[levelId].getRectangles(screenMainCanvas);
-window.finishCoordinates = levels[levelId].getFinishCoordinates(screenMainCanvas);
-window.user = getUser();

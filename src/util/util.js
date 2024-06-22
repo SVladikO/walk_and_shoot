@@ -1,8 +1,8 @@
 import {style} from './settings'
-import {UNIT_TYPE} from '../entity/unit/type';
 import {getUser} from '../entity/unit'
-
+import {screenMainCanvas} from './glob';
 import {weapon_gun1, weapon_gun2, weapon_gun3} from '../entity/gun/gun'
+import {levels, units, user, rectangles} from './global-variables';
 
 export function getRadianAngle(fromX, toX, fromY, toY) {
     var dx = toX - fromX;
@@ -62,8 +62,8 @@ export function clearCanvas(ctx) {
 }
 
 export function prepareCanvas(ctx) {
-    window.ctx.fillStyle = style.board.bgColor;
-    window.ctx.fillRect(0, 0, window.canvas_game_board.width, window.canvas_game_board.height)
+    ctx.fillStyle = style.board.bgColor;
+    ctx.fillRect(0, 0, window.canvas_game_board.width, window.canvas_game_board.height)
 }
 
 export function showNoBulletNotification() {
@@ -102,6 +102,8 @@ export function getScreen(width, height) {
     return {
         screenStepX: width / 8,
         screenStepY: height / 3,
+
+
 
 
         getHorizontalSide(pice) {
@@ -158,7 +160,7 @@ export function playSound(src, volume = 0.2) {
 
 
 
-function getBoxes(screen, ids) {
+export function getBoxes(screen, ids) {
     const boxes = [
         //row 1
         [0, 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
@@ -192,11 +194,10 @@ function getBoxes(screen, ids) {
     return ids.map(id => boxes[id])
 }
 
-
-function changeLevel(levelIndex) {
-    window.user = getUser(window.user.weapon);
-    window.rectangles = window.levels[levelIndex].getRectangles(window.screenMainCanvas);
-    window.units = window.levels[levelIndex].getUnits(window.screenMainCanvas);
-    window.finishCoordinates = window.levels[levelIndex].getFinishCoordinates(window.screenMainCanvas);
-    window.levelId = window.levelIndex;
+export function changeLevel(levelIndex) {
+    user = getUser(user.weapon);
+    rectangles = levels[levelIndex].getRectangles(screenMainCanvas);
+    units = levels[levelIndex].getUnits(screenMainCanvas);
+    finishCoordinates = levels[levelIndex].getFinishCoordinates(screenMainCanvas);
+    levelId = levelIndex;
 }
