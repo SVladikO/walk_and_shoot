@@ -1,7 +1,5 @@
-import {getScreen, getBoxes} from "./util";
+import {getBoxes} from "./util";
 import {getPistolUnit, getGunUnit, getAkUnit} from '../entity/unit/index';
-import {getUser} from '../entity/unit';
-import {screenMainCanvas} from './glob'
 const isUnitRandomWalkEnable = true;
 window.isMute = false;
 
@@ -155,9 +153,4 @@ export const levels = [
     // },
 ]
 
-let levelId = 0;
-export const units = levels[levelId].getUnits(screenMainCanvas);
-export const rectangles = levels[levelId].getRectangles(screenMainCanvas);
-export const finishCoordinates = levels[levelId].getFinishCoordinates(screenMainCanvas);
-export const user = getUser();
 

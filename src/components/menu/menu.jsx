@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import {Wrapper, Canvas, LevelWrapper, LevelTitle} from './menu.style';
 
-import {getScreen, prepareCanvas, changeLevel, restartGame} from "../../util/util";
+import {getScreen, prepareCanvas, restartGame} from "../../util/util";
+import {game} from '../../util/glob';
 import {levels} from '../../util/global-variables';
 import {style} from '../../util/settings';
 
@@ -78,7 +79,7 @@ export default function Menu({showMenu}) {
         () => {
             showMenu(false);
             restartGame();
-            changeLevel(levelIndex);
+            game.changeLevel(levelIndex);
         }
 
     useEffect(() => {

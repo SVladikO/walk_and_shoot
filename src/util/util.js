@@ -1,8 +1,6 @@
 import {style} from './settings'
-import {getUser} from '../entity/unit'
-import {screenMainCanvas} from './glob';
+import {game} from './glob';
 import {weapon_gun1, weapon_gun2, weapon_gun3} from '../entity/gun/gun'
-import {levels, units, user, rectangles} from './global-variables';
 
 export function getRadianAngle(fromX, toX, fromY, toY) {
     var dx = toX - fromX;
@@ -130,7 +128,7 @@ export function restartGame() {
 
 export function tryAgain() {
     restartGame()
-    changeLevel(window.levelId)
+    game.changeLevel(window.levelId)
     // game_over_notification.style.display = 'none';
 }
 
@@ -192,12 +190,4 @@ export function getBoxes(screen, ids) {
     ];
 
     return ids.map(id => boxes[id])
-}
-
-export function changeLevel(levelIndex) {
-    user = getUser(user.weapon);
-    rectangles = levels[levelIndex].getRectangles(screenMainCanvas);
-    units = levels[levelIndex].getUnits(screenMainCanvas);
-    finishCoordinates = levels[levelIndex].getFinishCoordinates(screenMainCanvas);
-    levelId = levelIndex;
 }
