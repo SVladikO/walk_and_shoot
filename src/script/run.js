@@ -4,6 +4,10 @@ export const run = (game) => {
     loop();
 
     function loop() {
+        if (game.user?.isDead()) {
+            game.inPlay = false;
+        }
+
         game.drawAll();
         window.requestAnimationFrame(loop);
     }

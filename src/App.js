@@ -17,6 +17,7 @@ run(game);
 
 function App() {
     const [showMenu, setShowMenu] = useState(true);
+    const [isUserDead, setIsUserDead] = useState(false);
     const [userBulletAmount, setUserBulletAmount] = useState(8);
 
     useEffect(() => {
@@ -29,6 +30,12 @@ function App() {
             setUserBulletAmount(game.user.bulletAmount);
         });
     }, []);
+
+    // setInterval(() => {
+    //     if (game.user?.isDead()) {
+    //         setIsUserDead(true)
+    //     }
+    // }, 1000)
 
     return (
         <div>
@@ -45,6 +52,7 @@ function App() {
                 </LineGroup>
             </Header>
             {showMenu && <Menu showMenu={setShowMenu} setUserBulletAmount={setUserBulletAmount}/>}
+            {isUserDead && <div>user dead</div>}
         </div>
     );
 }

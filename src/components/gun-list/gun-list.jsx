@@ -5,6 +5,7 @@ import gun2Img from '../../images/gun2.png';
 import gun3Img from '../../images/gun3.png';
 
 import {game} from '../../util/glob';
+import {hideNoBulletNotification} from "../../util/util";
 import {weapon_gun1, weapon_gun2, weapon_gun3} from "../../entity/gun/gun";
 
 export default function GunList({setUserBulletAmount}) {
@@ -12,6 +13,7 @@ export default function GunList({setUserBulletAmount}) {
         game.user.weapon = gun;
         game.user.bulletAmount = gun.bulletAmount;
         setUserBulletAmount(gun.bulletAmount)
+        hideNoBulletNotification();
     }
 
     return (

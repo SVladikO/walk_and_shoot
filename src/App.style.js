@@ -10,6 +10,7 @@ export const Header = styled.div`
 `;
 
 export const LineGroup = styled.div`
-   display: flex;
+    display: flex;
     gap: 15px;
+    align-items: center;
 `;
