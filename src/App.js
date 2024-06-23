@@ -10,10 +10,25 @@ import UserSpeed from "./components/user-speed/user-speed";
 import MenuButton from "./components/menu-button/menu-button";
 import SoundController from "./components/sound-controller/sound-controller";
 import Menu from "./components/menu/menu";
+import {run} from "./script/run";
+import {game} from "./util/glob";
+
+run(game);
 
 function App() {
     const [showMenu, setShowMenu] = useState(true);
     const [userBulletAmount, setUserBulletAmount] = useState(8);
+
+    useEffect(() => {
+        window.addEventListener("keypress", (event) => {
+            if (event.key === ' ') {
+                setUserBulletAmount(game.user.bulletAmount);
+            }
+        });
+        game.canvas_board.addEventListener("mousedown", () => {
+            setUserBulletAmount(game.user.bulletAmount);
+        });
+    }, []);
 
     return (
         <div>

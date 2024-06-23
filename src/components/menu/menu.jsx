@@ -6,8 +6,6 @@ import {game} from '../../util/glob';
 import {levels} from '../../util/global-variables';
 import {style} from '../../util/settings';
 
-import {run} from '../../script/run'
-
 export default function Menu({showMenu, setUserBulletAmount}) {
     const refLevels = [];
     const onSelectLevel = levelIndex =>
@@ -16,7 +14,6 @@ export default function Menu({showMenu, setUserBulletAmount}) {
             restartGame();
             game.changeLevel(levelIndex);
             game.inPlay = true;
-            run(game, setUserBulletAmount);
         }
 
     useEffect(() => {

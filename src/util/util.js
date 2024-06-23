@@ -204,3 +204,38 @@ export function renderRectangles(ctx, rectangles) {
         }
     )
 }
+
+export function isUnutVisiable(unit, game) {
+    const dots = getDotsOnUserUnitLine(unit);
+    const isBlockBetween = dots.some(dot => isOnBlock(dot[0], dot[1], 1))
+    return !isBlockBetween;
+
+    /**
+     * User can't see unit if block between them.
+     * On a line between user and unit we create array of dot's and check if any of dots is in block.
+     * If yes we don't show unit.
+     * @param unit
+     */
+    function getDotsOnUserUnitLine(unit) {
+        const radianFromUserToUnit = getRadianAngle(game.user.x, unit.x, game.user.y, unit.y);
+        const distanceBetweenUserAndUnit = getDistance(game.user.x, unit.x, game.user.y, unit.y);
+
+        const dots = [];
+
+        const DOT_DISTANCE_STEP = 2;
+        let dotDistanceAccumulator = 0;
+        let lastX = game.user.x;
+        let lastY = game.user.y;
+
+        while (dotDistanceAccumulator < distanceBetweenUserAndUnit) {
+            lastX = lastX + Math.cos(radianFromUserToUnit) * DOT_DISTANCE_STEP;
+            lastY = lastY + Math.sin(radianFromUserToUnit) * DOT_DISTANCE_STEP;
+
+            dots.push([lastX, lastY])
+
+            dotDistanceAccumulator += DOT_DISTANCE_STEP;
+        }
+
+        return dots;
+    }
+}
