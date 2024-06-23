@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Wrapper, SubWrapper, Canvas, LevelWrapper, LevelTitle} from './menu.style';
+import {Wrapper, SubWrapper, Canvas, GameTitle, LevelWrapper, LevelTitle} from './menu.style';
 
 import {getScreen, prepareCanvas, restartGame} from "../../util/util";
 import {game} from '../../util/glob';
@@ -37,8 +37,8 @@ export default function Menu({onSelectLevel}) {
         refLevels.push(ref);
         return (
             <LevelWrapper key={index} onClick={() => onSelectLevel(index)}>
+                <LevelTitle>LEVEL {index + 1}</LevelTitle>
                 <Canvas ref={ref}/>
-                <LevelTitle>Level {index + 1}</LevelTitle>
             </LevelWrapper>
         )
     })
@@ -46,7 +46,7 @@ export default function Menu({onSelectLevel}) {
 
     return (
         <Wrapper>
-            <h1 className="game_title">WALK AND SHOOT</h1>
+            <GameTitle className="game_title">WALK AND SHOOT</GameTitle>
             <h1>CHOOSE LEVEL</h1>
             <SubWrapper>
                 {canvasLevels}

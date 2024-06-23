@@ -4,7 +4,7 @@ import {
     getScreen,
     prepareCanvas,
     renderRectangles,
-    showGameOver
+    showGameOver,
 } from "./util";
 import {getUser} from "../entity/unit";
 import {levels} from "./global-variables";
@@ -48,8 +48,10 @@ class Game {
     }
 
     changeLevel(levelIndex) {
+        this.inPlay = true;
         this.levelId = levelIndex;
         this.user = getUser();
+        this.user.reloadGun()
         this.flyBullets = [];
         this.rectangles = this.levels[levelIndex].getRectangles(screenMainCanvas);
         this.units = this.levels[levelIndex].getUnits(screenMainCanvas);

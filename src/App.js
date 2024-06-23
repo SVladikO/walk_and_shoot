@@ -22,21 +22,23 @@ function App() {
     const [userHealth, setUserHealth] = useState(100);
     const [selectedLevelId, setSelectedLevelId] = useState(0);
     const [showMenu, setShowMenu] = useState(true);
-    const [isUserDead, setIsUserDead] = useState(false);
+    const [showTryAgain, setshowTryAgain] = useState(false);
     const [userBulletAmount, setUserBulletAmount] = useState(8);
 
     const onSelectLevel = levelIndex => {
         setSelectedLevelId(levelIndex)
         setShowMenu(false);
         game.changeLevel(levelIndex);
-        game.user.reloadGun();
         setUserBulletAmount(game.user.bulletAmount)
-        game.inPlay = true;
     }
 
-    const tryAgain = () => {
+    const onShowMenu = () => {
+        setShowMenu(true)
+        setshowTryAgain(false)
+    }
+    const onTryAgain = () => {
         onSelectLevel(selectedLevelId);
-        setIsUserDead(false)
+        setshowTryAgain(false)
         setUserHealth(100);
         changeUserHealth();
     }
@@ -54,7 +56,8 @@ function App() {
 
     setInterval(() => {
         if (game.user?.isDead()) {
-            setIsUserDead(true)
+            setshowTryAgain(true)
+            game.changeLevel(selectedLevelId);
         }
     }, 1000)
 
@@ -73,7 +76,7 @@ function App() {
                 </LineGroup>
             </Header>
             {showMenu && <Menu onSelectLevel={onSelectLevel}/>}
-            {isUserDead && <TryAgain selectedLevelId={selectedLevelId} tryAgain={tryAgain}/>}
+            {showTryAgain && <TryAgain selectedLevelId={selectedLevelId} onTryAgain={onTryAgain} onShowMenu={onShowMenu}/>}
         </div>
     );
 }

@@ -35,6 +35,12 @@ export const Notification = styled.div`
         25% {
             background-color: rgb(179, 0, 0);
         }
+        50% {
+            background-color: #000000;
+        }
+        75% {
+            background-color: rgb(179, 0, 0);
+        }
         100% {
             background-color: #000000;
         }
