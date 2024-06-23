@@ -7,8 +7,12 @@ import gun3Img from '../../images/gun3.png';
 import {game} from '../../util/glob';
 import {weapon_gun1, weapon_gun2, weapon_gun3} from "../../entity/gun/gun";
 
-export default function GunList() {
-    const setUserGun = gun => game.user.weapon = gun;
+export default function GunList({setUserBulletAmount}) {
+    const setUserGun = gun => {
+        game.user.weapon = gun;
+        game.user.bulletAmount = gun.bulletAmount;
+        setUserBulletAmount(gun.bulletAmount)
+    }
 
     return (
         <Wrapper>

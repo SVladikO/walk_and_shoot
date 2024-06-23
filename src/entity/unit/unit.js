@@ -141,9 +141,6 @@ export class Unit {
     }
 
     reloadGun() {
-        if (this.bulletAmount) {
-            return
-        }
         this.bulletAmount = this.weapon.reloadBulletAmount;
         !game.isMute && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.reload, 0.4);
         hideNoBulletNotification()
@@ -155,22 +152,25 @@ export class Unit {
         }
 
         // if (!this.shootSpeedIndicator) {
-            this.shootSpeedIndicator = this.weapon.shootSpeedStep;
+        this.shootSpeedIndicator = this.weapon.shootSpeedStep;
 
-            if (this.bulletAmount <= 0 && this.unitType === UNIT_TYPE.USER) {
-                !game.isMute && this.unitType === UNIT_TYPE.USER && playSound('./sound/gun-empty.mp3', 0.4)
-                showNoBulletNotification()
-                // setTimeout(() => {
-                //     this.reloadGun()
-                // }, 1000);
-                return;
-            }
+        this.bulletAmount -= 1;
+        console.log(5555)
+        if (this.bulletAmount <= 0 && this.unitType === UNIT_TYPE.USER) {
+            console.log(6666)
+            !game.isMute && this.unitType === UNIT_TYPE.USER && playSound('./sound/gun-empty.mp3', 0.4)
+            showNoBulletNotification()
+            // setTimeout(() => {
+            //     this.reloadGun()
+            // }, 1000);
+            return;
+        }
 
-            this.bulletAmount -= 1;
-            !game.isMute && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.shoot, .1);
-            const bullets = this.getBullets()
-            this.showFireFromGunImage = 3;
-            game.flyBullets = [...game.flyBullets, ...bullets];
+
+        !game.isMute && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.shoot, .1);
+        const bullets = this.getBullets()
+        this.showFireFromGunImage = 3;
+        game.flyBullets = [...game.flyBullets, ...bullets];
         // }
 
         // this.shootSpeedIndicator--;

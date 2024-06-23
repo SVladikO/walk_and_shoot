@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 3px;
     width: 180px;
     //border:solid 1px black;
     

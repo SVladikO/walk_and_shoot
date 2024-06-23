@@ -37,7 +37,7 @@ function App() {
                     <Health/>
                     <Bullets amount={userBulletAmount}/>
                 </LineGroup>
-                <GunList/>
+                <GunList setUserBulletAmount={setUserBulletAmount}/>
                 <LineGroup>
                     <UserSpeed/>
                     <SoundController/>

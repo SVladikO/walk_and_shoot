@@ -8,7 +8,7 @@ import {ReactComponent as UnMuteIcon} from "../../icons/unmute.svg";
 import {game} from '../../util/glob';
 
 export default function SoundController() {
-    const [isMute, setIsMute] = useState(false)
+    const [isMute, setIsMute] = useState(game.isMute)
 
     const onMute = bool => {
         setIsMute(bool)
