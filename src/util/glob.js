@@ -20,7 +20,7 @@ class Game {
         this.canvas_board = document.getElementById('canvas_game_board');
         this.ctx = this.canvas_board.getContext("2d");
 
-        this.isMute = false;
+        this.isMute = true;
         this.inPlay = false;
         this.levelId = 0;
         this.flyBullets = [];

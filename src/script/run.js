@@ -9,21 +9,14 @@ import {
 } from '../util/util';
 
 export const run = (game, setUserBulletAmount) => {
-    const canvas_game_board = document.getElementById('canvas_game_board');
-    const ctx = canvas_game_board.getContext("2d");
     const width = window.innerWidth;
     const height = window.innerHeight;
 
-    ctx.canvas.width = window.innerWidth;
-    ctx.canvas.height = window.innerHeight;
+    game.ctx.canvas.width = window.innerWidth;
+    game.ctx.canvas.height = window.innerHeight;
 
     let mousePositionX = 0;
     let mousePositionY = 0;
-
-    const moveTabletDirectionCenter = {
-        x: 120,
-        y: 120,
-    }
 
     loop();
 
@@ -37,9 +30,9 @@ export const run = (game, setUserBulletAmount) => {
     }
 
     function drawAll() {
-        clearCanvas(ctx, canvas_game_board);
-        prepareCanvas(ctx, {width,height});
-        renderRectangles(ctx, game.rectangles)
+        clearCanvas(game.ctx, game.canvas_board);
+        prepareCanvas(game.ctx, {width,height});
+        renderRectangles(game.ctx, game.rectangles)
 
         game.flyBullets.forEach(bullet => bullet.move());
         game.flyBullets.forEach(bullet => bullet.render());
@@ -97,11 +90,10 @@ export const run = (game, setUserBulletAmount) => {
         }
     }
 
-
     function renderEnd(c) {
-        ctx.beginPath();
-        ctx.font = "30px Arial";
-        ctx.fillText('FINISH', c.x, c.y);
+        game.ctx.beginPath();
+        game.ctx.font = "30px Arial";
+        game.ctx.fillText('FINISH', c.x, c.y);
     }
 
     window.addEventListener("keypress", (event) => {
@@ -122,7 +114,7 @@ export const run = (game, setUserBulletAmount) => {
     });
 
     window.addEventListener("keyup", (event) => game.inPlay && game.user.disableMove(event.key));
-    canvas_game_board.addEventListener("mousemove", e => {
+    game.canvas_board.addEventListener("mousemove", e => {
         mousePositionX = e.clientX;
         mousePositionY = e.clientY - 80
     });
