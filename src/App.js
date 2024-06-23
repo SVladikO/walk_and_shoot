@@ -70,6 +70,7 @@ function App() {
                 </LineGroup>
                 <GunList setUserBulletAmount={setUserBulletAmount}/>
                 <LineGroup>
+                    <div>LEVEL {selectedLevelId + 1}</div>
                     <UserSpeed/>
                     <SoundController/>
                     <MenuButton showMenu={setShowMenu}/>
