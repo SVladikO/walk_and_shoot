@@ -154,19 +154,13 @@ export class Unit {
         // if (!this.shootSpeedIndicator) {
         this.shootSpeedIndicator = this.weapon.shootSpeedStep;
 
-        this.bulletAmount -= 1;
-        console.log(5555)
         if (this.bulletAmount <= 0 && this.unitType === UNIT_TYPE.USER) {
-            console.log(6666)
             !game.isMute && this.unitType === UNIT_TYPE.USER && playSound('./sound/gun-empty.mp3', 0.4)
             showNoBulletNotification()
-            // setTimeout(() => {
-            //     this.reloadGun()
-            // }, 1000);
             return;
         }
 
-
+        this.bulletAmount -= 1;
         !game.isMute && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.shoot, .1);
         const bullets = this.getBullets()
         this.showFireFromGunImage = 3;
@@ -175,6 +169,9 @@ export class Unit {
 
         // this.shootSpeedIndicator--;
 
+        if (this.bulletAmount <= 0) {
+            showNoBulletNotification()
+        }
     }
 
     /**
