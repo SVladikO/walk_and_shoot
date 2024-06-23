@@ -36,6 +36,7 @@ class Game {
         this.ctx.canvas.width = this.boardWidth;
         this.ctx.canvas.height = this.boardHeigh;
 
+        this.unitSpeedStep = 1;
         this.isMute = true;
         this.inPlay = false;
         this.levelId = 0;

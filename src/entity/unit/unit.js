@@ -40,7 +40,6 @@ export class Unit {
         this.weapon = weapon;
         this.bulletAmount = weapon.bulletAmount;
         this.userIconId = userIconId;
-        this.step = step;
         this.randomMoveDedline = 10;
         this.maxHealth = health;
         this.health = health;
@@ -93,7 +92,7 @@ export class Unit {
         }
 
         if (this.moveDirection.w) {
-            const modifiedY = this.y - this.step;
+            const modifiedY = this.y - game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['w'])
 
             if (isInCanvas(modifiedY, window.innerHeight - 50) && !isOnBlock(this.x, modifiedY, style.user.dorRadius)) {
@@ -101,7 +100,7 @@ export class Unit {
             }
         }
         if (this.moveDirection.s) {
-            const modifiedY = this.y + this.step;
+            const modifiedY = this.y + game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['s'])
 
             if (isInCanvas(modifiedY, window.innerHeight - 50) && !isOnBlock(this.x, modifiedY, style.user.dorRadius)) {
@@ -109,7 +108,7 @@ export class Unit {
             }
         }
         if (this.moveDirection.a) {
-            const modifiedX = this.x - this.step;
+            const modifiedX = this.x - game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['a'])
 
             if (isInCanvas(modifiedX, window.innerWidth) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
@@ -117,7 +116,7 @@ export class Unit {
             }
         }
         if (this.moveDirection.d) {
-            const modifiedX = this.x + this.step;
+            const modifiedX = this.x + game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['d'])
 
             if (isInCanvas(modifiedX, window.innerWidth) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {

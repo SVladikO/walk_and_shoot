@@ -4,10 +4,10 @@ import {Wrapper, InputWrapper} from './user-speed.style';
 import {game} from '../../util/glob';
 
 export default function UserSpeed() {
-    const [userSpeed, setUserSpeed] = useState(game.user?.step || 1);
+    const [userSpeed, setUserSpeed] = useState(game.unitSpeedStep || 1);
     const changeUserSpeed = i => {
-        game.user.step += i;
-        setUserSpeed(game.user.step)
+        game.unitSpeedStep += i;
+        setUserSpeed(game.unitSpeedStep)
     }
 
     return (
