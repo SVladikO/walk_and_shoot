@@ -6,10 +6,10 @@ export default function Bullets({amount}) {
 
     return (
         <div>
-            <Wrapper id="bullet_amount">
+            <Wrapper>
                 {bullets}
             </Wrapper>
-            <Notification id="no_bullets_notification"></Notification>
+            {amount <= 0 && <Notification id="no_bullets_notification">No bullets. Press SPACE to reload.</Notification>}
         </div>
     )
 }

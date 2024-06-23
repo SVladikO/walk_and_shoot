@@ -23,7 +23,12 @@ export const LevelWrapper = styled.div`
     display: flex;
     flex-direction: column;
     background: white;
-    
+`;
+export const SubWrapper = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    max-width: 800px;
 `;
 export const LevelTitle = styled.div`
     font-size: 20px;

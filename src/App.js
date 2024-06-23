@@ -6,6 +6,7 @@ import {Header, LineGroup} from './App.style.js';
 import Health from "./components/health/health";
 import Bullets from "./components/bullets/bullets";
 import GunList from "./components/gun-list/gun-list";
+import TryAgain from './components/try-again/try-again';
 import UserSpeed from "./components/user-speed/user-speed";
 import MenuButton from "./components/menu-button/menu-button";
 import SoundController from "./components/sound-controller/sound-controller";
@@ -13,12 +14,32 @@ import Menu from "./components/menu/menu";
 import {run} from "./script/run";
 import {game} from "./util/glob";
 
+import {changeUserHealth} from './util/util';
+
 run(game);
 
 function App() {
+    const [userHealth, setUserHealth] = useState(100);
+    const [selectedLevelId, setSelectedLevelId] = useState(0);
     const [showMenu, setShowMenu] = useState(true);
     const [isUserDead, setIsUserDead] = useState(false);
     const [userBulletAmount, setUserBulletAmount] = useState(8);
+
+    const onSelectLevel = levelIndex => {
+        setSelectedLevelId(levelIndex)
+        setShowMenu(false);
+        game.changeLevel(levelIndex);
+        game.user.reloadGun();
+        setUserBulletAmount(game.user.bulletAmount)
+        game.inPlay = true;
+    }
+
+    const tryAgain = () => {
+        onSelectLevel(selectedLevelId);
+        setIsUserDead(false)
+        setUserHealth(100);
+        changeUserHealth();
+    }
 
     useEffect(() => {
         window.addEventListener("keypress", (event) => {
@@ -31,17 +52,17 @@ function App() {
         });
     }, []);
 
-    // setInterval(() => {
-    //     if (game.user?.isDead()) {
-    //         setIsUserDead(true)
-    //     }
-    // }, 1000)
+    setInterval(() => {
+        if (game.user?.isDead()) {
+            setIsUserDead(true)
+        }
+    }, 1000)
 
     return (
         <div>
             <Header>
                 <LineGroup>
-                    <Health/>
+                    <Health health={userHealth}/>
                     <Bullets amount={userBulletAmount}/>
                 </LineGroup>
                 <GunList setUserBulletAmount={setUserBulletAmount}/>
@@ -51,8 +72,8 @@ function App() {
                     <MenuButton showMenu={setShowMenu}/>
                 </LineGroup>
             </Header>
-            {showMenu && <Menu showMenu={setShowMenu} setUserBulletAmount={setUserBulletAmount}/>}
-            {isUserDead && <div>user dead</div>}
+            {showMenu && <Menu onSelectLevel={onSelectLevel}/>}
+            {isUserDead && <TryAgain selectedLevelId={selectedLevelId} tryAgain={tryAgain}/>}
         </div>
     );
 }

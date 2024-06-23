@@ -11,8 +11,8 @@ import {
     isOnBlock,
     isInRange,
     playSound,
-    hideNoBulletNotification,
-    showNoBulletNotification
+    // hideNoBulletNotification,
+    // showNoBulletNotification
 } from '../../util/util'
 
 export class Unit {
@@ -143,7 +143,6 @@ export class Unit {
     reloadGun() {
         this.bulletAmount = this.weapon.reloadBulletAmount;
         !game.isMute && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.reload, 0.4);
-        hideNoBulletNotification()
     }
 
     shoot() {
@@ -156,7 +155,7 @@ export class Unit {
 
         if (this.bulletAmount <= 0 && this.unitType === UNIT_TYPE.USER) {
             !game.isMute && this.unitType === UNIT_TYPE.USER && playSound('./sound/gun-empty.mp3', 0.4)
-            showNoBulletNotification()
+            // showNoBulletNotification()
             return;
         }
 
@@ -170,7 +169,7 @@ export class Unit {
         // this.shootSpeedIndicator--;
 
         if (this.bulletAmount <= 0) {
-            showNoBulletNotification()
+            // showNoBulletNotification()
         }
     }
 

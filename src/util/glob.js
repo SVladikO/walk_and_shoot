@@ -40,6 +40,7 @@ class Game {
         this.inPlay = false;
         this.levelId = 0;
         this.flyBullets = [];
+        this.levels = levels;
         this.user = null; //getUser();
         this.units = null;// levels[this.levelId].getUnits(screenMainCanvas);
         this.rectangles = null;// levels[this.levelId].getRectangles(screenMainCanvas);
@@ -50,8 +51,8 @@ class Game {
         this.levelId = levelIndex;
         this.user = getUser();
         this.flyBullets = [];
-        this.rectangles = levels[levelIndex].getRectangles(screenMainCanvas);
-        this.units = levels[levelIndex].getUnits(screenMainCanvas);
+        this.rectangles = this.levels[levelIndex].getRectangles(screenMainCanvas);
+        this.units = this.levels[levelIndex].getUnits(screenMainCanvas);
         this.finishCoordinates = levels[levelIndex].getFinishCoordinates(screenMainCanvas);
     }
 
@@ -89,12 +90,7 @@ class Game {
         this.ctx.font = "30px Arial";
         this.ctx.fillText('FINISH', this.finishCoordinates.x, this.finishCoordinates.y);
     }
-
-
-
 }
-
-
 
 export const game = new Game();
 

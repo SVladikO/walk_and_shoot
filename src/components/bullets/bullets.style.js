@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
     display: flex;
     justify-content: left;
-    align-items: center;
+    align-items: top;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 3px;

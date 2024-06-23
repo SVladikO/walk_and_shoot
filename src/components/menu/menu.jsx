@@ -1,20 +1,13 @@
 import React, {useEffect} from 'react';
-import {Wrapper, Canvas, LevelWrapper, LevelTitle} from './menu.style';
+import {Wrapper, SubWrapper, Canvas, LevelWrapper, LevelTitle} from './menu.style';
 
 import {getScreen, prepareCanvas, restartGame} from "../../util/util";
 import {game} from '../../util/glob';
-import {levels} from '../../util/global-variables';
 import {style} from '../../util/settings';
+import {levels} from '../../util/global-variables';
 
-export default function Menu({showMenu, setUserBulletAmount}) {
+export default function Menu({onSelectLevel}) {
     const refLevels = [];
-    const onSelectLevel = levelIndex =>
-        () => {
-            showMenu(false);
-            restartGame();
-            game.changeLevel(levelIndex);
-            game.inPlay = true;
-        }
 
     useEffect(() => {
         refLevels.forEach((ref, index) => {
@@ -43,7 +36,7 @@ export default function Menu({showMenu, setUserBulletAmount}) {
         const ref = React.createRef();
         refLevels.push(ref);
         return (
-            <LevelWrapper key={index} onClick={onSelectLevel(index)}>
+            <LevelWrapper key={index} onClick={() => onSelectLevel(index)}>
                 <Canvas ref={ref}/>
                 <LevelTitle>Level {index + 1}</LevelTitle>
             </LevelWrapper>
@@ -55,9 +48,9 @@ export default function Menu({showMenu, setUserBulletAmount}) {
         <Wrapper>
             <h1 className="game_title">WALK AND SHOOT</h1>
             <h1>CHOOSE LEVEL</h1>
-            <div id="game_levels_to_choose">
+            <SubWrapper>
                 {canvasLevels}
-            </div>
+            </SubWrapper>
         </Wrapper>
     )
 }

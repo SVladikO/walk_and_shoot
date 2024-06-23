@@ -13,7 +13,6 @@ export default function GunList({setUserBulletAmount}) {
         game.user.weapon = gun;
         game.user.bulletAmount = gun.bulletAmount;
         setUserBulletAmount(gun.bulletAmount)
-        hideNoBulletNotification();
     }
 
     return (

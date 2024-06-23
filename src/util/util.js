@@ -54,7 +54,7 @@ export function isOnBlock(objX, objY, objRadius) {
 export function createArrayFromLength(length) {
     const array = [];
 
-    for(let i = 0; i < length; i++) {
+    for (let i = 0; i < length; i++) {
         array.push(i);
     }
 
@@ -74,30 +74,6 @@ export function prepareCanvas(ctx, canvas_game_board) {
     ctx.fillRect(0, 0, canvas_game_board.width, canvas_game_board.height)
 }
 
-export function showNoBulletNotification() {
-    window.no_bullets_notification.textContent = 'Press "SPACE" to reload. No bullets. ';
-    window.no_bullets_notification.style.display = 'flex';
-}
-
-export function hideNoBulletNotification() {
-    window.no_bullets_notification.textContent = '';
-    window.no_bullets_notification.style.display = 'none';
-
-}
-
-export function updateWeapon(n) {
-    const weapons = {
-        weapon_gun1,
-        weapon_gun2,
-        weapon_gun3,
-    }
-
-    window.user.weapon = weapons[n]
-    window.user.bulletAmount = weapons[n].bulletAmount;
-    hideNoBulletNotification();
-}
-
-
 export function getScreen(width, height) {
     return {
         screenStepX: width / 8,
@@ -114,40 +90,9 @@ export function getScreen(width, height) {
 
 export function showGameOver(game) {
     if (game.user.isDead()) {
-        hideNoBulletNotification();
-        // game_over_notification.style.display = 'flex';
-        // game_over_level.textContent = `Level ${levelId + 1}`
         game.flyBullets = [];
     }
 }
-
-export function restartGame() {
-    hideNoBulletNotification()
-}
-
-export function tryAgain() {
-    restartGame()
-    game.changeLevel(window.levelId)
-    // game_over_notification.style.display = 'none';
-}
-
-export function showAllLevels() {
-    // game_over_notification.style.display = 'none';
-    // game_levels_board.style.display = 'flex';
-}
-
-// export function renderMoveDirectionCenter() {
-//     const width = window.ctx.canvas.width;
-//     const height = window.ctx.canvas.height;
-//     const x = width - moveTabletDirectionCenter.x;
-//     const y = height - moveTabletDirectionCenter.y;
-//
-//     window.ctx.moveTo(x, y);
-//     window.ctx.beginPath();
-//     window.ctx.arc(x, y, 10, 0, 300);
-//     window.ctx.fillStyle = "red";
-//     window.ctx.fill();
-// }
 
 export function playSound(src, volume = 0.2) {
     const audio = new Audio(src);
@@ -155,6 +100,11 @@ export function playSound(src, volume = 0.2) {
     audio.play()
 }
 
+export function changeUserHealth() {
+    const user_healt_progress = document.getElementById('user_healt_progress')
+    const healthProgres = game.user.health * 100 / game.user.maxHealth
+    user_healt_progress.value = healthProgres;
+}
 
 export function getBoxes(screen, ids) {
     const boxes = [
