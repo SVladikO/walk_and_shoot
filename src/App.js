@@ -71,6 +71,7 @@ function App() {
                 <GunList setUserBulletAmount={setUserBulletAmount}/>
                 <LineGroup>
                     <div>LEVEL {selectedLevelId + 1}</div>
+                    <div onClick={() => onSelectLevel(selectedLevelId + 1)}>NEXT LEVEL</div>
                     <UserSpeed/>
                     <SoundController/>
                     <MenuButton showMenu={setShowMenu}/>
