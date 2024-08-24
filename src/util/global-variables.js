@@ -15,10 +15,15 @@ export const levels = [
         getRectangles(screen) {
             return screen.getBoxes(this.blockIds)
         },
-        getUnits: (screen) => ([
-            getPistolUnit(screen.getHorizontalSide(4), screen.getVerticalSide(1) / 2),
-            getPistolUnit(screen.getHorizontalSide(7), screen.getVerticalSide(3) / 2),
-        ]),
+        unitIds: [0, 1, 16, 17, 32, 33, 48, 49, 64],
+        getUnits: (screen) => {
+            const units = screen.getUnits(this.unitIds);
+
+            return units.map(u => {
+                const [x, y] = u;
+                return getPistolUnit(x, y)
+            })
+        },
     },
     // level 2
     {

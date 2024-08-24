@@ -102,53 +102,35 @@ export function getScreen(width, height) {
             const yArray = this.getArrayByLength(maxVerticalBlocks) //[0 - 15]
             let boxes = [];
 
-                yArray.forEach(y => {
-                    xArray.forEach(x => {
-                        boxes.push([
-                            !x ? x : this.getHorizontalSide(x),
-                            !y ? y : this.getVerticalSide(y),
-                            this.getHorizontalSide(1),
-                            this.getVerticalSide(1)
-                        ])
-                    })
+            yArray.forEach(y => {
+                xArray.forEach(x => {
+                    boxes.push([
+                        !x ? x : this.getHorizontalSide(x),
+                        !y ? y : this.getVerticalSide(y),
+                        this.getHorizontalSide(1),
+                        this.getVerticalSide(1)
+                    ])
                 })
+            })
 
             console.log({boxes})
 
-            // const boxes = [
-            //     //row 1
-            //     [0, 0, this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(1), 0, this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(2), 0, this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(3), 0, this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(4), 0, this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(5), 0, this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(6), 0, this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(7), 0, this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     // row 2
-            //     [0, this.getVerticalSide(1), this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(1), this.getVerticalSide(1), this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(2), this.getVerticalSide(1), this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(3), this.getVerticalSide(1), this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(4), this.getVerticalSide(1), this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(5), this.getVerticalSide(1), this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(6), this.getVerticalSide(1), this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(7), this.getVerticalSide(1), this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     // row 3
-            //     [0, this.getVerticalSide(2), this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(1), this.getVerticalSide(2), this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(2), this.getVerticalSide(2), this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(3), this.getVerticalSide(2), this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(4), this.getVerticalSide(2), this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(5), this.getVerticalSide(2), this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(6), this.getVerticalSide(2), this.getHorizontalSide(1), this.getVerticalSide(1)],
-            //     [this.getHorizontalSide(7), this.getVerticalSide(2), this.getHorizontalSide(1), this.getVerticalSide(1)],
-            // ];
-
             return ids.map(id => boxes[id])
+        },
+        getUnits(ids) {
+            const blocks = this.getBoxes(ids);
+
+            const xIncrement = this.getHorizontalSide(1);
+            const yIncrement = this.getVerticalSide(1);
+
+            const units = blocks.map(b => {
+                const [x, y] = b;
+                return [x + xIncrement/2, y + yIncrement/2]
+            })
+
+            return units;
         }
     }
-
 }
 
 export function showGameOver(game) {

@@ -51,7 +51,7 @@ export default function LevelsPage({onSelectLevel, onShowEditLevelPage, setSelec
                 <Canvas ref={ref}/>
                 <button onClick={e => {
                     e.stopPropagation();
-                    onShowEditLevelPage(levels[index].blockIds)
+                    onShowEditLevelPage(index)
                 }}>Edit map</button>
             </LevelWrapper>
         )

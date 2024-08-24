@@ -19,6 +19,7 @@ import {changeUserHealth} from './util/util';
 
 import LevelsPage from "./page/levels-page/levels-page.jsx";
 import EditLevelPage from './page/edit-level-page/edit-level-page.jsx'
+import {levels} from "./util/global-variables";
 
 run(game);
 
@@ -26,6 +27,7 @@ function App() {
     const [userHealth, setUserHealth] = useState(100);
     const [selectedLevelId, setSelectedLevelId] = useState(0);
 
+    const [selectedUnitIds, setSelectedUnitIds] = useState([]);
     const [selectedEditLevelIds, setSelectedEditLevelIds] = useState([]);
 
 
@@ -51,10 +53,11 @@ function App() {
         setshowTryAgain(false)
     }
 
-    const onShowEditLevelPage = (levelIds = []) => {
+    const onShowEditLevelPage = index => {
         setShowLevelsPage(false)
         setShowEditLevelPage(true)
-        setSelectedEditLevelIds(levelIds)
+        setSelectedUnitIds(levels[index].unitIds)
+        setSelectedEditLevelIds(levels[index].blockIds)
     }
 
     const onTryAgain = () => {

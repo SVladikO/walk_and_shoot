@@ -1,7 +1,9 @@
 import {useState} from 'react';
-import {Wrapper, Row, Block} from './edit-level-page.style'
+import {Wrapper, Navigation, NavigationBtn, Row, Block} from './edit-level-page.style'
 
-function LevelModification({selectedEditLevelIds}) {
+function LevelModification({selectedEditLevelIds, selectedUnitIds}) {
+    const [isSelectUnit, setIsSelectUnit] = useState(true)
+    const [selectedUnits, setSelectedUnits] = useState(selectedUnitIds)
     const [selectedBlocks, setSelectedBlocks] = useState(selectedEditLevelIds)
 
     const addBlock = index => {
@@ -11,14 +13,29 @@ function LevelModification({selectedEditLevelIds}) {
         setSelectedBlocks([...selectedBlocks.filter(i => i !== index)])
     }
 
-    const clearBlocks = () => setSelectedBlocks([])
+    const addUnit = index => {
+        setSelectedUnits([...selectedUnits, index])
+    }
+    const deleteUnit = index => {
+        setSelectedUnits([...selectedUnits.filter(i => i !== index)])
+    }
+
+    const clearBlocks = () => {
+        setSelectedBlocks([])
+        setSelectedUnits([])
+    }
 
     const onBlockClick = index => () => {
-        console.log('click on: ', index);
+        if (isSelectUnit) {
+            const isIncludeUnit = selectedUnits.includes(index);
+            isIncludeUnit
+                ? deleteUnit(index)
+                : addUnit(index)
 
-        const isSelected = selectedBlocks.includes(index);
-
-        isSelected
+            return
+        }
+        const isIncludeBlock = selectedBlocks.includes(index);
+        isIncludeBlock
             ? deleteBlock(index)
             : addBlock(index)
     }
@@ -29,17 +46,31 @@ function LevelModification({selectedEditLevelIds}) {
 
     return (
         <Wrapper>
-            <div>
-                <button onClick={clearBlocks}>Clear board</button>
-            </div>
+            <Navigation>
+                <NavigationBtn onClick={clearBlocks}>Clear board</NavigationBtn>
+                <div>
+
+                    <NavigationBtn isAddUnit={isSelectUnit} onClick={() => setIsSelectUnit(true)}>Select unit</NavigationBtn>
+                    /
+                    <NavigationBtn isAddBlock={!isSelectUnit} onClick={() => setIsSelectUnit(false)}>Select block</NavigationBtn>
+                </div>
+            </Navigation>
             {
                 Array(trLength).fill(1).map(_ => (
                         <Row>
                             {
                                 Array(tdLength).fill(1).map(__ => {
                                     const index = indexAccamulator++
-                                    return <Block isSelected={selectedBlocks.includes(index)}
-                                                  onClick={onBlockClick(index)}>{index}</Block>
+                                    return (
+                                        <Block
+                                            isIncludeUnit={selectedUnits.includes(index)}
+                                            isIncludeBlock={selectedBlocks.includes(index)}
+                                            isSelectUnit={isSelectUnit}
+                                            onClick={onBlockClick(index)}
+                                        >
+                                            {index}
+                                        </Block>
+                                    )
                                 })
                             }
                         </Row>
@@ -54,9 +85,8 @@ function LevelModification({selectedEditLevelIds}) {
 
             <div>Selected units:</div>
             <div>
-                <input value={`[${selectedBlocks.sort((a, b) => a - b).join(', ')}]`}/>
+                <input value={`[${selectedUnits.sort((a, b) => a - b).join(', ')}]`}/>
             </div>
-
         </Wrapper>
     )
 }
