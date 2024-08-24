@@ -1,5 +1,13 @@
 import React, {useEffect} from 'react';
-import {Wrapper, SubWrapper, NavigationWrapper, Canvas, GameTitle, LevelWrapper, LevelTitle} from './levels-page.style.js';
+import {
+    Wrapper,
+    SubWrapper,
+    NavigationWrapper,
+    Canvas,
+    GameTitle,
+    LevelWrapper,
+    LevelTitle
+} from './levels-page.style.js';
 
 import navigationImg from '../../images/navigation.png';
 
@@ -8,7 +16,7 @@ import {style} from '../../util/settings';
 import {levels} from '../../util/global-variables';
 import {getScreen, prepareCanvas} from "../../util/util";
 
-export default function LevelsPage({onSelectLevel, onShowEditLevelPage}) {
+export default function LevelsPage({onSelectLevel, onShowEditLevelPage, setSelectedEditLevelIds}) {
     const refLevels = [];
 
     useEffect(() => {
@@ -41,6 +49,10 @@ export default function LevelsPage({onSelectLevel, onShowEditLevelPage}) {
             <LevelWrapper key={index} onClick={() => onSelectLevel(index)}>
                 <LevelTitle>LEVEL {index + 1}</LevelTitle>
                 <Canvas ref={ref}/>
+                <button onClick={e => {
+                    e.stopPropagation();
+                    onShowEditLevelPage(levels[index].blockIds)
+                }}>Edit map</button>
             </LevelWrapper>
         )
     })
@@ -53,7 +65,7 @@ export default function LevelsPage({onSelectLevel, onShowEditLevelPage}) {
             <SubWrapper>
                 {canvasLevels}
             </SubWrapper>
-            <button onClick={onShowEditLevelPage}>Show edit level page</button>
+            <button onClick={() => onShowEditLevelPage()}>Show edit level page</button>
             <NavigationWrapper>
                 <span> Walk by</span>
                 <img src={navigationImg}/>

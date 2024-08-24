@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     background: white;
-    z-index: 1000;
+    padding: 50px;
 `;
 
 export const Row = styled.div`
@@ -17,6 +17,6 @@ export const Block = styled.div`
     align-items: center;
     justify-content: center;
     //background: green;
-    color: darkgrey;
     border: solid 1px black;
+    ${p =>  p.isSelected ?  `color: white; background: black;` : `color: darkgrey;`}
 `;

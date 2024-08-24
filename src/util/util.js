@@ -75,20 +75,80 @@ export function prepareCanvas(ctx, canvas_game_board) {
 }
 
 export function getScreen(width, height) {
-    const mapHorizontalBlocks = 16;
-    const mapVerticalBlocks = 8;
+    const maxHorizontalBlocks = 16;
+    const maxVerticalBlocks = 8;
 
     return {
-        screenStepX: width / mapHorizontalBlocks,
-        screenStepY: height / mapVerticalBlocks,
+        screenStepX: width / maxHorizontalBlocks,
+        screenStepY: height / maxVerticalBlocks,
 
         getHorizontalSide(pice) {
             return this.screenStepX * pice;
         },
         getVerticalSide(pice) {
             return this.screenStepY * pice;
+        },
+        /**
+         * Generate array of index elements. Start from 0.
+         *
+         * @param length
+         * @returns {*}
+         */
+        getArrayByLength(length) {
+            return Array(length).fill(1).map((_, i) => i)
+        },
+        getBoxes(ids) {
+            const xArray = this.getArrayByLength(maxHorizontalBlocks) //[0 - 7]
+            const yArray = this.getArrayByLength(maxVerticalBlocks) //[0 - 15]
+            let boxes = [];
+
+                yArray.forEach(y => {
+                    xArray.forEach(x => {
+                        boxes.push([
+                            !x ? x : this.getHorizontalSide(x),
+                            !y ? y : this.getVerticalSide(y),
+                            this.getHorizontalSide(1),
+                            this.getVerticalSide(1)
+                        ])
+                    })
+                })
+
+            console.log({boxes})
+
+            // const boxes = [
+            //     //row 1
+            //     [0, 0, this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(1), 0, this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(2), 0, this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(3), 0, this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(4), 0, this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(5), 0, this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(6), 0, this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(7), 0, this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     // row 2
+            //     [0, this.getVerticalSide(1), this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(1), this.getVerticalSide(1), this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(2), this.getVerticalSide(1), this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(3), this.getVerticalSide(1), this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(4), this.getVerticalSide(1), this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(5), this.getVerticalSide(1), this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(6), this.getVerticalSide(1), this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(7), this.getVerticalSide(1), this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     // row 3
+            //     [0, this.getVerticalSide(2), this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(1), this.getVerticalSide(2), this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(2), this.getVerticalSide(2), this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(3), this.getVerticalSide(2), this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(4), this.getVerticalSide(2), this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(5), this.getVerticalSide(2), this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(6), this.getVerticalSide(2), this.getHorizontalSide(1), this.getVerticalSide(1)],
+            //     [this.getHorizontalSide(7), this.getVerticalSide(2), this.getHorizontalSide(1), this.getVerticalSide(1)],
+            // ];
+
+            return ids.map(id => boxes[id])
         }
     }
+
 }
 
 export function showGameOver(game) {
@@ -107,40 +167,6 @@ export function changeUserHealth() {
     const user_healt_progress = document.getElementById('user_healt_progress')
     const healthProgres = game.user.health * 100 / game.user.maxHealth
     user_healt_progress.value = healthProgres;
-}
-
-export function getBoxes(screen, ids) {
-    const boxes = [
-        //row 1
-        [0, 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(1), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(2), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(3), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(4), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(5), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(6), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(7), 0, screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        // row 2
-        [0, screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(1), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(2), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(3), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(4), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(5), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(6), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(7), screen.getVerticalSide(1), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        // row 3
-        [0, screen.getVerticalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(1), screen.getVerticalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(2), screen.getVerticalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(3), screen.getVerticalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(4), screen.getVerticalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(5), screen.getVerticalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(6), screen.getVerticalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-        [screen.getHorizontalSide(7), screen.getVerticalSide(2), screen.getHorizontalSide(1), screen.getVerticalSide(1)],
-    ];
-
-    return ids.map(id => boxes[id])
 }
 
 export function renderRectangles(ctx, rectangles) {
