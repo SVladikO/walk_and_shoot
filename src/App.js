@@ -17,8 +17,8 @@ import {game} from "./util/glob";
 
 import {changeUserHealth} from './util/util';
 
-import LevelsPage from "./page/levels-page/levels-page.jsx";
-import EditLevelPage from './page/edit-level-page/edit-level-page.jsx'
+import MenuPage from "./page/menu/menu.jsx";
+import EditLevelPage from './page/edit-level/edit-level.jsx'
 import {levels} from "./util/global-variables";
 
 run(game);
@@ -30,7 +30,6 @@ function App() {
     const [selectedUnitIds, setSelectedUnitIds] = useState([]);
     const [selectedEditLevelIds, setSelectedEditLevelIds] = useState([]);
 
-
     const [showLevelsPage, setShowLevelsPage] = useState(true);
     const [showEditLevelPage, setShowEditLevelPage] = useState(false);
     const [showTryAgain, setshowTryAgain] = useState(false);
@@ -39,11 +38,12 @@ function App() {
 
     const onSelectLevel = levelIndex => {
         if (levelIndex > game.levels.length - 1 || levelIndex < 0) {
+            console.warn('wrong level index: ', levelIndex)
             return
         }
 
-        setSelectedLevelId(levelIndex)
         setShowLevelsPage(false);
+        setSelectedLevelId(levelIndex)
         game.changeLevel(levelIndex);
         setUserBulletAmount(game.user.bulletAmount)
     }
@@ -87,34 +87,35 @@ function App() {
 
     return (
         <div>
-            {
-                !showLevelsPage && !showEditLevelPage && !showTryAgain &&
-                <Header>
-                    <LineGroup>
-                        <MenuButton showMenu={setShowLevelsPage}/>
-                        <PrimaryButton onClick={() => onSelectLevel(selectedLevelId - 1)}>PREV</PrimaryButton>
-                        <div>LEVEL {selectedLevelId + 1}</div>
-                        <PrimaryButton onClick={() => onSelectLevel(selectedLevelId + 1)}>NEXT</PrimaryButton>
-                        <UserSpeed/>
-                    </LineGroup>
-                    <LineGroup>
-                        <GunList setUserBulletAmount={setUserBulletAmount}/>
-                        <Bullets amount={userBulletAmount}/>
-                        <Health health={userHealth}/>
-                        <SoundController/>
-                    </LineGroup>
-                </Header>
-            }
-
+            <Header>
+                <LineGroup>
+                    <MenuButton showMenu={setShowLevelsPage}/>
+                    <PrimaryButton onClick={() => onSelectLevel(selectedLevelId - 1)}>PREV</PrimaryButton>
+                    <div>LEVEL {selectedLevelId + 1}</div>
+                    <PrimaryButton onClick={() => onSelectLevel(selectedLevelId + 1)}>NEXT</PrimaryButton>
+                    <UserSpeed/>
+                </LineGroup>
+                <LineGroup>
+                    <GunList setUserBulletAmount={setUserBulletAmount}/>
+                    <Bullets amount={userBulletAmount}/>
+                    <Health health={userHealth}/>
+                    <SoundController/>
+                </LineGroup>
+            </Header>
             {showLevelsPage && (
-                <LevelsPage
+                <MenuPage
                     onSelectLevel={onSelectLevel}
                     onShowEditLevelPage={onShowEditLevelPage}
                 />
             )
             }
             {showEditLevelPage &&
-                <EditLevelPage onSelectLevel={onSelectLevel} selectedEditLevelIds={selectedEditLevelIds}/>}
+                <EditLevelPage
+                    onSelectLevel={onSelectLevel}
+                    selectedEditLevelIds={selectedEditLevelIds}
+                    selectedUnitIds={selectedUnitIds}
+                />
+            }
             {showTryAgain &&
                 <TryAgain selectedLevelId={selectedLevelId} onTryAgain={onTryAgain}
                           onShowLevelsPage={onShowLevelsPage}/>}

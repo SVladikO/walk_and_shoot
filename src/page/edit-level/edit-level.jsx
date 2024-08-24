@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Wrapper, Navigation, NavigationBtn, Row, Block} from './edit-level-page.style'
+import {Wrapper, Navigation, NavigationBtn, Row, Block} from './edit-level.style'
 
 function LevelModification({selectedEditLevelIds, selectedUnitIds}) {
     const [isSelectUnit, setIsSelectUnit] = useState(true)

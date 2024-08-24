@@ -1,6 +1,7 @@
 import {style} from './settings'
 import {game} from './glob';
 import {weapon_gun1, weapon_gun2, weapon_gun3} from '../entity/gun/gun'
+import {getPistolUnit} from "../entity/unit";
 
 export function getRadianAngle(fromX, toX, fromY, toY) {
     var dx = toX - fromX;
@@ -128,7 +129,7 @@ export function getScreen(width, height) {
                 return [x + xIncrement/2, y + yIncrement/2]
             })
 
-            return units;
+            return units.map(unit => [unit[0], unit[1]])
         }
     }
 }

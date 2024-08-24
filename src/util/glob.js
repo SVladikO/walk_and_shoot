@@ -70,7 +70,6 @@ class Game {
         this.flyBullets.forEach(bullet => bullet.move());
         this.flyBullets.forEach(bullet => bullet.render());
         this.flyBullets = this.flyBullets.filter(bullet => !bullet.isDead);
-
         this.user.render(game.mousePositionX, game.mousePositionY);
 
         this.units.forEach(unit => unit.unitRandomDirection())

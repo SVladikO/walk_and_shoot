@@ -15,14 +15,18 @@ export const levels = [
         getRectangles(screen) {
             return screen.getBoxes(this.blockIds)
         },
-        unitIds: [0, 1, 16, 17, 32, 33, 48, 49, 64],
-        getUnits: (screen) => {
-            const units = screen.getUnits(this.unitIds);
+        unitIds: [3, 4, 5, 6, 7, 8, 20, 24, 35, 36, 37, 39, 40, 50, 51, 52, 53, 54, 55, 66, 67, 68, 70, 83, 86, 99, 115],
+        getUnits(screen) {
 
-            return units.map(u => {
+            const units = screen.getUnits(this.unitIds);
+            const ui = units.map(u => {
                 const [x, y] = u;
                 return getPistolUnit(x, y)
             })
+
+            console.log({ui})
+
+            return ui;
         },
     },
     // level 2
@@ -37,6 +41,7 @@ export const levels = [
         getRectangles(screen) {
             return screen.getBoxes(this.blockIds)
         },
+        unitIds: [],
         getUnits: (screen) => ([
             getPistolUnit(screen.getHorizontalSide(7) / 2, screen.getVerticalSide(1) / 4),
             getGunUnit(screen.getHorizontalSide(11) / 2, screen.getVerticalSide(1) / 2),
@@ -55,6 +60,7 @@ export const levels = [
         getRectangles(screen) {
             return screen.getBoxes(this.blockIds)
         },
+        unitIds: [],
         getUnits: (screen) => ([
             getPistolUnit(screen.getHorizontalSide(7) / 2, screen.getVerticalSide(1) / 4, isUnitRandomWalkEnable),
             getGunUnit(screen.getHorizontalSide(11) / 2, screen.getVerticalSide(1) / 2),
@@ -76,6 +82,7 @@ export const levels = [
         getRectangles(screen) {
             return screen.getBoxes([2, 6, 8, 12, 18, 22])
         },
+        unitIds: [],
         getUnits: (screen) => ([
             getPistolUnit(screen.getHorizontalSide(7) / 2, screen.getVerticalSide(1) / 4, isUnitRandomWalkEnable),
             getGunUnit(screen.getHorizontalSide(11) / 2, screen.getVerticalSide(1) / 2),
@@ -99,6 +106,7 @@ export const levels = [
         getRectangles(screen) {
             return screen.getBoxes(this.blockIds)
         },
+        unitIds: [],
         getUnits: (screen) => ([
             getPistolUnit(screen.getHorizontalSide(9) / 2, screen.getVerticalSide(1) / 4, isUnitRandomWalkEnable),
             getGunUnit(screen.getHorizontalSide(11) / 2, screen.getVerticalSide(1) / 2),
@@ -120,6 +128,7 @@ export const levels = [
         getRectangles(screen) {
             return screen.getBoxes(this.blockIds)
         },
+        unitIds: [],
         getUnits: (screen) => ([
             getPistolUnit(screen.getHorizontalSide(3), screen.getVerticalSide(2), isUnitRandomWalkEnable),
             getGunUnit(screen.getHorizontalSide(3), screen.getVerticalSide(2), isUnitRandomWalkEnable),

@@ -7,7 +7,7 @@ import {
     GameTitle,
     LevelWrapper,
     LevelTitle
-} from './levels-page.style.js';
+} from './menu.style.js';
 
 import navigationImg from '../../images/navigation.png';
 
@@ -16,7 +16,7 @@ import {style} from '../../util/settings';
 import {levels} from '../../util/global-variables';
 import {getScreen, prepareCanvas} from "../../util/util";
 
-export default function LevelsPage({onSelectLevel, onShowEditLevelPage, setSelectedEditLevelIds}) {
+export default function Menu({onSelectLevel, onShowEditLevelPage, setSelectedEditLevelIds}) {
     const refLevels = [];
 
     useEffect(() => {
@@ -39,7 +39,6 @@ export default function LevelsPage({onSelectLevel, onShowEditLevelPage, setSelec
                 ctx.lineWidth = 1;
             })
         })
-
     }, [])
 
     const canvasLevels = levels.map((level, index) => {
