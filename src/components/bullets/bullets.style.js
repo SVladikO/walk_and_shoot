@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
     display: flex;
-    justify-content: left;
+    justify-content: right;
     align-items: top;
     flex-direction: row;
     flex-wrap: wrap;
@@ -33,16 +33,16 @@ export const Notification = styled.div`
 
     @keyframes example {
         25% {
-            background-color: rgb(179, 0, 0);
+            background-color: rgb(181, 1, 1);
         }
-        50% {
-            background-color: #000000;
+        60% {
+            background-color: rgb(191, 15, 15);
         }
         75% {
-            background-color: rgb(179, 0, 0);
+            background-color: rgb(0, 63, 179);
         }
         100% {
-            background-color: #000000;
+            background-color: rgb(11, 73, 186);
         }
     }
 `;

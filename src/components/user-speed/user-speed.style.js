@@ -15,7 +15,7 @@ export const InputWrapper = styled.div`
     gap: 2px;
     
     & > input {
-        width: 40px;
+        width: 30px;
         font-size: 16px;
     }
 
@@ -23,7 +23,7 @@ export const InputWrapper = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 40px;
+        width: 25px;
         border: solid 1px black;
         border-radius: 2px;
     }

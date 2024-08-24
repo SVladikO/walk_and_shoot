@@ -75,9 +75,12 @@ export function prepareCanvas(ctx, canvas_game_board) {
 }
 
 export function getScreen(width, height) {
+    const mapHorizontalBlocks = 16;
+    const mapVerticalBlocks = 8;
+
     return {
-        screenStepX: width / 8,
-        screenStepY: height / 3,
+        screenStepX: width / mapHorizontalBlocks,
+        screenStepY: height / mapVerticalBlocks,
 
         getHorizontalSide(pice) {
             return this.screenStepX * pice;

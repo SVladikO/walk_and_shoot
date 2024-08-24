@@ -1,12 +1,14 @@
 import React, {useEffect} from 'react';
-import {Wrapper, SubWrapper, Canvas, GameTitle, LevelWrapper, LevelTitle} from './menu.style';
+import {Wrapper, SubWrapper, NavigationWrapper, Canvas, GameTitle, LevelWrapper, LevelTitle} from './levels-page.style.js';
 
-import {getScreen, prepareCanvas, restartGame} from "../../util/util";
-import {game} from '../../util/glob';
+import navigationImg from '../../images/navigation.png';
+
+
 import {style} from '../../util/settings';
 import {levels} from '../../util/global-variables';
+import {getScreen, prepareCanvas} from "../../util/util";
 
-export default function Menu({onSelectLevel}) {
+export default function LevelsPage({onSelectLevel, onShowEditLevelPage}) {
     const refLevels = [];
 
     useEffect(() => {
@@ -51,6 +53,11 @@ export default function Menu({onSelectLevel}) {
             <SubWrapper>
                 {canvasLevels}
             </SubWrapper>
+            <button onClick={onShowEditLevelPage}>Show edit level page</button>
+            <NavigationWrapper>
+                <span> Walk by</span>
+                <img src={navigationImg}/>
+            </NavigationWrapper>
         </Wrapper>
     )
 }

@@ -42,3 +42,8 @@ export const LevelTitle = styled.div`
     color: black;
 `;
 
+export const NavigationWrapper = styled.div`
+    position: absolute;
+    bottom: 0;
+    left: 0;
+`;

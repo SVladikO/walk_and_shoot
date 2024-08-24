@@ -3,6 +3,8 @@ import './App.css';
 
 import {Header, LineGroup} from './App.style.js';
 
+
+import {PrimaryButton} from './components/button/button';
 import Health from "./components/health/health";
 import Bullets from "./components/bullets/bullets";
 import GunList from "./components/gun-list/gun-list";
@@ -10,32 +12,47 @@ import TryAgain from './components/try-again/try-again';
 import UserSpeed from "./components/user-speed/user-speed";
 import MenuButton from "./components/menu-button/menu-button";
 import SoundController from "./components/sound-controller/sound-controller";
-import Menu from "./components/menu/menu";
 import {run} from "./script/run";
 import {game} from "./util/glob";
 
 import {changeUserHealth} from './util/util';
+
+import LevelsPage from "./page/levels-page/levels-page.jsx";
+import EditLevelPage from './page/edit-level-page/edit-level-page.jsx'
 
 run(game);
 
 function App() {
     const [userHealth, setUserHealth] = useState(100);
     const [selectedLevelId, setSelectedLevelId] = useState(0);
-    const [showMenu, setShowMenu] = useState(true);
+    const [showLevelsPage, setShowLevelsPage] = useState(true);
+    const [showEditLevelPage, setShowEditLevelPage] = useState(false);
     const [showTryAgain, setshowTryAgain] = useState(false);
+
     const [userBulletAmount, setUserBulletAmount] = useState(8);
 
     const onSelectLevel = levelIndex => {
+        if(levelIndex > game.levels.length - 1 || levelIndex < 0) {
+            return
+        }
+
         setSelectedLevelId(levelIndex)
-        setShowMenu(false);
+        setShowLevelsPage(false);
         game.changeLevel(levelIndex);
         setUserBulletAmount(game.user.bulletAmount)
     }
 
-    const onShowMenu = () => {
-        setShowMenu(true)
+    const onShowLevelsPage = () => {
+        setShowLevelsPage(true)
         setshowTryAgain(false)
     }
+
+
+    const onShowEditLevelPage = () => {
+        setShowLevelsPage(false)
+        setShowEditLevelPage(true)
+    }
+
     const onTryAgain = () => {
         onSelectLevel(selectedLevelId);
         setshowTryAgain(false)
@@ -63,22 +80,29 @@ function App() {
 
     return (
         <div>
-            <Header>
-                <LineGroup>
-                    <Health health={userHealth}/>
-                    <Bullets amount={userBulletAmount}/>
-                </LineGroup>
-                <GunList setUserBulletAmount={setUserBulletAmount}/>
-                <LineGroup>
-                    <div>LEVEL {selectedLevelId + 1}</div>
-                    <div onClick={() => onSelectLevel(selectedLevelId + 1)}>NEXT LEVEL</div>
-                    <UserSpeed/>
-                    <SoundController/>
-                    <MenuButton showMenu={setShowMenu}/>
-                </LineGroup>
-            </Header>
-            {showMenu && <Menu onSelectLevel={onSelectLevel}/>}
-            {showTryAgain && <TryAgain selectedLevelId={selectedLevelId} onTryAgain={onTryAgain} onShowMenu={onShowMenu}/>}
+            {
+                !showLevelsPage && !showEditLevelPage && !showTryAgain &&
+                <Header>
+                    <LineGroup>
+                        <MenuButton showMenu={setShowLevelsPage}/>
+                        <PrimaryButton onClick={() => onSelectLevel(selectedLevelId - 1)}>PREV</PrimaryButton>
+                        <div>LEVEL {selectedLevelId + 1}</div>
+                        <PrimaryButton onClick={() => onSelectLevel(selectedLevelId + 1)}>NEXT</PrimaryButton>
+                        <UserSpeed/>
+                    </LineGroup>
+                    <LineGroup>
+                        <GunList setUserBulletAmount={setUserBulletAmount}/>
+                        <Bullets amount={userBulletAmount}/>
+                        <Health health={userHealth}/>
+                        <SoundController/>
+                    </LineGroup>
+                </Header>
+}
+
+            {showLevelsPage && <LevelsPage onSelectLevel={onSelectLevel} onShowEditLevelPage={onShowEditLevelPage} />}
+            {showEditLevelPage && <EditLevelPage onSelectLevel={onSelectLevel}/>}
+            {showTryAgain &&
+                <TryAgain selectedLevelId={selectedLevelId} onTryAgain={onTryAgain} onShowLevelsPage={onShowLevelsPage}/>}
         </div>
     );
 }
