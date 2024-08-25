@@ -52,6 +52,7 @@ function App() {
     const onShowMenuPage = () => {
         setShowMenuPage(true)
         setShowTryAgainPage(false)
+        setShowEditLevelPage(false)
     }
 
     const onShowEditLevelPage = index => {
@@ -118,6 +119,7 @@ function App() {
                     onSelectLevel={onSelectLevel}
                     selectedEditLevelIds={selectedEditLevelIds}
                     selectedUnitIds={selectedUnitIds}
+                    onShowMenuPage={onShowMenuPage}
                 />
             }
             {showTryAgainPage &&

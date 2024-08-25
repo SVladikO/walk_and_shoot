@@ -10,7 +10,7 @@ import gunGUNSrc from '../../images/gun3.png';
 
 import {ReactComponent as WalkIcon} from '../../icons/walk.svg';
 
-function EditLevel({selectedEditLevelIds, selectedUnitIds}) {
+function EditLevel({selectedEditLevelIds, selectedUnitIds, onShowMenuPage}) {
     const [isSelectUnit, setIsSelectUnit] = useState(true)
     const [isEnemyWalk, setIsEnemyWalk] = useState(false)
     const [selectEnemyType, setSelectEnemyType] = useState(ENEMY_TYPE.PISTOL)
@@ -64,6 +64,7 @@ function EditLevel({selectedEditLevelIds, selectedUnitIds}) {
         <Wrapper>
             <div>
                 <Navigation>
+                    <NavigationBtn onClick={onShowMenuPage}>MENU</NavigationBtn>
                     <NavigationBtn onClick={clearBlocks}>Clear board</NavigationBtn>
                     <NavigationBtn onClick={() => setSelectedUnits([])}>Clear enemies</NavigationBtn>
                     <div>
