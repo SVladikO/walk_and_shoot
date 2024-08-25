@@ -9,6 +9,8 @@ import {
     LevelTitle
 } from './menu.style.js';
 
+import {SecondaryButton} from '../../components/button/button'
+
 import navigationImg from '../../images/navigation.png';
 
 
@@ -64,7 +66,7 @@ export default function Menu({onSelectLevel, onShowEditLevelPage, setSelectedEdi
             <SubWrapper>
                 {canvasLevels}
             </SubWrapper>
-            <button onClick={() => onShowEditLevelPage()}>CREATE NEW LEVEL</button>
+            <SecondaryButton onClick={() => onShowEditLevelPage()}>CREATE NEW LEVEL</SecondaryButton>
             <NavigationWrapper>
                 <span> Walk by</span>
                 <img src={navigationImg}/>
