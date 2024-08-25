@@ -16,15 +16,15 @@ export const run = (game) => {
             return
         }
 
-        game.units
+        game.enemies
             // .filter(unit => game.user.isVisibleForMe(unit.x, unit.y))
-            .filter(unit => isUnutVisiable(unit, game))
-            .forEach(unit => unit.shoot())
+            .filter(enemy => isUnutVisiable(enemy, game))
+            .forEach(enemy => enemy.shoot())
 
-        game.units.forEach(unit => unit.isShootEnabled = true);
+        game.enemies.forEach(enemy => enemy.isShootEnabled = true);
 
         setTimeout(() => {
-            game.units.forEach(unit => unit.isShootEnabled = false);
+            game.enemies.forEach(enemy => enemy.isShootEnabled = false);
         }, 1000);
 
     }, 2000)

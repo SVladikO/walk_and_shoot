@@ -15,7 +15,8 @@ import {SecondaryButton} from '../../components/button/button'
 import navigationImg from '../../images/navigation.png';
 
 import {style} from '../../util/settings';
-import {getScreen, prepareCanvas} from "../../util/util";
+import {getScreen} from "../../util/screen";
+import {prepareCanvas} from "../../util/util";
 
 export default function Menu({onSelectLevel, onShowEditLevelPage, setLevelForEdit}) {
     const refLevels = [];

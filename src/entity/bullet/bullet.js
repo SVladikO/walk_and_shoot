@@ -50,7 +50,7 @@ export default class Bullet {
 
         //For unit bullet check does it kick UNIT
         if (this.ownerType === UNIT_TYPE.USER) {
-            game.units.forEach(unit => {
+            game.enemies.forEach(unit => {
                 if (unit.isDead()) {
                     return;
                 }

@@ -78,7 +78,6 @@ function App() {
     }
 
     useEffect(() => {
-        alert('app useEffect')
         game.init();
 
         window.addEventListener("keypress", (event) => {

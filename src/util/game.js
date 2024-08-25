@@ -1,12 +1,12 @@
 import {
     isUnutVisiable,
     clearCanvas,
-    getScreen,
     prepareCanvas,
     renderRectangles,
     showGameOver,
 } from "./util";
 import {getUser} from "../entity/unit";
+import {getScreen} from '../util/screen';
 
 import {getLocalStorage, LOCAL_STORAGE_KEY} from './localstorage';
 
@@ -40,7 +40,7 @@ class Game {
         this.levelId = 0;
         this.flyBullets = [];
         this.user = null; //getUser();
-        this.units = null;// levels[this.levelId].getUnits(screenMainCanvas);
+        this.enemies = null;// levels[this.levelId].getEnemies(screenMainCanvas);
         this.rectangles = null;// levels[this.levelId].getRectangles(screenMainCanvas);
         this.finishCoordinates = null;//levels[this.levelId].getFinishCoordinates(screenMainCanvas);
 
@@ -60,7 +60,8 @@ class Game {
             if (self.inPlay) {
                 self.drawAll();
             }
-            console.log(111, window.requestAnimationFrame(loop));
+
+            window.requestAnimationFrame(loop);
         }
     }
 
@@ -73,13 +74,14 @@ class Game {
         this.user.reloadGun()
         this.flyBullets = [];
         this.rectangles = screenMainCanvas.getBoxes(levels[levelIndex].blockIds);
-        this.units = screenMainCanvas.getUnits(levels[levelIndex].enemies);
+        this.enemies = screenMainCanvas.getEnemies(levels[levelIndex].enemies);
         // this.finishCoordinates = levels[levelIndex].getFinishCoordinates(screenMainCanvas);
+
     }
 
     stop() {
         this.inPlay = false;
-        this.units = [];
+        this.enemies = [];
         this.rectangles = [];
     }
 
@@ -96,14 +98,14 @@ class Game {
         this.flyBullets = this.flyBullets.filter(bullet => !bullet.isDead);
         this.user.render(game.mousePositionX, game.mousePositionY, this.ctx);
 
-        this.units.forEach(unit => unit.unitRandomDirection())
-        this.units.forEach(unit => unit.move())
-        this.units
+        this.enemies.forEach(enemy => enemy.unitRandomDirection())
+        this.enemies.forEach(enemy => enemy.move())
+        this.enemies
             // .filter(unit => this.user.isVisibleForMe(unit.x, unit.y))
-            .filter(unit => isUnutVisiable(unit, this) || unit.isDead())
-            .forEach(unit => unit.render(this.user.x, this.user.y, this.ctx))
+            .filter(enemy => isUnutVisiable(enemy, this) || enemy.isDead())
+            .forEach(enemy => enemy.render(this.user.x, this.user.y, this.ctx))
 
-        // this.units = this.units.filter(unit => !unit.isDead())
+        // this.enemies = this.enemies.filter(unit => !unit.isDead())
 
         showGameOver(this);
 
