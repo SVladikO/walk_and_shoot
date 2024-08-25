@@ -58,7 +58,7 @@ class Game {
         this.flyBullets = [];
         this.rectangles = this.levels[levelIndex].getRectangles(screenMainCanvas);
         this.units = this.levels[levelIndex].getUnits(screenMainCanvas);
-        this.finishCoordinates = levels[levelIndex].getFinishCoordinates(screenMainCanvas);
+        // this.finishCoordinates = levels[levelIndex].getFinishCoordinates(screenMainCanvas);
     }
 
     stop() {
@@ -98,7 +98,7 @@ class Game {
     renderEnd() {
         this.ctx.beginPath();
         this.ctx.font = "30px Arial";
-        this.ctx.fillText('FINISH', this.finishCoordinates.x, this.finishCoordinates.y);
+        // this.ctx.fillText('FINISH', this.finishCoordinates.x, this.finishCoordinates.y);
     }
 }
 
