@@ -80,6 +80,12 @@ function App() {
                 setUserBulletAmount(game.user.bulletAmount);
             }
         });
+        // console.log('setUserBulletAmount ')
+        window.canvas_game_board.addEventListener("mousedown", () => {
+            // console.log('shoot outside')
+            game.user.shoot()
+            setUserBulletAmount(game.user.bulletAmount);
+        });
     }, []);
 
     setInterval(() => {
@@ -107,7 +113,7 @@ function App() {
                 </LineGroup>
             </Header>
 
-            <CanvasBoard id="canvas_game_board" isVisible={!showMenuPage && !showTryAgainPage && !showEditLevelPage} />
+            <CanvasBoard id="canvas_game_board" isVisible={!showMenuPage && !showTryAgainPage && !showEditLevelPage}/>
 
             {showMenuPage && (
                 <MenuPage

@@ -48,14 +48,6 @@ class Game {
             this.mousePositionX = e.clientX;
             this.mousePositionY = e.clientY - 50
         });
-
-        this.canvas_board.addEventListener("mousedown", () => {
-            this.user.shoot()
-        });
-
-        this.canvas_board.addEventListener("mousedown", () => {
-            // setUserBulletAmount(game.user.bulletAmount);
-        });
     }
 
     start(levelIndex) {
