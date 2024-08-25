@@ -8,7 +8,6 @@ import {PrimaryButton} from './components/button/button';
 import Health from "./components/health/health";
 import Bullets from "./components/bullets/bullets";
 import GunList from "./components/gun-list/gun-list";
-import TryAgain from './components/try-again/try-again';
 import UserSpeed from "./components/user-speed/user-speed";
 import MenuButton from "./components/menu-button/menu-button";
 import SoundController from "./components/sound-controller/sound-controller";
@@ -18,7 +17,9 @@ import {game} from "./util/glob";
 import {changeUserHealth} from './util/util';
 
 import MenuPage from "./page/menu/menu.jsx";
+import TryAgainPage from './page/try-again/try-again';
 import EditLevelPage from './page/edit-level/edit-level.jsx'
+
 import {levels} from "./util/global-variables";
 
 run(game);
@@ -48,7 +49,7 @@ function App() {
         setUserBulletAmount(game.user.bulletAmount)
     }
 
-    const onShowLevelsPage = () => {
+    const onShowMenuPage = () => {
         setShowMenuPage(true)
         setShowTryAgainPage(false)
     }
@@ -120,8 +121,10 @@ function App() {
                 />
             }
             {showTryAgainPage &&
-                <TryAgain selectedLevelId={selectedLevelId} onTryAgain={onTryAgain}
-                          onshowMenuPage={onShowLevelsPage}/>}
+                <TryAgainPage
+                    selectedLevelId={selectedLevelId}
+                    onTryAgain={onTryAgain}
+                    onShowMenuPage={onShowMenuPage}/>}
         </div>
     );
 }
