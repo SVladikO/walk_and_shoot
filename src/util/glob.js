@@ -49,14 +49,20 @@ class Game {
     }
 
     changeLevel(levelIndex) {
-        this.inPlay = true;
         this.levelId = levelIndex;
+        this.inPlay = true;
         this.user = getUser();
         this.user.reloadGun()
         this.flyBullets = [];
         this.rectangles = this.levels[levelIndex].getRectangles(screenMainCanvas);
         this.units = this.levels[levelIndex].getUnits(screenMainCanvas);
         this.finishCoordinates = levels[levelIndex].getFinishCoordinates(screenMainCanvas);
+    }
+
+    stop() {
+        this.inPlay = false;
+        this.units = [];
+        this.rectangles = [];
     }
 
     drawAll() {

@@ -53,6 +53,7 @@ function App() {
         setShowMenuPage(true)
         setShowTryAgainPage(false)
         setShowEditLevelPage(false)
+        game.stop();
     }
 
     const onShowEditLevelPage = index => {
@@ -94,7 +95,7 @@ function App() {
         <div>
             <Header isVisible={!showMenuPage && !showTryAgainPage && !showEditLevelPage}>
                 <LineGroup>
-                    <MenuButton showMenu={setShowMenuPage}/>
+                    <MenuButton showMenu={onShowMenuPage}/>
                     <PrimaryButton onClick={() => onSelectLevel(selectedLevelId - 1)}>PREV</PrimaryButton>
                     <div>LEVEL {selectedLevelId + 1}</div>
                     <PrimaryButton onClick={() => onSelectLevel(selectedLevelId + 1)}>NEXT</PrimaryButton>
