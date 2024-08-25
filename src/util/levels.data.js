@@ -9,9 +9,9 @@ export const levels = [
         getRectangles(screen) {
             return screen.getBoxes(this.blockIds)
         },
-        unitIds: [{"type":"PISTOL","index":35,"isWalk":false},{"type":"PISTOL","index":68,"isWalk":false},{"type":"PISTOL","index":112,"isWalk":false},{"type":"PISTOL","index":102,"isWalk":false},{"type":"PISTOL","index":73,"isWalk":false},{"type":"PISTOL","index":6,"isWalk":false},{"type":"PISTOL","index":59,"isWalk":false},{"type":"GUN","index":94,"isWalk":false},{"type":"AK47","index":64,"isWalk":true}],
+        enemies: [{"type":"PISTOL","index":35,"isWalk":false},{"type":"PISTOL","index":68,"isWalk":false},{"type":"PISTOL","index":112,"isWalk":false},{"type":"PISTOL","index":102,"isWalk":false},{"type":"PISTOL","index":73,"isWalk":false},{"type":"PISTOL","index":6,"isWalk":false},{"type":"PISTOL","index":59,"isWalk":false},{"type":"GUN","index":94,"isWalk":false},{"type":"AK47","index":64,"isWalk":true}],
         getUnits(screen) {
-            return screen.getUnits(this.unitIds);
+            return screen.getUnits(this.enemies);
         },
     },
     // level 2
@@ -20,9 +20,9 @@ export const levels = [
         getRectangles(screen) {
             return screen.getBoxes(this.blockIds)
         },
-        unitIds: [{"type":"PISTOL","index":36,"isWalk":false},{"type":"PISTOL","index":72,"isWalk":false},{"type":"GUN","index":116,"isWalk":false},{"type":"AK47","index":6,"isWalk":true},{"type":"AK47","index":104,"isWalk":true},{"type":"AK47","index":59,"isWalk":true},{"type":"GUN","index":15,"isWalk":true},{"type":"GUN","index":127,"isWalk":true}],
+        enemies: [{"type":"PISTOL","index":36,"isWalk":false},{"type":"PISTOL","index":72,"isWalk":false},{"type":"GUN","index":116,"isWalk":false},{"type":"AK47","index":6,"isWalk":true},{"type":"AK47","index":104,"isWalk":true},{"type":"AK47","index":59,"isWalk":true},{"type":"GUN","index":15,"isWalk":true},{"type":"GUN","index":127,"isWalk":true}],
         getUnits(screen) {
-            return screen.getUnits(this.unitIds);
+            return screen.getUnits(this.enemies);
         }
     },
     // levels 3
@@ -31,7 +31,7 @@ export const levels = [
         getRectangles(screen) {
             return screen.getBoxes(this.blockIds)
         },
-        unitIds: [],
+        enemies: [],
         getUnits: (screen) => ([
             getPistolUnit(screen.getHorizontalSide(7) / 2, screen.getVerticalSide(1) / 4, isUnitRandomWalkEnable),
             getGunUnit(screen.getHorizontalSide(11) / 2, screen.getVerticalSide(1) / 2),
@@ -47,7 +47,7 @@ export const levels = [
         getRectangles(screen) {
             return screen.getBoxes([2, 6, 8, 12, 18, 22])
         },
-        unitIds: [],
+        enemies: [],
         getUnits: (screen) => ([
             getPistolUnit(screen.getHorizontalSide(7) / 2, screen.getVerticalSide(1) / 4, isUnitRandomWalkEnable),
             getGunUnit(screen.getHorizontalSide(11) / 2, screen.getVerticalSide(1) / 2),
@@ -65,7 +65,7 @@ export const levels = [
         getRectangles(screen) {
             return screen.getBoxes(this.blockIds)
         },
-        unitIds: [],
+        enemies: [],
         getUnits: (screen) => ([
             getPistolUnit(screen.getHorizontalSide(9) / 2, screen.getVerticalSide(1) / 4, isUnitRandomWalkEnable),
             getGunUnit(screen.getHorizontalSide(11) / 2, screen.getVerticalSide(1) / 2),
@@ -81,7 +81,7 @@ export const levels = [
         getRectangles(screen) {
             return screen.getBoxes(this.blockIds)
         },
-        unitIds: [],
+        enemies: [],
         getUnits: (screen) => ([
             getPistolUnit(screen.getHorizontalSide(3), screen.getVerticalSide(2), isUnitRandomWalkEnable),
             getGunUnit(screen.getHorizontalSide(3), screen.getVerticalSide(2), isUnitRandomWalkEnable),
@@ -93,24 +93,6 @@ export const levels = [
             getPistolUnit(screen.getHorizontalSide(7), screen.getVerticalSide(1), isUnitRandomWalkEnable),
         ]),
     },
-    // // level 7
-    // {
-    //     getRectangles(screen) {
-    //         return screen.getBoxes( [2, 6, 8, 10, 12, 14, 16, 20])
-    //     },
-    //     getUnits: (screen) => ([
-    //
-    //     ]),
-    // },
-    // // level 7
-    // {
-    //     getRectangles(screen) {
-    //         return screen.getBoxes( [3, 9, 11, 13, 21])
-    //     },
-    //     getUnits: (screen) => ([
-    //
-    //     ]),
-    // },
 ]
 
 
