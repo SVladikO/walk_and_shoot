@@ -20,7 +20,7 @@ import MenuPage from "./page/menu/menu.jsx";
 import TryAgainPage from './page/try-again/try-again';
 import EditLevelPage from './page/edit-level/edit-level.jsx'
 
-import {levels} from "./util/global-variables";
+import {levels} from "./util/levels.data.js";
 
 run(game);
 

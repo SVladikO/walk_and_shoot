@@ -7,7 +7,7 @@ import {
     showGameOver,
 } from "./util";
 import {getUser} from "../entity/unit";
-import {levels} from "./global-variables";
+import {levels} from "./levels.data.js";
 
 const headerHeight = 50
 /**

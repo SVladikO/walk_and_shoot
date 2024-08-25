@@ -15,7 +15,7 @@ import navigationImg from '../../images/navigation.png';
 
 
 import {style} from '../../util/settings';
-import {levels} from '../../util/global-variables';
+import {levels} from '../../util/levels.data.js';
 import {getScreen, prepareCanvas} from "../../util/util";
 
 export default function Menu({onSelectLevel, onShowEditLevelPage, setSelectedEditLevelIds}) {
