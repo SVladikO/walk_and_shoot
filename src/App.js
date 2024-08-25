@@ -30,7 +30,7 @@ function App() {
     const [selectedUnitIds, setSelectedUnitIds] = useState([]);
     const [selectedEditLevelIds, setSelectedEditLevelIds] = useState([]);
 
-    const [showLevelsPage, setShowLevelsPage] = useState(true);
+    const [showMenuPage, setShowMenuPage] = useState(true);
     const [showEditLevelPage, setShowEditLevelPage] = useState(false);
     const [showTryAgain, setshowTryAgain] = useState(false);
 
@@ -42,19 +42,19 @@ function App() {
             return
         }
 
-        setShowLevelsPage(false);
+        setShowMenuPage(false);
         setSelectedLevelId(levelIndex)
         game.changeLevel(levelIndex);
         setUserBulletAmount(game.user.bulletAmount)
     }
 
     const onShowLevelsPage = () => {
-        setShowLevelsPage(true)
+        setShowMenuPage(true)
         setshowTryAgain(false)
     }
 
     const onShowEditLevelPage = index => {
-        setShowLevelsPage(false)
+        setShowMenuPage(false)
         setShowEditLevelPage(true)
         if (index ===undefined) {
             return
@@ -92,7 +92,7 @@ function App() {
         <div>
             <Header>
                 <LineGroup>
-                    <MenuButton showMenu={setShowLevelsPage}/>
+                    <MenuButton showMenu={setShowMenuPage}/>
                     <PrimaryButton onClick={() => onSelectLevel(selectedLevelId - 1)}>PREV</PrimaryButton>
                     <div>LEVEL {selectedLevelId + 1}</div>
                     <PrimaryButton onClick={() => onSelectLevel(selectedLevelId + 1)}>NEXT</PrimaryButton>
@@ -105,7 +105,7 @@ function App() {
                     <SoundController/>
                 </LineGroup>
             </Header>
-            {showLevelsPage && (
+            {showMenuPage && (
                 <MenuPage
                     onSelectLevel={onSelectLevel}
                     onShowEditLevelPage={onShowEditLevelPage}
@@ -121,7 +121,7 @@ function App() {
             }
             {showTryAgain &&
                 <TryAgain selectedLevelId={selectedLevelId} onTryAgain={onTryAgain}
-                          onShowLevelsPage={onShowLevelsPage}/>}
+                          onshowMenuPage={onShowLevelsPage}/>}
         </div>
     );
 }
