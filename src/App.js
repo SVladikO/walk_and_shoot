@@ -56,8 +56,11 @@ function App() {
     const onShowEditLevelPage = index => {
         setShowLevelsPage(false)
         setShowEditLevelPage(true)
-        setSelectedUnitIds(levels[index].unitIds)
-        setSelectedEditLevelIds(levels[index].blockIds)
+        if (index ===undefined) {
+            return
+        }
+        setSelectedUnitIds([...levels[index].unitIds])
+        setSelectedEditLevelIds([...levels[index].blockIds])
     }
 
     const onTryAgain = () => {

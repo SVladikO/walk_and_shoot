@@ -1,8 +1,8 @@
 import {style} from './settings'
 import {game} from './glob';
 import {weapon_gun1, weapon_gun2, weapon_gun3} from '../entity/gun/gun'
-import {getPistolUnit} from "../entity/unit";
-
+import {getAkUnit, getGunUnit, getPistolUnit} from "../entity/unit";
+import {ENEMY_TYPE} from '../entity/unit/type.js';
 export function getRadianAngle(fromX, toX, fromY, toY) {
     var dx = toX - fromX;
     var dy = toY - fromY;
@@ -118,18 +118,41 @@ export function getScreen(width, height) {
 
             return ids.map(id => boxes[id])
         },
-        getUnits(ids) {
-            const blocks = this.getBoxes(ids);
 
-            const xIncrement = this.getHorizontalSide(1);
-            const yIncrement = this.getVerticalSide(1);
+        /**
+         * Get enemies coordinates with guns on map
+         * @param [{"type":"PISTOL","index":35,"isWalk":false}] enemies
+         * @returns {*}
+         */
+        getUnits(levelEnemies) {
+            const ids = levelEnemies.map(e => e.index)
+            const enemyCoordinatesBeta = this.getBoxes(ids);
 
-            const units = blocks.map(b => {
-                const [x, y] = b;
-                return [x + xIncrement/2, y + yIncrement/2]
+            const xIncrement = this.getHorizontalSide(1)/2;
+            const yIncrement = this.getVerticalSide(1)/2;
+
+            const enemyCoordinates = enemyCoordinatesBeta.map(e => [e[0] + xIncrement, e[1] + yIncrement]);
+
+            return enemyCoordinates.map((enemyCoordinate, index) => {
+                const levelEnemy = levelEnemies[index]
+                const [x,y] = enemyCoordinate;
+
+                let getEnemyFunc;
+
+                switch (levelEnemy.type) {
+                    case ENEMY_TYPE.PISTOL:
+                        getEnemyFunc = getPistolUnit;
+                        break;
+                    case ENEMY_TYPE.AK47:
+                        getEnemyFunc = getAkUnit;
+                        break;
+                    case ENEMY_TYPE.GUN:
+                        getEnemyFunc = getGunUnit;
+                        break;
+                }
+
+                return getEnemyFunc(x, y, levelEnemy.isWalk);
             })
-
-            return units.map(unit => [unit[0], unit[1]])
         }
     }
 }

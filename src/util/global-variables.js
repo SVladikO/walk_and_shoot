@@ -15,18 +15,9 @@ export const levels = [
         getRectangles(screen) {
             return screen.getBoxes(this.blockIds)
         },
-        unitIds: [3, 4, 5, 6, 7, 8, 20, 24, 35, 36, 37, 39, 40, 50, 51, 52, 53, 54, 55, 66, 67, 68, 70, 83, 86, 99, 115],
+        unitIds: [{"type":"PISTOL","index":35,"isWalk":false},{"type":"PISTOL","index":68,"isWalk":false},{"type":"PISTOL","index":112,"isWalk":false},{"type":"PISTOL","index":102,"isWalk":false},{"type":"PISTOL","index":73,"isWalk":false},{"type":"PISTOL","index":6,"isWalk":false},{"type":"PISTOL","index":59,"isWalk":false},{"type":"GUN","index":94,"isWalk":false}],
         getUnits(screen) {
-
-            const units = screen.getUnits(this.unitIds);
-            const ui = units.map(u => {
-                const [x, y] = u;
-                return getPistolUnit(x, y)
-            })
-
-            console.log({ui})
-
-            return ui;
+            return screen.getUnits(this.unitIds);
         },
     },
     // level 2
@@ -37,16 +28,14 @@ export const levels = [
                 y: screen.getVerticalSide(5)
             }
         },
-        blockIds: [2, 6, 12, 16, 17, 18, 19, 20, 21, 22, 23],
+        blockIds: [19, 20, 21, 28, 29, 30, 35, 41, 46, 56, 71, 73, 83, 94, 99, 100, 101, 108, 109, 110],
         getRectangles(screen) {
             return screen.getBoxes(this.blockIds)
         },
-        unitIds: [],
-        getUnits: (screen) => ([
-            getPistolUnit(screen.getHorizontalSide(7) / 2, screen.getVerticalSide(1) / 4),
-            getGunUnit(screen.getHorizontalSide(11) / 2, screen.getVerticalSide(1) / 2),
-            getPistolUnit(screen.getHorizontalSide(15) / 2, screen.getVerticalSide(1) / 2, isUnitRandomWalkEnable),
-        ])
+        unitIds: [{"type":"PISTOL","index":36,"isWalk":false},{"type":"PISTOL","index":72,"isWalk":false},{"type":"GUN","index":116,"isWalk":false},{"type":"AK47","index":6,"isWalk":true},{"type":"AK47","index":104,"isWalk":true},{"type":"AK47","index":59,"isWalk":true},{"type":"GUN","index":15,"isWalk":true},{"type":"GUN","index":127,"isWalk":true}],
+        getUnits(screen) {
+            return screen.getUnits(this.unitIds);
+        }
     },
     // levels 3
     {

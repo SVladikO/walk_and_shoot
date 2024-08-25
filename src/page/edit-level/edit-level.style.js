@@ -3,20 +3,27 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
     background: white;
     padding: 50px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 `;
 
 export const Navigation = styled.div`
     padding: 10px 0;
     display: flex;
-    gap: 16px;
+    justify-content: right;
+    gap: 15px;
 `;
 
 export const NavigationBtn = styled.button`
-    padding: 4px;
-    border: none;
+    padding: 8px;
+    border: solid 1px black;
     border-radius: 4px;
-    ${p => p.isAddUnit && `background: green; color: black;`}
-    ${p => p.isAddBlock && `background: black; color: white;`}
+    color: black;
+    font-size: 18px;
+    
+    ${p => p.isAddUnit && `background: #63f663; `}
+    ${p => p.isAddBlock && `background: black; color: white`}
 `;
 
 export const Row = styled.div`
@@ -37,7 +44,23 @@ export const Block = styled.div`
             : p.isIncludeBlock
                     ? `color: white; background: black;`
                     : p.isIncludeUnit
-                            ? `color: white; background: green;`
+                            ? `background: #63f663;`
                             : `color: darkgrey;`
+    }
+    
+    position: relative;
+    
+    & > img {
+        height: 10px;
+        widht: auto;
+        position: absolute;
+        bottom: 0;
+    } 
+    & > svg {
+        height: 10px;
+        widht: auto;
+        position: absolute;
+        top: 0;
+        right: 0;
     }
 `;
