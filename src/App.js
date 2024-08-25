@@ -27,8 +27,7 @@ function App() {
     const [userHealth, setUserHealth] = useState(100);
     const [selectedLevelId, setSelectedLevelId] = useState(0);
 
-    const [selectedUnitIds, setSelectedUnitIds] = useState([]);
-    const [selectedEditLevelIds, setSelectedEditLevelIds] = useState([]);
+    const [levelForEdit, setLevelForEdit] = useState();
 
     const [showMenuPage, setShowMenuPage] = useState(true);
     const [showTryAgainPage, setShowTryAgainPage] = useState(false);
@@ -64,10 +63,11 @@ function App() {
         setShowMenuPage(false)
         setShowEditLevelPage(true)
         if (index === undefined) {
+            setLevelForEdit({});
             return
         }
-        setSelectedUnitIds([...levels[index].enemies])
-        setSelectedEditLevelIds([...levels[index].blockIds])
+
+        setLevelForEdit(levels[index]);
     }
 
     const onTryAgain = () => {
@@ -108,7 +108,7 @@ function App() {
                 </LineGroup>
                 <LineGroup>
                     <GunList setUserBulletAmount={setUserBulletAmount}/>
-                    <Bullets amount={userBulletAmount}/>
+                    <Bullets amount={userBulletAmount} maxAmount={game?.user?.weapon?.reloadBulletAmount || 8}/>
                     <Health health={userHealth}/>
                     <SoundController/>
                 </LineGroup>
@@ -120,14 +120,13 @@ function App() {
                 <MenuPage
                     onSelectLevel={onSelectLevel}
                     onShowEditLevelPage={onShowEditLevelPage}
+                    setLevelForEdit={setLevelForEdit}
                 />
             )
             }
             {showEditLevelPage &&
                 <EditLevelPage
-                    onSelectLevel={onSelectLevel}
-                    selectedEditLevelIds={selectedEditLevelIds}
-                    selectedUnitIds={selectedUnitIds}
+                    levelForEdit={levelForEdit}
                     onShowMenuPage={onShowMenuPage}
                 />
             }

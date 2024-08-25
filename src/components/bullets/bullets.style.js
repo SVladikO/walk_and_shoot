@@ -8,16 +8,34 @@ export const Wrapper = styled.div`
     flex-wrap: wrap;
     gap: 3px;
     width: 180px;
-    //border:solid 1px black;
-
-    & > div {
-        border-radius: 50%;
-        background: black;
-        height: 10px;
-        width: 10px;
-    }
+    position: relative;
 `;
 
+export const BulletWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    position: absolute;
+    flex-wrap: wrap;
+`
+export const Bullet = styled.div`
+    background: #ff0c0c;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+`
+export const UsedBulletWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+`;
+export const UsedBullet = styled.div`
+    background: #bababc;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+`
 export const Notification = styled.div`
     padding: 10px;
     background: rgb(179, 0, 0);

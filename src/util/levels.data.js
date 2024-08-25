@@ -34,8 +34,8 @@ const levels = [
     },
     // levels 3
     {
-        blockIds: [1, 6, 11, 12, 17, 22],
-        enemies: [],
+        blockIds: [17, 19, 21, 23, 25, 27, 29, 31, 49, 51, 53, 55, 57, 59, 61, 63, 81, 83, 85, 87, 89, 91, 93, 95, 113, 115, 117, 119, 121, 123, 125, 127],
+        enemies:[{"type":"AK47","index":73,"isWalk":false},{"type":"AK47","index":77,"isWalk":false},{"type":"AK47","index":43,"isWalk":false},{"type":"AK47","index":30,"isWalk":false},{"type":"PISTOL","index":20,"isWalk":true},{"type":"AK47","index":120,"isWalk":false},{"type":"PISTOL","index":99,"isWalk":true},{"type":"GUN","index":52,"isWalk":false},{"type":"GUN","index":24,"isWalk":true},{"type":"GUN","index":126,"isWalk":true}],
     },
     // level 4
     {
@@ -48,6 +48,6 @@ const levels = [
 const wasLevelsInitialized = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS)
 
 if (!wasLevelsInitialized) {
-    setLocalStorage(LOCAL_STORAGE_KEY.LEVELS, levels)
+    setLocalStorage(LOCAL_STORAGE_KEY.LEVELS, levels.map((level, index) => ({...level, id: index + 1})))
 }
 

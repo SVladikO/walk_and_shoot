@@ -8,16 +8,17 @@ import gunPistolSrc from '../../images/gun1.png';
 import gunAK47Src from '../../images/gun2.png';
 import gunGUNSrc from '../../images/gun3.png';
 
-import { getLocalStorage, setLocalStorage, LOCAL_STORAGE_KEY } from '../../util/localstorage';
+import {getLocalStorage, setLocalStorage, LOCAL_STORAGE_KEY} from '../../util/localstorage';
 
 import {ReactComponent as WalkIcon} from '../../icons/walk.svg';
 
-function EditLevel({selectedEditLevelIds, selectedUnitIds, onShowMenuPage}) {
+function EditLevel({levelForEdit, onShowMenuPage}) {
     const [isSelectUnit, setIsSelectUnit] = useState(true)
     const [isEnemyWalk, setIsEnemyWalk] = useState(false)
     const [selectEnemyType, setSelectEnemyType] = useState(ENEMY_TYPE.PISTOL)
-    const [selectedUnits, setSelectedUnits] = useState(selectedUnitIds)
-    const [selectedBlocks, setSelectedBlocks] = useState(selectedEditLevelIds)
+
+    const [selectedEnemies, setSelectedEnemies] = useState(levelForEdit.enemies || [])
+    const [selectedBlocks, setSelectedBlocks] = useState(levelForEdit.blockIds || [])
 
     const addBlock = index => {
         setSelectedBlocks([...selectedBlocks, index])
@@ -28,21 +29,21 @@ function EditLevel({selectedEditLevelIds, selectedUnitIds, onShowMenuPage}) {
     }
 
     const addUnit = index => {
-        setSelectedUnits([...selectedUnits, {type: selectEnemyType, index, isWalk: isEnemyWalk}])
+        setSelectedEnemies([...selectedEnemies, {type: selectEnemyType, index, isWalk: isEnemyWalk}])
     }
 
     const deleteUnit = index => {
-        setSelectedUnits([...selectedUnits.filter(el => el.index !== index)])
+        setSelectedEnemies([...selectedEnemies.filter(el => el.index !== index)])
     }
 
     const clearBlocks = () => {
         setSelectedBlocks([])
-        setSelectedUnits([])
+        setSelectedEnemies([])
     }
 
     const onBlockClick = index => () => {
         if (isSelectUnit) {
-            const isIncludeUnit = selectedUnits.map(el => el.index).includes(index);
+            const isIncludeUnit = selectedEnemies.map(el => el.index).includes(index);
             isIncludeUnit
                 ? deleteUnit(index)
                 : addUnit(index)
@@ -60,23 +61,34 @@ function EditLevel({selectedEditLevelIds, selectedUnitIds, onShowMenuPage}) {
     const tdLength = 16;
     let indexAccamulator = 0;
 
-    console.log({selectedUnits})
+    console.log({selectedEnemies})
 
     return (
         <div>
 
             <NavigationBtn onClick={onShowMenuPage}>MENU</NavigationBtn>
             <NavigationBtn onClick={() => {
-                const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS)
-                setLocalStorage(LOCAL_STORAGE_KEY.LEVELS, [...levels, {
-                    enemies: selectedUnits,
-                    blockIds: selectedBlocks
-                }])
+                const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS);
+
+                if (levelForEdit.id) {
+                    //Update level data
+                    const level = levels.find(level => level.id === levelForEdit.id)
+                    level.blockIds = selectedBlocks;
+                    level.enemies = selectedEnemies;
+                    setLocalStorage(LOCAL_STORAGE_KEY.LEVELS, levels);
+                } else {
+                    //Add new level
+                    setLocalStorage(LOCAL_STORAGE_KEY.LEVELS, [...levels, {
+                        id: levels.length + 1,
+                        enemies: selectedEnemies,
+                        blockIds: selectedBlocks
+                    }])
+                }
                 onShowMenuPage();
             }}>Save level
             </NavigationBtn>
             <NavigationBtn onClick={clearBlocks}>Clear board</NavigationBtn>
-            <NavigationBtn onClick={() => setSelectedUnits([])}>Clear enemies</NavigationBtn>
+            <NavigationBtn onClick={() => setSelectedEnemies([])}>Clear enemies</NavigationBtn>
             <Wrapper>
                 <div>
                     <Navigation>
@@ -97,7 +109,7 @@ function EditLevel({selectedEditLevelIds, selectedUnitIds, onShowMenuPage}) {
                                     {
                                         Array(tdLength).fill(1).map(__ => {
                                             const index = indexAccamulator++
-                                            const unit = selectedUnits.find(el => el.index === index)
+                                            const unit = selectedEnemies.find(el => el.index === index)
 
                                             let gunSrc;
 
@@ -140,7 +152,7 @@ function EditLevel({selectedEditLevelIds, selectedUnitIds, onShowMenuPage}) {
 
                     <div>
                         Selected units:
-                        <input value={`${JSON.stringify(selectedUnits)}`}/>
+                        <input value={`${JSON.stringify(selectedEnemies)}`}/>
                     </div>
 
                 </div>
