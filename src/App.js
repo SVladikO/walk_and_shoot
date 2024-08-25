@@ -37,8 +37,8 @@ function App() {
 
     const onSelectLevel = levelIndex => {
         const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS);
+        game.stop();
 
-        game.init();
         if (levelIndex > levels.length - 1 || levelIndex < 0) {
             console.warn('wrong level index: ', levelIndex)
             return
@@ -78,6 +78,9 @@ function App() {
     }
 
     useEffect(() => {
+        alert('app useEffect')
+        game.init();
+
         window.addEventListener("keypress", (event) => {
             if (event.key === ' ') {
                 setUserBulletAmount(game.user.bulletAmount);

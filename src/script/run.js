@@ -1,17 +1,6 @@
 import {isUnutVisiable} from '../util/util';
 
 export const run = (game) => {
-    loop();
-
-    function loop() {
-        if (game.user?.isDead()) {
-            game.inPlay = false;
-        }
-
-        game.drawAll();
-        window.requestAnimationFrame(loop);
-    }
-
     window.addEventListener("keypress", (event) => {
         game.user.enableMove(event.key)
         event.key === ' ' && game.user.reloadGun()

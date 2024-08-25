@@ -19,7 +19,7 @@ export const BulletWrapper = styled.div`
     flex-wrap: wrap;
 `
 export const Bullet = styled.div`
-    background: #ff0c0c;
+    background: #000000;
     height: 10px;
     width: 10px;
     border-radius: 50%;

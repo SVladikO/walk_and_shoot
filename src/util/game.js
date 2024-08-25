@@ -48,6 +48,20 @@ class Game {
             this.mousePositionX = e.clientX;
             this.mousePositionY = e.clientY - 50
         });
+
+        const self = this;
+        loop();
+
+        function loop() {
+            if (self?.user?.isDead()) {
+                self.inPlay = false;
+            }
+
+            if (self.inPlay) {
+                self.drawAll();
+            }
+            console.log(111, window.requestAnimationFrame(loop));
+        }
     }
 
     start(levelIndex) {
