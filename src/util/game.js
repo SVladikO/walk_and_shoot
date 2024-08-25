@@ -7,7 +7,8 @@ import {
     showGameOver,
 } from "./util";
 import {getUser} from "../entity/unit";
-import {levels} from "./levels.data.js";
+
+import {getLocalStorage, LOCAL_STORAGE_KEY} from './localstorage';
 
 const headerHeight = 50
 /**
@@ -38,7 +39,6 @@ class Game {
         this.inPlay = false;
         this.levelId = 0;
         this.flyBullets = [];
-        this.levels = levels;
         this.user = null; //getUser();
         this.units = null;// levels[this.levelId].getUnits(screenMainCanvas);
         this.rectangles = null;// levels[this.levelId].getRectangles(screenMainCanvas);
@@ -51,13 +51,15 @@ class Game {
     }
 
     start(levelIndex) {
+        const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS);
+        console.log('game.start', {levels})
         this.levelId = levelIndex;
         this.inPlay = true;
         this.user = getUser();
         this.user.reloadGun()
         this.flyBullets = [];
-        this.rectangles = this.levels[levelIndex].getRectangles(screenMainCanvas);
-        this.units = this.levels[levelIndex].getUnits(screenMainCanvas);
+        this.rectangles = screenMainCanvas.getBoxes(levels[levelIndex].blockIds);
+        this.units = screenMainCanvas.getUnits(levels[levelIndex].enemies);
         // this.finishCoordinates = levels[levelIndex].getFinishCoordinates(screenMainCanvas);
     }
 

@@ -8,6 +8,8 @@ import gunPistolSrc from '../../images/gun1.png';
 import gunAK47Src from '../../images/gun2.png';
 import gunGUNSrc from '../../images/gun3.png';
 
+import { getLocalStorage, setLocalStorage, LOCAL_STORAGE_KEY } from '../../util/localstorage';
+
 import {ReactComponent as WalkIcon} from '../../icons/walk.svg';
 
 function EditLevel({selectedEditLevelIds, selectedUnitIds, onShowMenuPage}) {
@@ -62,12 +64,22 @@ function EditLevel({selectedEditLevelIds, selectedUnitIds, onShowMenuPage}) {
 
     return (
         <div>
+
             <NavigationBtn onClick={onShowMenuPage}>MENU</NavigationBtn>
+            <NavigationBtn onClick={() => {
+                const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS)
+                setLocalStorage(LOCAL_STORAGE_KEY.LEVELS, [...levels, {
+                    enemies: selectedUnits,
+                    blockIds: selectedBlocks
+                }])
+                onShowMenuPage();
+            }}>Save level
+            </NavigationBtn>
+            <NavigationBtn onClick={clearBlocks}>Clear board</NavigationBtn>
+            <NavigationBtn onClick={() => setSelectedUnits([])}>Clear enemies</NavigationBtn>
             <Wrapper>
                 <div>
                     <Navigation>
-                        <NavigationBtn onClick={clearBlocks}>Clear board</NavigationBtn>
-                        <NavigationBtn onClick={() => setSelectedUnits([])}>Clear enemies</NavigationBtn>
                         <div>
                             <NavigationBtn
                                 isAddBlock={!isSelectUnit}
@@ -130,6 +142,7 @@ function EditLevel({selectedEditLevelIds, selectedUnitIds, onShowMenuPage}) {
                         Selected units:
                         <input value={`${JSON.stringify(selectedUnits)}`}/>
                     </div>
+
                 </div>
                 <div>
                     {isSelectUnit &&

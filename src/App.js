@@ -1,8 +1,7 @@
 import {useState, useEffect} from "react";
 import './App.css';
-
+import './util/levels.data.js'; //By import we put levels in localStorage
 import {Header, LineGroup, CanvasBoard} from './App.style.js';
-
 
 import {PrimaryButton} from './components/button/button';
 import Health from "./components/health/health";
@@ -16,11 +15,11 @@ import {game} from "./util/game";
 
 import {changeUserHealth} from './util/util';
 
+import {getLocalStorage, LOCAL_STORAGE_KEY} from './util/localstorage';
+
 import MenuPage from "./page/menu/menu.jsx";
 import TryAgainPage from './page/try-again/try-again';
 import EditLevelPage from './page/edit-level/edit-level.jsx'
-
-import {levels} from "./util/levels.data.js";
 
 run(game);
 
@@ -38,8 +37,10 @@ function App() {
     const [userBulletAmount, setUserBulletAmount] = useState(8);
 
     const onSelectLevel = levelIndex => {
+        const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS);
+
         game.init();
-        if (levelIndex > game.levels.length - 1 || levelIndex < 0) {
+        if (levelIndex > levels.length - 1 || levelIndex < 0) {
             console.warn('wrong level index: ', levelIndex)
             return
         }
@@ -58,12 +59,14 @@ function App() {
     }
 
     const onShowEditLevelPage = index => {
+        const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS);
+
         setShowMenuPage(false)
         setShowEditLevelPage(true)
         if (index === undefined) {
             return
         }
-        setSelectedUnitIds([...levels[index].unitIds])
+        setSelectedUnitIds([...levels[index].enemies])
         setSelectedEditLevelIds([...levels[index].blockIds])
     }
 
@@ -80,9 +83,7 @@ function App() {
                 setUserBulletAmount(game.user.bulletAmount);
             }
         });
-        // console.log('setUserBulletAmount ')
         window.canvas_game_board.addEventListener("mousedown", () => {
-            // console.log('shoot outside')
             game.user.shoot()
             setUserBulletAmount(game.user.bulletAmount);
         });

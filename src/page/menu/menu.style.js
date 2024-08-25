@@ -10,10 +10,10 @@ export const Wrapper = styled.div`
     position: absolute;
     top: 0;
     width: 100%;
-    height: 100%;
-    padding: 40px 0 0 0;
+    height: 200%;
+    padding: 40px 0 1000px 0;
     background: #000000;
-    overflow-y: auto;
+    overflow: auto;
 `;
 export const GameTitle = styled.h1`
     color: #950101;
@@ -33,7 +33,7 @@ export const SubWrapper = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     gap: 30px;
-    max-width: 800px;
+    max-width: 1200px;
 `;
 export const LevelTitle = styled.div`
     font-size: 20px;

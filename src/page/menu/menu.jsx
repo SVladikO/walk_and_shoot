@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import {getLocalStorage, LOCAL_STORAGE_KEY} from '../../util/localstorage';
 import {
     Wrapper,
     SubWrapper,
@@ -13,17 +14,20 @@ import {SecondaryButton} from '../../components/button/button'
 
 import navigationImg from '../../images/navigation.png';
 
-
 import {style} from '../../util/settings';
-import {levels} from '../../util/levels.data.js';
 import {getScreen, prepareCanvas} from "../../util/util";
 
 export default function Menu({onSelectLevel, onShowEditLevelPage, setSelectedEditLevelIds}) {
     const refLevels = [];
 
+    const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS);
+
     useEffect(() => {
+        const screen = getScreen(200, 100);
+
         refLevels.forEach((ref, index) => {
-            const rectangles = levels[index].getRectangles(getScreen(200, 100))
+            const rectangles = screen.getBoxes(levels[index].blockIds)
+            console.log({rectangles})
             const ctx = ref.current.getContext('2d');
             ctx.canvas.width = 200;
             ctx.canvas.height = 100;
@@ -53,7 +57,7 @@ export default function Menu({onSelectLevel, onShowEditLevelPage, setSelectedEdi
                 <button onClick={e => {
                     e.stopPropagation();
                     onShowEditLevelPage(index)
-                }}>Edit map</button>
+                }}>EDIT MAP</button>
             </LevelWrapper>
         )
     })
@@ -68,7 +72,6 @@ export default function Menu({onSelectLevel, onShowEditLevelPage, setSelectedEdi
             </SubWrapper>
             <SecondaryButton onClick={() => onShowEditLevelPage()}>CREATE NEW LEVEL</SecondaryButton>
             <NavigationWrapper>
-                <span> Walk by</span>
                 <img src={navigationImg}/>
             </NavigationWrapper>
         </Wrapper>
