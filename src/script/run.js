@@ -22,15 +22,6 @@ export const run = (game) => {
 
     window.addEventListener("keyup", (event) => game.inPlay && game.user.disableMove(event.key));
 
-    game.canvas_board.addEventListener("mousemove", e => {
-        game.mousePositionX = e.clientX;
-        game.mousePositionY = e.clientY - 50
-    });
-
-    game.canvas_board.addEventListener("mousedown", () => {
-        game.user.shoot()
-    });
-
     setInterval(() => {
         if (!game.inPlay) {
             return

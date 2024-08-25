@@ -1,5 +1,5 @@
 import {style} from './settings'
-import {game} from './glob';
+import {game} from './game';
 import {weapon_gun1, weapon_gun2, weapon_gun3} from '../entity/gun/gun'
 import {getAkUnit, getGunUnit, getPistolUnit} from "../entity/unit";
 import {ENEMY_TYPE} from '../entity/unit/type.js';

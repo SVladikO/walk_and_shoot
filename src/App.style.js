@@ -11,6 +11,10 @@ export const Header = styled.div`
     position: relative;
 `;
 
+export const CanvasBoard = styled.canvas`
+    display: ${p => p.isVisible ? 'flex' : 'none'};
+`;
+
 export const LineGroup = styled.div`
     display: flex;
     gap: 15px;

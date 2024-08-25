@@ -1,7 +1,7 @@
 import {useState} from 'react';
 
 import {Wrapper, InputWrapper} from './user-speed.style';
-import {game} from '../../util/glob';
+import {game} from '../../util/game';
 
 export default function UserSpeed() {
     const [userSpeed, setUserSpeed] = useState(game.unitSpeedStep || 1);

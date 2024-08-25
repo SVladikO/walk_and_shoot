@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import './App.css';
 
-import {Header, LineGroup} from './App.style.js';
+import {Header, LineGroup, CanvasBoard} from './App.style.js';
 
 
 import {PrimaryButton} from './components/button/button';
@@ -12,7 +12,7 @@ import UserSpeed from "./components/user-speed/user-speed";
 import MenuButton from "./components/menu-button/menu-button";
 import SoundController from "./components/sound-controller/sound-controller";
 import {run} from "./script/run";
-import {game} from "./util/glob";
+import {game} from "./util/game";
 
 import {changeUserHealth} from './util/util';
 
@@ -38,6 +38,7 @@ function App() {
     const [userBulletAmount, setUserBulletAmount] = useState(8);
 
     const onSelectLevel = levelIndex => {
+        game.init();
         if (levelIndex > game.levels.length - 1 || levelIndex < 0) {
             console.warn('wrong level index: ', levelIndex)
             return
@@ -45,7 +46,7 @@ function App() {
 
         setShowMenuPage(false);
         setSelectedLevelId(levelIndex)
-        game.changeLevel(levelIndex);
+        game.start(levelIndex);
         setUserBulletAmount(game.user.bulletAmount)
     }
 
@@ -59,7 +60,7 @@ function App() {
     const onShowEditLevelPage = index => {
         setShowMenuPage(false)
         setShowEditLevelPage(true)
-        if (index ===undefined) {
+        if (index === undefined) {
             return
         }
         setSelectedUnitIds([...levels[index].unitIds])
@@ -79,15 +80,12 @@ function App() {
                 setUserBulletAmount(game.user.bulletAmount);
             }
         });
-        game.canvas_board.addEventListener("mousedown", () => {
-            setUserBulletAmount(game.user.bulletAmount);
-        });
     }, []);
 
     setInterval(() => {
         if (game.user?.isDead()) {
             setShowTryAgainPage(true)
-            game.changeLevel(selectedLevelId);
+            game.start(selectedLevelId);
         }
     }, 1000)
 
@@ -108,6 +106,9 @@ function App() {
                     <SoundController/>
                 </LineGroup>
             </Header>
+
+            <CanvasBoard id="canvas_game_board" isVisible={!showMenuPage && !showTryAgainPage && !showEditLevelPage} />
+
             {showMenuPage && (
                 <MenuPage
                     onSelectLevel={onSelectLevel}

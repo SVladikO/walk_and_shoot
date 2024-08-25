@@ -61,87 +61,89 @@ function EditLevel({selectedEditLevelIds, selectedUnitIds, onShowMenuPage}) {
     console.log({selectedUnits})
 
     return (
-        <Wrapper>
-            <div>
-                <Navigation>
-                    <NavigationBtn onClick={onShowMenuPage}>MENU</NavigationBtn>
-                    <NavigationBtn onClick={clearBlocks}>Clear board</NavigationBtn>
-                    <NavigationBtn onClick={() => setSelectedUnits([])}>Clear enemies</NavigationBtn>
-                    <div>
-                        <NavigationBtn
-                            isAddBlock={!isSelectUnit}
-                            onClick={() => setIsSelectUnit(false)}>
-                            Select block
-                        </NavigationBtn>
-                        /
-                        <NavigationBtn isAddUnit={isSelectUnit} onClick={() => setIsSelectUnit(true)}>Select
-                            unit</NavigationBtn>
-                    </div>
-                </Navigation>
-                {
-                    Array(trLength).fill(1).map(_ => (
-                            <Row>
-                                {
-                                    Array(tdLength).fill(1).map(__ => {
-                                        const index = indexAccamulator++
-                                        const unit = selectedUnits.find(el => el.index === index)
+        <div>
+            <NavigationBtn onClick={onShowMenuPage}>MENU</NavigationBtn>
+            <Wrapper>
+                <div>
+                    <Navigation>
+                        <NavigationBtn onClick={clearBlocks}>Clear board</NavigationBtn>
+                        <NavigationBtn onClick={() => setSelectedUnits([])}>Clear enemies</NavigationBtn>
+                        <div>
+                            <NavigationBtn
+                                isAddBlock={!isSelectUnit}
+                                onClick={() => setIsSelectUnit(false)}>
+                                Select block
+                            </NavigationBtn>
+                            /
+                            <NavigationBtn isAddUnit={isSelectUnit} onClick={() => setIsSelectUnit(true)}>Select
+                                unit</NavigationBtn>
+                        </div>
+                    </Navigation>
+                    {
+                        Array(trLength).fill(1).map(_ => (
+                                <Row>
+                                    {
+                                        Array(tdLength).fill(1).map(__ => {
+                                            const index = indexAccamulator++
+                                            const unit = selectedUnits.find(el => el.index === index)
 
-                                        let gunSrc;
+                                            let gunSrc;
 
-                                        if (unit) {
-                                            switch (unit.type) {
-                                                case ENEMY_TYPE.PISTOL:
-                                                    gunSrc = gunPistolSrc;
-                                                    break;
-                                                case ENEMY_TYPE.AK47:
-                                                    gunSrc = gunAK47Src;
-                                                    break;
-                                                case ENEMY_TYPE.GUN:
-                                                    gunSrc = gunGUNSrc;
-                                                    break;
+                                            if (unit) {
+                                                switch (unit.type) {
+                                                    case ENEMY_TYPE.PISTOL:
+                                                        gunSrc = gunPistolSrc;
+                                                        break;
+                                                    case ENEMY_TYPE.AK47:
+                                                        gunSrc = gunAK47Src;
+                                                        break;
+                                                    case ENEMY_TYPE.GUN:
+                                                        gunSrc = gunGUNSrc;
+                                                        break;
+                                                }
                                             }
-                                        }
 
-                                        return (
-                                            <Block
-                                                isIncludeUnit={!!unit}
-                                                isIncludeBlock={selectedBlocks.includes(index)}
-                                                isSelectUnit={isSelectUnit}
-                                                onClick={onBlockClick(index)}
-                                            >
-                                                {index}
-                                                {gunSrc && <img src={gunSrc}/>}
-                                                {unit && unit.isWalk && <WalkIcon/>}
-                                            </Block>
-                                        )
-                                    })
-                                }
-                            </Row>
+                                            return (
+                                                <Block
+                                                    isIncludeUnit={!!unit}
+                                                    isIncludeBlock={selectedBlocks.includes(index)}
+                                                    isSelectUnit={isSelectUnit}
+                                                    onClick={onBlockClick(index)}
+                                                >
+                                                    {index}
+                                                    {gunSrc && <img src={gunSrc}/>}
+                                                    {unit && unit.isWalk && <WalkIcon/>}
+                                                </Block>
+                                            )
+                                        })
+                                    }
+                                </Row>
+                            )
                         )
-                    )
-                }
-                <div>
-                    Selected blocks:
-                    <input value={`[${selectedBlocks.sort((a, b) => a - b).join(', ')}]`}/>
-                </div>
+                    }
+                    <div>
+                        Selected blocks:
+                        <input value={`[${selectedBlocks.sort((a, b) => a - b).join(', ')}]`}/>
+                    </div>
 
-                <div>
-                    Selected units:
-                    <input value={`${JSON.stringify(selectedUnits)}`}/>
+                    <div>
+                        Selected units:
+                        <input value={`${JSON.stringify(selectedUnits)}`}/>
+                    </div>
                 </div>
-            </div>
-            <div>
-                {isSelectUnit &&
-                    <Units
-                        selectEnemyType={selectEnemyType}
-                        setSelectEnemyType={setSelectEnemyType}
-                        isEnemyWalk={isEnemyWalk}
-                        setIsEnemyWalk={setIsEnemyWalk}
+                <div>
+                    {isSelectUnit &&
+                        <Units
+                            selectEnemyType={selectEnemyType}
+                            setSelectEnemyType={setSelectEnemyType}
+                            isEnemyWalk={isEnemyWalk}
+                            setIsEnemyWalk={setIsEnemyWalk}
 
-                    />
-                }
-            </div>
-        </Wrapper>
+                        />
+                    }
+                </div>
+            </Wrapper>
+        </div>
     )
 }
 

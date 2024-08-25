@@ -19,11 +19,8 @@ const headerHeight = 50
  */
 export const screenMainCanvas = getScreen(window.innerWidth, window.innerHeight - headerHeight);
 
-const canvas_game_board = document.getElementById('canvas_game_board');
-export const ctx = canvas_game_board.getContext("2d");
-
 class Game {
-    constructor() {
+    init() {
         this.canvas_board = document.getElementById('canvas_game_board');
         this.ctx = this.canvas_board.getContext("2d");
 
@@ -46,9 +43,22 @@ class Game {
         this.units = null;// levels[this.levelId].getUnits(screenMainCanvas);
         this.rectangles = null;// levels[this.levelId].getRectangles(screenMainCanvas);
         this.finishCoordinates = null;//levels[this.levelId].getFinishCoordinates(screenMainCanvas);
+
+        this.canvas_board.addEventListener("mousemove", e => {
+            this.mousePositionX = e.clientX;
+            this.mousePositionY = e.clientY - 50
+        });
+
+        this.canvas_board.addEventListener("mousedown", () => {
+            this.user.shoot()
+        });
+
+        this.canvas_board.addEventListener("mousedown", () => {
+            // setUserBulletAmount(game.user.bulletAmount);
+        });
     }
 
-    changeLevel(levelIndex) {
+    start(levelIndex) {
         this.levelId = levelIndex;
         this.inPlay = true;
         this.user = getUser();
@@ -76,14 +86,14 @@ class Game {
         this.flyBullets.forEach(bullet => bullet.move());
         this.flyBullets.forEach(bullet => bullet.render());
         this.flyBullets = this.flyBullets.filter(bullet => !bullet.isDead);
-        this.user.render(game.mousePositionX, game.mousePositionY);
+        this.user.render(game.mousePositionX, game.mousePositionY, this.ctx);
 
         this.units.forEach(unit => unit.unitRandomDirection())
         this.units.forEach(unit => unit.move())
         this.units
             // .filter(unit => this.user.isVisibleForMe(unit.x, unit.y))
             .filter(unit => isUnutVisiable(unit, this) || unit.isDead())
-            .forEach(unit => unit.render(this.user.x, this.user.y))
+            .forEach(unit => unit.render(this.user.x, this.user.y, this.ctx))
 
         // this.units = this.units.filter(unit => !unit.isDead())
 

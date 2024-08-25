@@ -3,7 +3,7 @@ import {GUN_TYPE} from '../gun/type';
 import {weapon_gun3} from "../gun/gun";
 import Bullet from '../bullet/bullet';
 import {style} from '../../util/settings';
-import {ctx, game} from '../../util/glob';
+import {game} from '../../util/game';
 import {
     getRadianAngle,
     getRandom,
@@ -199,7 +199,7 @@ export class Unit {
         return this.weapon.shoot(this.angle, angle => new Bullet(startBulletX, startBulletY, angle, this.weapon, this.unitType));
     }
 
-    render(directionX, directionY) {
+    render(directionX, directionY, ctx) {
         this.updateAngle(directionX, directionY)
 
         ctx.beginPath();
@@ -268,7 +268,7 @@ export class Unit {
         this.angle = getRadianAngle(this.x, toX, this.y, toY)
     }
 
-    updateAngleForMobile(fromX, fromY) {
+    updateAngleForMobile(fromX, fromY, ctx) {
         const width = ctx.canvas.width;
         const height = ctx.canvas.height;
         const toX = 0; //width - moveTabletDirectionCenter.x;
@@ -279,7 +279,7 @@ export class Unit {
         this.angle = Math.atan2(dy, dx);
     }
 
-    renderDirection() {
+    renderDirection(ctx) {
         const step = 1;
 
         const circlX = this.x + Math.cos(this.angle) * this.visibilityRadius;
