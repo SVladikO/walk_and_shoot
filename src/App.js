@@ -3,7 +3,7 @@ import './App.css';
 import './util/levels.data.js'; //By import we put levels in localStorage
 import {Header, LineGroup, CanvasBoard} from './App.style.js';
 
-import {PrimaryButton} from './components/button/button';
+import {PrimaryButton, ThirdButton} from './components/button/button';
 import Health from "./components/health/health";
 import Bullets from "./components/bullets/bullets";
 import GunList from "./components/gun-list/gun-list";
@@ -101,9 +101,9 @@ function App() {
             <Header isVisible={!showMenuPage && !showTryAgainPage && !showEditLevelPage}>
                 <LineGroup>
                     <MenuButton showMenu={onShowMenuPage}/>
-                    <PrimaryButton onClick={() => onSelectLevel(selectedLevelId - 1)}>PREV</PrimaryButton>
+                    <ThirdButton onClick={() => onSelectLevel(selectedLevelId - 1)}>PREV</ThirdButton>
                     <div>LEVEL {selectedLevelId + 1}</div>
-                    <PrimaryButton onClick={() => onSelectLevel(selectedLevelId + 1)}>NEXT</PrimaryButton>
+                    <ThirdButton onClick={() => onSelectLevel(selectedLevelId + 1)}>NEXT</ThirdButton>
                     <UserSpeed/>
                 </LineGroup>
                 <LineGroup>
