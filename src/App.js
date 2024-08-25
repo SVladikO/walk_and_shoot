@@ -31,8 +31,8 @@ function App() {
     const [selectedEditLevelIds, setSelectedEditLevelIds] = useState([]);
 
     const [showMenuPage, setShowMenuPage] = useState(true);
+    const [showTryAgainPage, setShowTryAgainPage] = useState(false);
     const [showEditLevelPage, setShowEditLevelPage] = useState(false);
-    const [showTryAgain, setshowTryAgain] = useState(false);
 
     const [userBulletAmount, setUserBulletAmount] = useState(8);
 
@@ -50,7 +50,7 @@ function App() {
 
     const onShowLevelsPage = () => {
         setShowMenuPage(true)
-        setshowTryAgain(false)
+        setShowTryAgainPage(false)
     }
 
     const onShowEditLevelPage = index => {
@@ -65,7 +65,7 @@ function App() {
 
     const onTryAgain = () => {
         onSelectLevel(selectedLevelId);
-        setshowTryAgain(false)
+        setShowTryAgainPage(false)
         setUserHealth(100);
         changeUserHealth();
     }
@@ -83,14 +83,14 @@ function App() {
 
     setInterval(() => {
         if (game.user?.isDead()) {
-            setshowTryAgain(true)
+            setShowTryAgainPage(true)
             game.changeLevel(selectedLevelId);
         }
     }, 1000)
 
     return (
         <div>
-            <Header>
+            <Header isVisible={!showMenuPage && !showTryAgainPage && !showEditLevelPage}>
                 <LineGroup>
                     <MenuButton showMenu={setShowMenuPage}/>
                     <PrimaryButton onClick={() => onSelectLevel(selectedLevelId - 1)}>PREV</PrimaryButton>
@@ -119,7 +119,7 @@ function App() {
                     selectedUnitIds={selectedUnitIds}
                 />
             }
-            {showTryAgain &&
+            {showTryAgainPage &&
                 <TryAgain selectedLevelId={selectedLevelId} onTryAgain={onTryAgain}
                           onshowMenuPage={onShowLevelsPage}/>}
         </div>

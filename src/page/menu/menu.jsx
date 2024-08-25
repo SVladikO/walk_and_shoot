@@ -64,7 +64,7 @@ export default function Menu({onSelectLevel, onShowEditLevelPage, setSelectedEdi
             <SubWrapper>
                 {canvasLevels}
             </SubWrapper>
-            <button onClick={() => onShowEditLevelPage()}>Show edit level page</button>
+            <button onClick={() => onShowEditLevelPage()}>CREATE NEW LEVEL</button>
             <NavigationWrapper>
                 <span> Walk by</span>
                 <img src={navigationImg}/>

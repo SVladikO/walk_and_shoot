@@ -3,10 +3,12 @@ import styled from "styled-components";
 export const Header = styled.div`
     height: 60px;
     background: white;
-    display: flex;
+    display: ${p => p.isVisible ? 'flex' : 'none'};
     align-items: center;
     justify-content: space-between;
     padding: 0 10px;
+    z-index: 1;
+    position: relative;
 `;
 
 export const LineGroup = styled.div`

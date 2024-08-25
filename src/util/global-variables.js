@@ -15,7 +15,7 @@ export const levels = [
         getRectangles(screen) {
             return screen.getBoxes(this.blockIds)
         },
-        unitIds: [{"type":"PISTOL","index":35,"isWalk":false},{"type":"PISTOL","index":68,"isWalk":false},{"type":"PISTOL","index":112,"isWalk":false},{"type":"PISTOL","index":102,"isWalk":false},{"type":"PISTOL","index":73,"isWalk":false},{"type":"PISTOL","index":6,"isWalk":false},{"type":"PISTOL","index":59,"isWalk":false},{"type":"GUN","index":94,"isWalk":false}],
+        unitIds: [{"type":"PISTOL","index":35,"isWalk":false},{"type":"PISTOL","index":68,"isWalk":false},{"type":"PISTOL","index":112,"isWalk":false},{"type":"PISTOL","index":102,"isWalk":false},{"type":"PISTOL","index":73,"isWalk":false},{"type":"PISTOL","index":6,"isWalk":false},{"type":"PISTOL","index":59,"isWalk":false},{"type":"GUN","index":94,"isWalk":false},{"type":"AK47","index":64,"isWalk":true}],
         getUnits(screen) {
             return screen.getUnits(this.unitIds);
         },
