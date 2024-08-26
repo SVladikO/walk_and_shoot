@@ -19,7 +19,7 @@ export const run = (game) => {
         game.enemies
             // .filter(unit => game.user.isVisibleForMe(unit.x, unit.y))
             .filter(enemy => isUnutVisiable(enemy, game))
-            .forEach(enemy => enemy.shoot())
+            .forEach(enemy => enemy.shootSingle())
 
         game.enemies.forEach(enemy => enemy.isShootEnabled = true);
 

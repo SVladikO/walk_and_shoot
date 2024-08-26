@@ -35,7 +35,7 @@ export class Unit {
 
         this.isRandomMoveEnable = isRandomMoveEnable;
         this.isShootEnabled = false;
-        this.shootSpeedIndicator = weapon.shootSpeedStep;
+        this.shootSpeedAccamulator = weapon.shootSpeedStep;
         this.showFireFromGunImage = 0;
         this.weapon = weapon;
         this.bulletAmount = weapon.bulletAmount;
@@ -144,17 +144,17 @@ export class Unit {
         !game.isMute && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.reload, 0.4);
     }
 
-    shoot() {
+    /**
+     * One click one shoot.
+     */
+    shootSingle() {
         if (this.isDead()) {
             return;
         }
 
-        // if (!this.shootSpeedIndicator) {
-        this.shootSpeedIndicator = this.weapon.shootSpeedStep;
-
+        //Empty gun sound for no bullets.
         if (this.bulletAmount <= 0 && this.unitType === UNIT_TYPE.USER) {
             !game.isMute && this.unitType === UNIT_TYPE.USER && playSound('./sound/gun-empty.mp3', 0.4)
-            // showNoBulletNotification()
             return;
         }
 
@@ -163,13 +163,22 @@ export class Unit {
         const bullets = this.getBullets()
         this.showFireFromGunImage = 3;
         game.flyBullets = [...game.flyBullets, ...bullets];
-        // }
+    }
 
-        // this.shootSpeedIndicator--;
-
-        if (this.bulletAmount <= 0) {
-            // showNoBulletNotification()
+    /**
+     * Click and keep mouse to shoot automatically.
+     */
+    shootAutomaticaly() {
+        if (!this.isShootEnabled) {
+            return;
         }
+
+        if (!this.shootSpeedAccamulator) {
+            this.shootSpeedAccamulator = this.weapon.shootSpeedStep;
+            this.shootSingle();
+        }
+
+        this.shootSpeedAccamulator--;
     }
 
     /**

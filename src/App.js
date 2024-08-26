@@ -6,6 +6,7 @@ import {Header, LineGroup, CanvasBoard} from './App.style.js';
 import {PrimaryButton, ThirdButton} from './components/button/button';
 import Health from "./components/health/health";
 import Bullets from "./components/bullets/bullets";
+import ShootAuto from "./components/shoot-auto/shoot-auto";
 import GunList from "./components/gun-list/gun-list";
 import UserSpeed from "./components/user-speed/user-speed";
 import MenuButton from "./components/menu-button/menu-button";
@@ -25,6 +26,7 @@ run(game);
 
 function App() {
     const [userHealth, setUserHealth] = useState(100);
+    const [isShootModeAuto, setIsShootModeAuto] = useState(game.isShootModeAuto);
     const [selectedLevelId, setSelectedLevelId] = useState(0);
 
     const [levelForEdit, setLevelForEdit] = useState();
@@ -34,6 +36,11 @@ function App() {
     const [showEditLevelPage, setShowEditLevelPage] = useState(false);
 
     const [userBulletAmount, setUserBulletAmount] = useState(8);
+
+    const onChangeIsShootModeAuto = () => {
+        setIsShootModeAuto(!isShootModeAuto);
+        game.isShootModeAuto = !isShootModeAuto;
+    }
 
     const onSelectLevel = levelIndex => {
         const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS);
@@ -78,17 +85,26 @@ function App() {
     }
 
     useEffect(() => {
-        game.init();
+        game.init(() => setUserBulletAmount(game.user.bulletAmount));
+
 
         window.addEventListener("keypress", (event) => {
             if (event.key === ' ') {
                 setUserBulletAmount(game.user.bulletAmount);
             }
         });
-        window.canvas_game_board.addEventListener("mousedown", () => {
-            game.user.shoot()
-            setUserBulletAmount(game.user.bulletAmount);
-        });
+        window.canvas_game_board.addEventListener("mousedown", (game => () => {
+                if (game.isShootModeAuto) {
+                    game.user.isShootEnabled = true;
+                } else {
+                    game.user.shootSingle();
+                }
+
+                setUserBulletAmount(game.user.bulletAmount);
+            })(game)
+        );
+
+        window.canvas_game_board.addEventListener("mouseup", (game => () => game.user.isShootEnabled = false)(game));
     }, []);
 
     setInterval(() => {
@@ -109,6 +125,7 @@ function App() {
                     <UserSpeed/>
                 </LineGroup>
                 <LineGroup>
+                    <ShootAuto value={isShootModeAuto} onChangeHandler={onChangeIsShootModeAuto} />
                     <GunList setUserBulletAmount={setUserBulletAmount}/>
                     <Bullets amount={userBulletAmount} maxAmount={game?.user?.weapon?.reloadBulletAmount || 8}/>
                     <Health health={userHealth}/>

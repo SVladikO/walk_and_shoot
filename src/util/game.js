@@ -21,13 +21,14 @@ const headerHeight = 50
 export const screenMainCanvas = getScreen(window.innerWidth, window.innerHeight - headerHeight);
 
 class Game {
-    init() {
+    init(onAutoShoot) {
+        this.onAutoShoot = onAutoShoot;
         this.canvas_board = document.getElementById('canvas_game_board');
         this.ctx = this.canvas_board.getContext("2d");
 
         this.boardWidth = window.innerWidth;
         this.boardHeigh = window.innerHeight;
-
+        this.isShootModeAuto = false
         this.mousePositionX = 0;
         this.mousePositionY = 0;
 
@@ -109,7 +110,18 @@ class Game {
 
         showGameOver(this);
 
-        this.renderEnd()
+        this.renderEnd();
+
+        if (this.isShootModeAuto) {
+            this.enemies
+                // .filter(unit => game.user.isVisibleForMe(unit.x, unit.y))
+                .filter(enemy => isUnutVisiable(enemy, this))
+                .forEach(enemy => enemy.shootAutomaticaly())
+
+            this.user.shootAutomaticaly();
+            this.isShootModeAuto && this.onAutoShoot()
+        }
+
         this.user.move();
     }
 
