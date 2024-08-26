@@ -11,8 +11,15 @@ export const Header = styled.div`
     position: relative;
 `;
 
+export const CanvasBoardWrapper = styled.div`
+  position: relative;
+`;
+
 export const CanvasBoard = styled.canvas`
     display: ${p => p.isVisible ? 'flex' : 'none'};
+    position: absolute;
+    top: 0;
+    left: 0;
 `;
 
 export const LineGroup = styled.div`

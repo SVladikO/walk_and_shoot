@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import './App.css';
 import './util/levels.data.js'; //By import we put levels in localStorage
-import {Header, LineGroup, CanvasBoard} from './App.style.js';
+import {Header, LineGroup, CanvasBoardWrapper, CanvasBoard} from './App.style.js';
 
 import {PrimaryButton, ThirdButton} from './components/button/button';
 import Health from "./components/health/health";
@@ -86,26 +86,7 @@ function App() {
 
     useEffect(() => {
         game.init(() => setUserBulletAmount(game.user.bulletAmount));
-
-
-        window.addEventListener("keypress", (event) => {
-            if (event.key === ' ') {
-                setUserBulletAmount(game.user.bulletAmount);
-            }
-        });
-        window.canvas_game_board.addEventListener("mousedown", (game => () => {
-                if (game.isShootModeAuto) {
-                    game.user.isShootEnabled = true;
-                } else {
-                    game.user.shootSingle();
-                }
-
-                setUserBulletAmount(game.user.bulletAmount);
-            })(game)
-        );
-
-        window.canvas_game_board.addEventListener("mouseup", (game => () => game.user.isShootEnabled = false)(game));
-    }, []);
+        }, []);
 
     setInterval(() => {
         if (game.user?.isDead()) {
@@ -132,9 +113,10 @@ function App() {
                     <SoundController/>
                 </LineGroup>
             </Header>
-
-            <CanvasBoard id="canvas_game_board" isVisible={!showMenuPage && !showTryAgainPage && !showEditLevelPage}/>
-
+            <CanvasBoardWrapper>
+                <CanvasBoard id="canvas_game_board" isVisible={!showMenuPage && !showTryAgainPage && !showEditLevelPage}/>
+                <CanvasBoard id="static_canvas_game_board" isVisible={!showMenuPage && !showTryAgainPage && !showEditLevelPage}/>
+            </CanvasBoardWrapper>
             {showMenuPage && (
                 <MenuPage
                     onSelectLevel={onSelectLevel}
