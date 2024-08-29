@@ -1,11 +1,7 @@
 import {isUnutVisiable} from '../util/util';
 
 export const run = (game) => {
-    window.addEventListener("keypress", (event) => {
-        game.user.enableMove(event.key)
-        event.key === ' ' && game.user.reloadGun()
-        game.drawAll();
-    });
+  
 
 // user_health_id.addEventListener("change", (event) => user.step = +event.target.value);
 
