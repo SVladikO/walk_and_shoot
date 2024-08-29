@@ -94,7 +94,6 @@ class Game {
 
     start(levelIndex) {
         const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS);
-        console.log('game.start', {levels})
         this.levelId = levelIndex;
         this.inPlay = true;
         this.user = getUser();
@@ -102,8 +101,10 @@ class Game {
         this.flyBullets = [];
         this.rectangles = screenMainCanvas.getBoxes(levels[levelIndex].blockIds);
         this.enemies = screenMainCanvas.getEnemies(levels[levelIndex].enemies);
-        // this.finishCoordinates = levels[levelIndex].getFinishCoordinates(screenMainCanvas);
+        clearCanvas(this.static_ctx);
+        debugger
         renderRectangles(this.static_ctx, this.rectangles)
+        console.log('start(', {levelIndex, rec: this.rectangles})
 
     }
 
@@ -117,7 +118,7 @@ class Game {
         if (!this.inPlay) {
             return
         }
-        clearCanvas(this.ctx, this.canvas_board);
+        clearCanvas(this.ctx);
         prepareCanvas(this.ctx, {width: this.boardWidth, height: this.boardHeigh});
 
         this.flyBullets.forEach(bullet => bullet.move());

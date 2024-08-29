@@ -28,12 +28,13 @@ export default function Menu({onSelectLevel, onShowEditLevelPage, setLevelForEdi
 
         refLevels.forEach((ref, index) => {
             const rectangles = screen.getBoxes(levels[index].blockIds)
-            console.log({rectangles})
+            console.log('level: ', index, {rectangles})
             const ctx = ref.current.getContext('2d');
             ctx.canvas.width = 200;
             ctx.canvas.height = 100;
             prepareCanvas(ctx, {width: 200, height: 100})
             rectangles.forEach(rec => {
+                ctx.beginPath();
                 const [x, y, width, height] = rec;
                 ctx.rect(x, y, width, height);
                 ctx.fillStyle = style.box.bgColor;

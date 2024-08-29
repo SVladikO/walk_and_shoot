@@ -40,7 +40,7 @@ export function getScreen(width, height) {
                 })
             })
 
-            console.log({boxes})
+            // console.log({boxes})
 
             return ids.map(id => boxes[id])
         },

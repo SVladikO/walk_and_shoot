@@ -1,8 +1,6 @@
 import {style} from './settings'
 import {game} from './game';
-import {weapon_gun1, weapon_gun2, weapon_gun3} from '../entity/gun/gun'
-import {getAkUnit, getGunUnit, getPistolUnit} from "../entity/unit";
-import {ENEMY_TYPE} from '../entity/unit/type.js';
+
 export function getRadianAngle(fromX, toX, fromY, toY) {
     var dx = toX - fromX;
     var dy = toY - fromY;
@@ -66,8 +64,8 @@ export function getRandom(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-export function clearCanvas(ctx, canvas_game_board) {
-    ctx.fillRect(0, 0, canvas_game_board.width, canvas_game_board.height);
+export function clearCanvas(ctx) {
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 }
 
 export function prepareCanvas(ctx, canvas_game_board) {
@@ -95,6 +93,7 @@ export function changeUserHealth() {
 
 export function renderRectangles(ctx, rectangles) {
     rectangles.forEach(block => {
+            ctx.beginPath();
             const [x, y, width, height] = block;
             ctx.rect(x, y, width, height);
             ctx.fillStyle = style.box.bgColor;
