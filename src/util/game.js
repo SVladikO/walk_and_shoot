@@ -21,11 +21,13 @@ const headerHeight = 50
 export const screenMainCanvas = getScreen(window.innerWidth, window.innerHeight - headerHeight);
 
 class Game {
-    init(onAutoShoot) {
-        this.boardWidth = window.innerWidth;
-        this.boardHeigh = window.innerHeight;
+    init(onAutoShoot, onWeaponReload) {
+        this.boardWidth = window.innerWidth  - 10;
+        this.boardHeigh = window.innerHeight  - 70;
 
         this.onAutoShoot = onAutoShoot;
+        this.onWeaponReload = onWeaponReload;
+
         this.canvas_board = document.getElementById('canvas_game_board');
         this.ctx = this.canvas_board.getContext("2d");
         this.ctx.canvas.width = this.boardWidth;
@@ -53,17 +55,20 @@ class Game {
         this.rectangles = null;// levels[this.levelId].getRectangles(screenMainCanvas);
         this.finishCoordinates = null;//levels[this.levelId].getFinishCoordinates(screenMainCanvas);
 
-        this.static_canvas_board.addEventListener("mousemove", e => {
+        this.canvas_board.addEventListener("mousemove", e => {
             this.mousePositionX = e.clientX;
             this.mousePositionY = e.clientY - 50
         });
 
-        this.static_canvas_board.addEventListener("keypress", (event) => {
-            if (event.key === ' ') {
-                this.onAutoShoot()
-            }
+        window.addEventListener("keypress", (event) => {
+            game.user.enableMove(event.key)             // user movement
+            event.key === ' ' && game.user.reloadGun(); // reload weapon
+            this.onWeaponReload()
+            game.drawAll();
+            
         });
-        this.static_canvas_board.addEventListener("mousedown", (game => () => {
+
+        this.canvas_board.addEventListener("mousedown", (game => () => {
                 if (game.isShootModeAuto) {
                     game.user.isShootEnabled = true;
                 } else {
@@ -74,7 +79,7 @@ class Game {
             })(game)
         );
 
-       this.static_canvas_board.addEventListener("mouseup", (game => () => game.user.isShootEnabled = false)(game));
+       this.canvas_board.addEventListener("mouseup", (game => () => game.user.isShootEnabled = false)(game));
     
         const self = this;
         loop();
@@ -102,7 +107,6 @@ class Game {
         this.rectangles = screenMainCanvas.getBoxes(levels[levelIndex].blockIds);
         this.enemies = screenMainCanvas.getEnemies(levels[levelIndex].enemies);
         clearCanvas(this.static_ctx);
-        debugger
         renderRectangles(this.static_ctx, this.rectangles)
         console.log('start(', {levelIndex, rec: this.rectangles})
 
@@ -119,7 +123,7 @@ class Game {
             return
         }
         clearCanvas(this.ctx);
-        prepareCanvas(this.ctx, {width: this.boardWidth, height: this.boardHeigh});
+        // prepareCanvas(this.ctx, {width: this.boardWidth, height: this.boardHeigh});
 
         this.flyBullets.forEach(bullet => bullet.move());
         this.flyBullets.forEach(bullet => bullet.render());

@@ -84,9 +84,13 @@ function App() {
         changeUserHealth();
     }
 
-    useEffect(() => {
-        game.init(() => setUserBulletAmount(game.user.bulletAmount));
-        }, []);
+    const onAutoShoot = () => setUserBulletAmount(game.user.bulletAmount);
+    const onWeaponReload = () => {
+        game.user.bulletAmount = game.user.weapon.reloadBulletAmount;
+        onAutoShoot()
+    }
+
+    useEffect(() => game.init(onAutoShoot, onWeaponReload), []);
 
     setInterval(() => {
         if (game.user?.isDead()) {
@@ -114,9 +118,9 @@ function App() {
                 </LineGroup>
             </Header>
             <CanvasBoardWrapper>
-                <CanvasBoard id="canvas_game_board" isVisible={!showMenuPage && !showTryAgainPage && !showEditLevelPage}/>
                 <CanvasBoard id="static_canvas_game_board" isVisible={!showMenuPage && !showTryAgainPage && !showEditLevelPage}/>
-            </CanvasBoardWrapper>
+                <CanvasBoard id="canvas_game_board" isVisible={!showMenuPage && !showTryAgainPage && !showEditLevelPage}/>
+                 </CanvasBoardWrapper>
             {showMenuPage && (
                 <MenuPage
                     onSelectLevel={onSelectLevel}

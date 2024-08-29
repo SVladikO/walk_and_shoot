@@ -1,6 +1,6 @@
 export const style = {
     board: {
-        bgColor: '#c8c8c8',
+        bgColor: 'grey',
     },
     box: {
         bgColor: '#000',

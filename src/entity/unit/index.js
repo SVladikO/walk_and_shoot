@@ -3,9 +3,6 @@ import {UNIT_TYPE} from "./type";
 import {screenMainCanvas} from '../../util/game';
 import {Unit} from "./unit";
 
-console.log(weapon_gun1)
-
-
 
 export const getUser = (weapon = weapon_gun1) =>
     new Unit(screenMainCanvas.getHorizontalSide(1) / 2, screenMainCanvas.getVerticalSide(1) / 2, 20, UNIT_TYPE.USER, weapon, 'userIconId1')
