@@ -84,13 +84,9 @@ function App() {
         changeUserHealth();
     }
 
-    const onAutoShoot = () => setUserBulletAmount(game.user.bulletAmount);
-    const onWeaponReload = () => {
-        game.user.bulletAmount = game.user.weapon.reloadBulletAmount;
-        onAutoShoot()
-    }
+    const updateBulletsAmountUI = () => setUserBulletAmount(game.user.bulletAmount);
 
-    useEffect(() => game.init(onAutoShoot, onWeaponReload), []);
+    useEffect(() => game.init(updateBulletsAmountUI), []);
 
     setInterval(() => {
         if (game.user?.isDead()) {
@@ -104,6 +100,7 @@ function App() {
             <Header isVisible={!showMenuPage && !showTryAgainPage && !showEditLevelPage}>
                 <LineGroup>
                     <MenuButton showMenu={onShowMenuPage}/>
+                    <SoundController/>
                     <ThirdButton onClick={() => onSelectLevel(selectedLevelId - 1)}>PREV</ThirdButton>
                     <div>LEVEL {selectedLevelId + 1}</div>
                     <ThirdButton onClick={() => onSelectLevel(selectedLevelId + 1)}>NEXT</ThirdButton>
@@ -114,7 +111,6 @@ function App() {
                     <GunList setUserBulletAmount={setUserBulletAmount}/>
                     <Bullets amount={userBulletAmount} maxAmount={game?.user?.weapon?.reloadBulletAmount || 8}/>
                     <Health health={userHealth}/>
-                    <SoundController/>
                 </LineGroup>
             </Header>
             <CanvasBoardWrapper>

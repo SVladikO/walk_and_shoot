@@ -21,12 +21,11 @@ const headerHeight = 50
 export const screenMainCanvas = getScreen(window.innerWidth, window.innerHeight - headerHeight);
 
 class Game {
-    init(onAutoShoot, onWeaponReload) {
+    init(updateBulletsAmountUI) {
         this.boardWidth = window.innerWidth  - 10;
         this.boardHeigh = window.innerHeight  - 70;
 
-        this.onAutoShoot = onAutoShoot;
-        this.onWeaponReload = onWeaponReload;
+        this.updateBulletsAmountUI = updateBulletsAmountUI;
 
         this.canvas_board = document.getElementById('canvas_game_board');
         this.ctx = this.canvas_board.getContext("2d");
@@ -62,8 +61,10 @@ class Game {
 
         window.addEventListener("keypress", (event) => {
             game.user.enableMove(event.key)             // user movement
-            event.key === ' ' && game.user.reloadGun(); // reload weapon
-            this.onWeaponReload()
+            if (event.key === ' ') {
+                game.user.reloadGun(); // reload weapon
+                this.updateBulletsAmountUI()
+            }
             game.drawAll();
             
         });
@@ -75,7 +76,7 @@ class Game {
                     game.user.shootSingle();
                 }
 
-                this.onAutoShoot()
+                this.updateBulletsAmountUI()
             })(game)
         );
 
@@ -150,7 +151,7 @@ class Game {
                 .forEach(enemy => enemy.shootAutomaticaly())
 
             this.user.shootAutomaticaly();
-            this.isShootModeAuto && this.onAutoShoot()
+            this.isShootModeAuto && this.updateBulletsAmountUI()
         }
 
         this.user.move();
