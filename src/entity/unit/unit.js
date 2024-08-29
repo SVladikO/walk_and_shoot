@@ -208,13 +208,28 @@ export class Unit {
         return this.weapon.shoot(this.angle, angle => new Bullet(startBulletX, startBulletY, angle, this.weapon, this.unitType));
     }
 
-    renderHealth(ctx) {
+    renderBulletText(ctx) {
         if (this.isDead()) {
             return;
         }
 
         const x = this.x - 30;
         const y = this.y - 45;
+
+        ctx.beginPath();
+        ctx.fillStyle = "red";
+        ctx.font = "12px Arial";
+        ctx.fillText(`${this.bulletAmount}/${this.weapon.reloadBulletAmount} ${this.bulletAmount <= 0 ? ' - reload' : ''}`, x, y);
+
+    }
+
+    renderHealth(ctx) {
+        if (this.isDead()) {
+            return;
+        }
+
+        const x = this.x - 30;
+        const y = this.y - 40;
         
         const fullHealthLenght = 50;
 
@@ -286,6 +301,7 @@ export class Unit {
         ctx.setTransform(1, 0, 0, 1, 0, 0); // 6. Reset center back.
 
         this.renderHealth(ctx);
+        this.renderBulletText(ctx);
     }
 
     updateAngle(toX, toY) {
