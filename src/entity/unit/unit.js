@@ -208,31 +208,58 @@ export class Unit {
         return this.weapon.shoot(this.angle, angle => new Bullet(startBulletX, startBulletY, angle, this.weapon, this.unitType));
     }
 
+    renderHealth(ctx) {
+        if (this.isDead()) {
+            return;
+        }
+
+        const x = this.x - 30;
+        const y = this.y - 45;
+        
+        const fullHealthLenght = 50;
+
+        /**
+         * fullHealthLenght - this.maxHealth
+         * ???              - this.health
+         */
+        const currentHealthLenght = fullHealthLenght * this.health / this.maxHealth;
+        
+        // Health white bg.
+        ctx.beginPath();
+        ctx.lineWidth = "4";
+        ctx.fillStyle = "white";
+        ctx.rect(x, y, fullHealthLenght, 10);
+        ctx.fill();
+
+       // Health level
+        ctx.beginPath();
+        ctx.lineWidth = "4";
+        ctx.fillStyle = "#fa2121";
+        ctx.rect(x, y, currentHealthLenght, 10);
+        ctx.fill();
+
+        // Health level
+        ctx.beginPath();
+        ctx.lineWidth = "4";
+        ctx.fillStyle = "#fa2121";
+        ctx.rect(x, y, currentHealthLenght, 10);
+        ctx.fill();
+
+        // Health border
+        ctx.beginPath();
+        ctx.lineWidth = "1";
+        ctx.strokeStyle = "black";
+        ctx.rect(x, y, fullHealthLenght, 10);  
+        ctx.stroke();
+    }
+
     render(directionX, directionY, ctx) {
         this.updateAngle(directionX, directionY)
 
+        this.renderHealth(ctx);
+
         ctx.beginPath();
         ctx.arc(this.x, this.y, style.user.dorRadius, 0, 300);
-
-        let bg;
-
-        switch (this.weapon.type) {
-            case GUN_TYPE.PISTOL:
-                bg = 'red';
-                break;
-            case GUN_TYPE.AK:
-                bg = 'blue';
-                break;
-            case GUN_TYPE.GUN:
-                bg = 'green';
-                break;
-            default:
-                bg = 'orange';
-        }
-// Point of transform origin
-//         window.ctx.arc(0, 0, 5, 0, 2 * Math.PI);
-//         window.ctx.fillStyle = "blue";
-//         window.ctx.fill();
 
         ctx.translate(this.x, this.y)      // 1. Set x,y where we will rotate.
         ctx.rotate(this.angle)             // 2. Rotate
@@ -251,7 +278,6 @@ export class Unit {
             }
         }
 
-
         const userIconId1 = document.getElementById(this.isDead() ? 'unitDeadIconId' : this.userIconId);
 
         ctx.drawImage(userIconId1, this.x - 30, this.y - 25, 50, 50);
@@ -259,18 +285,7 @@ export class Unit {
         ctx.rotate(-this.angle)             // 5. Rotate back
         ctx.setTransform(1, 0, 0, 1, 0, 0); // 6. Reset center back.
 
-        // ctx.beginPath();
-        // ctx.arc(this.x, this.y, 10, 0, 300);
-        // ctx.fillStyle = 'black';
-        // ctx.fill();
-        // ctx.fillStyle = 'white';
-        // ctx.textAlign = "center";
-        // ctx.font = "14px Arial";
-        // ctx.fillText(this.health, this.x, this.y + 5);
-
-        // const unitImage = document.getElementById(this.userIconId);
-        // ctx.drawImage(unitImage, this.x - 25, this.y - 25, 50, 50);
-
+        this.renderHealth(ctx);
     }
 
     updateAngle(toX, toY) {
