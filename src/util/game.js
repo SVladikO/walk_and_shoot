@@ -22,6 +22,12 @@ export const screenMainCanvas = getScreen(window.innerWidth, window.innerHeight 
 
 class Game {
     init(updateBulletsAmountUI) {
+        // Let's make game board smaller and aboid when unit hidden in top or bottom.
+        this.boardWidthFrom = 0;
+        this.boardWidhtTo = window.innerWidth  - 10;
+        this.boardHeightFrom = 0;
+        this.boardHeightTo = window.innerHeight  - 70;
+
         this.boardWidth = window.innerWidth  - 10;
         this.boardHeigh = window.innerHeight  - 70;
 

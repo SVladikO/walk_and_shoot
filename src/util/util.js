@@ -14,8 +14,8 @@ export function getDistance(fromX, toX, fromY, toY) {
     return Math.sqrt(X * X + Y * Y);
 }
 
-export function isInCanvas(modifiedPosition, max) {
-    return !isOutOfRange(modifiedPosition, 0 + style.user.dorRadius, max - style.user.dorRadius)
+export function isInCanvas(modifiedPosition, min, max) {
+    return !isOutOfRange(modifiedPosition + style.user.dorRadius, min , max - style.user.dorRadius)
 }
 
 export function isOutOfRange(num, min, max) {

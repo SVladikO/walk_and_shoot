@@ -9,6 +9,7 @@ export const Header = styled.div`
     padding: 0 10px;
     z-index: 1;
     position: relative;
+    // border-bottom: solid 4px black;
 `;
 
 export const CanvasBoardWrapper = styled.div`
@@ -20,6 +21,7 @@ export const CanvasBoard = styled.canvas`
     position: absolute;
     top: 0;
     left: 0;
+    border: solid 8px black;
 `;
 
 export const LineGroup = styled.div`

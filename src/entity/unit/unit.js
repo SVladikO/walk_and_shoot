@@ -95,23 +95,25 @@ export class Unit {
             const modifiedY = this.y - game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['w'])
 
-            if (isInCanvas(modifiedY, window.innerHeight - 50) && !isOnBlock(this.x, modifiedY, style.user.dorRadius)) {
+            if (isInCanvas(modifiedY, 20, game.boardHeigh) && !isOnBlock(this.x, modifiedY, style.user.dorRadius)) {
                 this.y = modifiedY;
             }
         }
+
         if (this.moveDirection.s) {
             const modifiedY = this.y + game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['s'])
 
-            if (isInCanvas(modifiedY, window.innerHeight - 50) && !isOnBlock(this.x, modifiedY, style.user.dorRadius)) {
+            if (isInCanvas(modifiedY, 0, window.innerHeight - 80) && !isOnBlock(this.x, modifiedY, style.user.dorRadius)) {
                 this.y = modifiedY;
             }
         }
+
         if (this.moveDirection.a) {
             const modifiedX = this.x - game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['a'])
 
-            if (isInCanvas(modifiedX, window.innerWidth) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
+            if (isInCanvas(modifiedX, 30, game.boardWidth) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
                 this.x = modifiedX;
             }
         }
@@ -119,7 +121,7 @@ export class Unit {
             const modifiedX = this.x + game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['d'])
 
-            if (isInCanvas(modifiedX, window.innerWidth) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
+            if (isInCanvas(modifiedX, 10, game.boardWidth - widthDecrement) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
                 this.x = modifiedX;
             }
         }
@@ -220,7 +222,6 @@ export class Unit {
         ctx.fillStyle = "red";
         ctx.font = "12px Arial";
         ctx.fillText(`${this.bulletAmount}/${this.weapon.reloadBulletAmount} ${this.bulletAmount <= 0 ? ' - reload' : ''}`, x, y);
-
     }
 
     renderHealth(ctx) {
@@ -351,5 +352,4 @@ export class Unit {
 
         return isInRangeX && isInRangeY;
     }
-
 }
