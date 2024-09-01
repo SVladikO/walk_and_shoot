@@ -284,8 +284,8 @@ export class Unit {
         this.renderBulletText(ctx);
 
         ctx.beginPath();
-        ctx.arc(this.x, this.y, style.user.dorRadius, 0, 300);
-        ctx.stroke();
+      //  ctx.arc(this.x, this.y, style.user.dorRadius, 0, 300);
+      //  ctx.stroke();
 
 
         ctx.translate(this.x, this.y)      // 1. Set x,y where we will rotate.

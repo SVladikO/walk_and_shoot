@@ -132,10 +132,18 @@ class Game {
 
         this.enemies.forEach(enemy => enemy.unitRandomDirection())
         this.enemies.forEach(enemy => enemy.move())
+        // Render dead enemies to static board
+        this.enemies.forEach(enemy =>  enemy.isDead() && enemy.render(this.user.x, this.user.y, this.static_ctx));
+        // Delete dead enemies from array
+        this.enemies = this.enemies.filter(enemy => !enemy.isDead());
+
         this.enemies
             // .filter(unit => this.user.isVisibleForMe(unit.x, unit.y))
-            .filter(enemy => isUnutVisiable(enemy, this) || enemy.isDead())
+            .filter(enemy => isUnutVisiable(enemy, this))
             .forEach(enemy => enemy.render(this.user.x, this.user.y, this.ctx))
+
+      
+
 
         // this.enemies = this.enemies.filter(unit => !unit.isDead())
 
