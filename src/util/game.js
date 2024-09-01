@@ -6,6 +6,7 @@ import {
 import {headerHeight} from '../App.style';
 import {getUser} from "../entity/unit";
 import {getScreen} from '../util/screen';
+import {showNoBulletNotification, hideNoBulletNotification} from './util';
 
 import {getLocalStorage, LOCAL_STORAGE_KEY} from './localstorage';
 
@@ -196,23 +197,37 @@ class Game {
     this.canvas_board.addEventListener("mousemove", e => {
         this.mousePositionX = e.clientX;
         this.mousePositionY = e.clientY - 50
+
+        if (game.user.bulletAmount === 0) {
+            showNoBulletNotification(e)
+       }
     });
 
     window.addEventListener("keypress", (event) => {
         game.user.enableMove(event.key)   // user movement
         if (event.key === ' ') {
             game.user.reloadGun();        // reload weapon
-            this.updateBulletsAmountUI()
+            this.updateBulletsAmountUI();
+            hideNoBulletNotification();
+        } 
+        
+        if (game.user.bulletAmount === 0) {
+            showNoBulletNotification(event);
         }
+
         game.drawAll();
         
     });
 
-    this.canvas_board.addEventListener("mousedown", (game => () => {
+    this.canvas_board.addEventListener("mousedown", (game => e => {
             if (game.isShootModeAuto) {
                 game.user.isShootEnabled = true;
             } else {
                 game.user.shootSingle();
+            }
+
+            if (game.user.bulletAmount === 0) {
+                showNoBulletNotification(e)
             }
 
             this.updateBulletsAmountUI()

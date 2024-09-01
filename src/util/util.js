@@ -81,6 +81,19 @@ export function playSound(src, volume = 0.2) {
     audio.play()
 }
 
+export function showNoBulletNotification(e) {
+    const notificationReloadWeapon = document.getElementById('reload_weapon_notification_id')
+    notificationReloadWeapon.style.top = `${e.clientY - 60}px`;
+    notificationReloadWeapon.style.left =   `${e.clientX - 60}px`;
+    notificationReloadWeapon.style.display = 'block'
+}
+
+
+export function hideNoBulletNotification(e) {
+    const notificationReloadWeapon = document.getElementById('reload_weapon_notification_id')
+    notificationReloadWeapon.style.display = 'none'
+}
+
 export function changeUserHealth() {
     const user_healt_progress = document.getElementById('user_healt_progress')
     const healthProgres = game.user.health * 100 / game.user.maxHealth
