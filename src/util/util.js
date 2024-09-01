@@ -15,7 +15,7 @@ export function getDistance(fromX, toX, fromY, toY) {
 }
 
 export function isInCanvas(modifiedPosition, min, max) {
-    return !isOutOfRange(modifiedPosition + style.user.dorRadius, min , max - style.user.dorRadius)
+    return !isOutOfRange(modifiedPosition, min , max)
 }
 
 export function isOutOfRange(num, min, max) {
@@ -34,7 +34,7 @@ export function isInRange(num, min, max) {
  * @returns {boolean}
  */
 export function isOnBlock(objX, objY, objRadius) {
-    const rect = game.rectangles.find(rec => {
+    const rect = game.rectanglesForActiveBoard.find(rec => {
         const [x, y, width, height] = rec;
         const minX = x - objRadius;
         const maxX = minX + width + objRadius * 2;
@@ -64,10 +64,6 @@ export function getRandom(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-export function clearCanvas(ctx) {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-}
-
 export function prepareCanvas(ctx, canvas_game_board) {
     ctx.fillStyle = style.board.bgColor;
     ctx.fillRect(0, 0, canvas_game_board.width, canvas_game_board.height)
@@ -91,20 +87,17 @@ export function changeUserHealth() {
     user_healt_progress.value = healthProgres;
 }
 
-export function renderRectangles(ctx, rectangles) {
-    rectangles.forEach(block => {
-            ctx.beginPath();
-            const [x, y, width, height] = block;
-            ctx.rect(x, y, width, height);
-            ctx.fillStyle = style.box.bgColor;
-            ctx.fill()
-            ctx.strokeStyle = style.box.borderColor;
-            ctx.lineWidth = style.box.borderLineWidth;
-            ctx.stroke();
-            ctx.strokeStyle = style.box.borderColor;
-            ctx.lineWidth = 1;
-        }
-    )
+export function renderRectangle(ctx, block, bgColor='black') {
+    ctx.beginPath();
+    const [x, y, width, height] = block;
+    ctx.rect(x, y, width, height);
+    ctx.fillStyle = bgColor;
+    ctx.fill()
+    ctx.strokeStyle = bgColor;
+    ctx.lineWidth = style.box.borderLineWidth;
+    ctx.stroke();
+    ctx.strokeStyle = style.box.borderColor;
+    ctx.lineWidth = 1;
 }
 
 export function isUnutVisiable(unit, game) {

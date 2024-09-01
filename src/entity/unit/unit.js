@@ -1,5 +1,4 @@
 import {UNIT_TYPE} from "./type";
-import {GUN_TYPE} from '../gun/type';
 import {weapon_gun3} from "../gun/gun";
 import Bullet from '../bullet/bullet';
 import {style} from '../../util/settings';
@@ -91,11 +90,19 @@ export class Unit {
             return;
         }
 
+        const minY = game.boardHeightFrom;
+        const maxY = game.boardHeightTo;
+
+        const minX = game.boardWidthFrom;
+        const maxX =  game.boardWidthTo;
+
         if (this.moveDirection.w) {
             const modifiedY = this.y - game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['w'])
 
-            if (isInCanvas(modifiedY, game.boardWidthFrom, game.boardWidthTo) && !isOnBlock(this.x, modifiedY, style.user.dorRadius)) {
+            console.log('w', {modifiedY, minY, maxY});
+            
+            if (isInCanvas(modifiedY, minY, maxY) && !isOnBlock(this.x, modifiedY, style.user.dorRadius)) {
                 this.y = modifiedY;
             }
         }
@@ -104,7 +111,8 @@ export class Unit {
             const modifiedY = this.y + game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['s'])
 
-            if (isInCanvas(modifiedY, game.boardWidthFrom, game.boardWidthTo) && !isOnBlock(this.x, modifiedY, style.user.dorRadius)) {
+            console.log('s', {modifiedY, minY, maxY});
+            if (isInCanvas(modifiedY, minY, maxY) && !isOnBlock(this.x, modifiedY, style.user.dorRadius)) {
                 this.y = modifiedY;
             }
         }
@@ -112,16 +120,16 @@ export class Unit {
         if (this.moveDirection.a) {
             const modifiedX = this.x - game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['a'])
-
-            if (isInCanvas(modifiedX, game.boardHeightFrom, game.boardHeightTo) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
+            console.log('a', {modifiedX, minX, maxX});
+            if (isInCanvas(modifiedX, minX, maxX) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
                 this.x = modifiedX;
             }
         }
         if (this.moveDirection.d) {
             const modifiedX = this.x + game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['d'])
-
-            if (isInCanvas(modifiedX, game.boardHeightFrom, game.boardHeightTo) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
+            console.log('d', {modifiedX, minX, maxX}, game.boardWidthTo, game.boardWidth);
+            if (isInCanvas(modifiedX,  minX, maxX) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
                 this.x = modifiedX;
             }
         }
@@ -211,7 +219,7 @@ export class Unit {
     }
 
     renderBulletText(ctx) {
-        if (this.isDead()) {
+        if (this.isDead() || this.unitType !== UNIT_TYPE.USER) {
             return;
         }
 
@@ -273,9 +281,12 @@ export class Unit {
         this.updateAngle(directionX, directionY)
 
         this.renderHealth(ctx);
+        this.renderBulletText(ctx);
 
         ctx.beginPath();
         ctx.arc(this.x, this.y, style.user.dorRadius, 0, 300);
+        ctx.stroke();
+
 
         ctx.translate(this.x, this.y)      // 1. Set x,y where we will rotate.
         ctx.rotate(this.angle)             // 2. Rotate
@@ -301,8 +312,7 @@ export class Unit {
         ctx.rotate(-this.angle)             // 5. Rotate back
         ctx.setTransform(1, 0, 0, 1, 0, 0); // 6. Reset center back.
 
-        this.renderHealth(ctx);
-        this.renderBulletText(ctx);
+        // ctx.arc(this.x, this.y, 40, 0, 2 * Math.PI);
     }
 
     updateAngle(toX, toY) {

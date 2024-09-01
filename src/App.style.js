@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
+export const  headerHeight = 60;
+
 export const Header = styled.div`
-    height: 60px;
+    height: ${headerHeight}px;
     background: white;
     display: ${p => p.isVisible ? 'flex' : 'none'};
     align-items: center;
@@ -21,7 +23,7 @@ export const CanvasBoard = styled.canvas`
     position: absolute;
     top: 0;
     left: 0;
-    border: solid 8px black;
+    // border: solid 8px black;
 `;
 
 export const LineGroup = styled.div`
