@@ -45,7 +45,7 @@ export default class Bullet {
         if (this.ownerType === UNIT_TYPE.UNIT && game.user.isBulletOn(this.lastX, this.lastY)) {
             game.user.health -= this.weapon.damage;
             this.isDead = true;
-            changeUserHealth();
+            //changeUserHealth();
         }
 
         //For unit bullet check does it kick UNIT

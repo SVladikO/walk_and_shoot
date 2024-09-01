@@ -5,7 +5,7 @@ import {Unit} from "./unit";
 
 
 export const getUser = (weapon = weapon_gun1) =>
-    new Unit(game.screenMainCanvas.getHorizontalSide(3) / 2, game.screenMainCanvas.getVerticalSide(3) / 2, 20, UNIT_TYPE.USER, weapon, 'userIconId1')
+    new Unit(game.screenMainCanvas.getHorizontalSide(1), game.screenMainCanvas.getVerticalSide(1), 20, UNIT_TYPE.USER, weapon, 'userIconId1')
 
 export const getUnit = (x, y, health, weapon, unitImageId, isRandomWalkEnable) =>
     new Unit(x, y, health, UNIT_TYPE.UNIT, weapon, unitImageId, isRandomWalkEnable);

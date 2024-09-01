@@ -80,8 +80,8 @@ function App() {
     const onTryAgain = () => {
         onSelectLevel(selectedLevelId);
         setShowTryAgainPage(false)
-        setUserHealth(100);
-        changeUserHealth();
+        setUserHealth(100); 
+        //changeUserHealth();
     }
 
     const updateBulletsAmountUI = () => setUserBulletAmount(game.user.bulletAmount);
@@ -110,7 +110,7 @@ function App() {
                     <ShootAuto value={isShootModeAuto} onChangeHandler={onChangeIsShootModeAuto} />
                     <GunList setUserBulletAmount={setUserBulletAmount}/>
                     <Bullets amount={userBulletAmount} maxAmount={game?.user?.weapon?.reloadBulletAmount || 8}/>
-                    <Health health={userHealth}/>
+                    {/* <Health health={userHealth}/> */}
                 </LineGroup>
             </Header>
             <CanvasBoardWrapper>

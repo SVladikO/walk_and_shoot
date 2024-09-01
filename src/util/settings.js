@@ -9,7 +9,7 @@ export const style = {
     },
     user: {
         bgColor: '#000',
-        dorRadius: 25,
+        dorRadius: 20,
     },
     bullet: {
         bgColor: '#cd0000',

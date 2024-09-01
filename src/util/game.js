@@ -9,7 +9,7 @@ import {getScreen} from '../util/screen';
 
 import {getLocalStorage, LOCAL_STORAGE_KEY} from './localstorage';
 
-const distanceFromBorder = 50;
+const distanceFromBorder = 70;
 
 class Game {
     init(updateBulletsAmountUI) {
@@ -108,9 +108,9 @@ class Game {
         const img = document.getElementById("sandBgId");
         this.static_ctx.drawImage(img, 0, 0, this.boardWidth, this.boardHeigh)
         // renderRectangle(this.static_ctx, [0, 0, this.boardWidth, this.boardHeigh], '#f7ff00')
-        renderRectangle(this.static_ctx, [this.boardWidthFrom, this.boardHeightFrom, this.getWidthLength(), this.getHeightLength()], '#f2a739b3')
+        // renderRectangle(this.static_ctx, [this.boardWidthFrom, this.boardHeightFrom, this.getWidthLength(), this.getHeightLength()], '#f2a739b3')
         // this.moveDrawPoint(this.static_ctx)
-        this.rectanglesForActiveBoard.map(rec => renderRectangle(this.static_ctx, rec, '#03218a'))
+        this.rectanglesForActiveBoard.map(rec => renderRectangle(this.static_ctx, rec, '#bf7200'))
     }
 
     stop() {
