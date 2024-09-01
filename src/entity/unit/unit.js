@@ -95,7 +95,7 @@ export class Unit {
             const modifiedY = this.y - game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['w'])
 
-            if (isInCanvas(modifiedY, 20, game.boardHeigh) && !isOnBlock(this.x, modifiedY, style.user.dorRadius)) {
+            if (isInCanvas(modifiedY, game.boardWidthFrom, game.boardWidthTo) && !isOnBlock(this.x, modifiedY, style.user.dorRadius)) {
                 this.y = modifiedY;
             }
         }
@@ -104,7 +104,7 @@ export class Unit {
             const modifiedY = this.y + game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['s'])
 
-            if (isInCanvas(modifiedY, 0, window.innerHeight - 80) && !isOnBlock(this.x, modifiedY, style.user.dorRadius)) {
+            if (isInCanvas(modifiedY, game.boardWidthFrom, game.boardWidthTo) && !isOnBlock(this.x, modifiedY, style.user.dorRadius)) {
                 this.y = modifiedY;
             }
         }
@@ -113,7 +113,7 @@ export class Unit {
             const modifiedX = this.x - game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['a'])
 
-            if (isInCanvas(modifiedX, 30, game.boardWidth) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
+            if (isInCanvas(modifiedX, game.boardHeightFrom, game.boardHeightTo) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
                 this.x = modifiedX;
             }
         }
@@ -121,7 +121,7 @@ export class Unit {
             const modifiedX = this.x + game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['d'])
 
-            if (isInCanvas(modifiedX, 10, game.boardWidth - widthDecrement) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
+            if (isInCanvas(modifiedX, game.boardHeightFrom, game.boardHeightTo) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
                 this.x = modifiedX;
             }
         }

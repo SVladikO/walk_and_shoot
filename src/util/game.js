@@ -1,7 +1,6 @@
 import {
     isUnutVisiable,
     clearCanvas,
-    prepareCanvas,
     renderRectangles,
     showGameOver,
 } from "./util";
@@ -11,25 +10,24 @@ import {getScreen} from '../util/screen';
 import {getLocalStorage, LOCAL_STORAGE_KEY} from './localstorage';
 
 const headerHeight = 50
-/**
- * We need this one to build block per level.
- * We cut bord on 20 horizontally, 10 vertically.
- * Our goal is make the same map on different screens.
- * That's why we need this function.
- * @type {{screenStepY: number, screenStepX: number, getHorizontalSide(), getVerticalSide()}}
- */
-export const screenMainCanvas = getScreen(window.innerWidth, window.innerHeight - headerHeight);
+
+const distanceFromBorder = 40;
+
 
 class Game {
     init(updateBulletsAmountUI) {
-        // Let's make game board smaller and aboid when unit hidden in top or bottom.
-        this.boardWidthFrom = 0;
-        this.boardWidhtTo = window.innerWidth  - 10;
-        this.boardHeightFrom = 0;
-        this.boardHeightTo = window.innerHeight  - 70;
 
-        this.boardWidth = window.innerWidth  - 10;
-        this.boardHeigh = window.innerHeight  - 70;
+        ////// BORD RELATED \\\\\\\
+
+        // As units may move out of board or be partially hidden
+        // I made design to move from border on the same distance.
+        this.boardWidthFrom = distanceFromBorder;
+        this.boardWidthTo = window.innerWidth  - distanceFromBorder;
+        this.boardHeightFrom = distanceFromBorder;
+        this.boardHeightTo = window.innerHeight  - distanceFromBorder;
+
+        this.boardWidth = window.innerWidth;
+        this.boardHeigh = window.innerHeight;
 
         this.updateBulletsAmountUI = updateBulletsAmountUI;
 
@@ -40,6 +38,7 @@ class Game {
 
         this.static_canvas_board = document.getElementById('static_canvas_game_board');
         this.static_ctx = this.static_canvas_board.getContext("2d");
+
         this.static_ctx.canvas.width = this.boardWidth;
         this.static_ctx.canvas.height = this.boardHeigh;
 
@@ -47,18 +46,15 @@ class Game {
         this.mousePositionX = 0;
         this.mousePositionY = 0;
 
-        this.ctx.canvas.width = this.boardWidth;
-        this.ctx.canvas.height = this.boardHeigh;
-
         this.unitSpeedStep = 1;
         this.isMute = false;
         this.inPlay = false;
         this.levelId = 0;
         this.flyBullets = [];
-        this.user = null; //getUser();
-        this.enemies = null;// levels[this.levelId].getEnemies(screenMainCanvas);
-        this.rectangles = null;// levels[this.levelId].getRectangles(screenMainCanvas);
-        this.finishCoordinates = null;//levels[this.levelId].getFinishCoordinates(screenMainCanvas);
+        this.user = null; 
+        this.enemies = null;
+        this.rectangles = null;
+        this.finishCoordinates = null;
 
         this.canvas_board.addEventListener("mousemove", e => {
             this.mousePositionX = e.clientX;
@@ -66,9 +62,9 @@ class Game {
         });
 
         window.addEventListener("keypress", (event) => {
-            game.user.enableMove(event.key)             // user movement
+            game.user.enableMove(event.key)   // user movement
             if (event.key === ' ') {
-                game.user.reloadGun(); // reload weapon
+                game.user.reloadGun();        // reload weapon
                 this.updateBulletsAmountUI()
             }
             game.drawAll();
@@ -104,19 +100,46 @@ class Game {
         }
     }
 
+    getWidthLength() {
+        return this.boardWidthTo - this.boardWidthFrom;
+    }
+
+    getHeightLength() {
+        return this.boardHeightTo - this.boardHeightFrom;
+    }
+
     start(levelIndex) {
+        /**
+         * We need this one to build block per level.
+         * We cut bord on 16 horizontally, 8 vertically.
+         * Our goal is make the same map on different screens.
+         * That's why we need this function.
+         * @type {{screenStepY: number, screenStepX: number, getHorizontalSide(), getVerticalSide()}}
+         */
+        this.screenMainCanvas = getScreen(this.getWidthLength(), this.getHeightLength() - headerHeight);
+
         const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS);
         this.levelId = levelIndex;
         this.inPlay = true;
         this.user = getUser();
         this.user.reloadGun()
         this.flyBullets = [];
-        this.rectangles = screenMainCanvas.getBoxes(levels[levelIndex].blockIds);
-        this.enemies = screenMainCanvas.getEnemies(levels[levelIndex].enemies);
-        clearCanvas(this.static_ctx);
-        renderRectangles(this.static_ctx, this.rectangles)
+        this.rectangles = this.screenMainCanvas.getBoxes(levels[levelIndex].blockIds);
+        this.enemies = this.screenMainCanvas.getEnemies(levels[levelIndex].enemies);
+        
+        this.renderStaticBoard()
+
         console.log('start(', {levelIndex, rec: this.rectangles})
 
+    }
+
+    renderStaticBoard() {
+        this.moveStartDrawPoint(this.static_ctx)
+        renderRectangles(this.static_ctx, this.rectangles)
+    }
+
+    moveStartDrawPoint(ctx) {
+        ctx.translate(this.boardWidthFrom, this.boardHeightFrom) // move start point
     }
 
     stop() {
@@ -130,8 +153,9 @@ class Game {
             return
         }
         clearCanvas(this.ctx);
-        // prepareCanvas(this.ctx, {width: this.boardWidth, height: this.boardHeigh});
 
+        this.moveStartDrawPoint(this.ctx)
+        
         this.flyBullets.forEach(bullet => bullet.move());
         this.flyBullets.forEach(bullet => bullet.render());
         this.flyBullets = this.flyBullets.filter(bullet => !bullet.isDead);

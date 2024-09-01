@@ -1,11 +1,11 @@
 import {weapon_gun1, weapon_gun2, weapon_gun3} from "../gun/gun";
 import {UNIT_TYPE} from "./type";
-import {screenMainCanvas} from '../../util/game';
+import {game} from '../../util/game';
 import {Unit} from "./unit";
 
 
 export const getUser = (weapon = weapon_gun1) =>
-    new Unit(screenMainCanvas.getHorizontalSide(1) / 2, screenMainCanvas.getVerticalSide(1) / 2, 20, UNIT_TYPE.USER, weapon, 'userIconId1')
+    new Unit(game.screenMainCanvas.getHorizontalSide(1) / 2, game.screenMainCanvas.getVerticalSide(1) / 2, 20, UNIT_TYPE.USER, weapon, 'userIconId1')
 
 export const getUnit = (x, y, health, weapon, unitImageId, isRandomWalkEnable) =>
     new Unit(x, y, health, UNIT_TYPE.UNIT, weapon, unitImageId, isRandomWalkEnable);

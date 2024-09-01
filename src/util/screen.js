@@ -1,5 +1,6 @@
 import {ENEMY_TYPE} from "../entity/unit/type";
 import {getAkUnit, getGunUnit, getPistolUnit} from "../entity/unit";
+import {game} from './game';
 
 export function getScreen(width, height) {
     const maxHorizontalBlocks = 16;
@@ -77,7 +78,7 @@ export function getScreen(width, height) {
                         break;
                 }
 
-                return getEnemyFunc(x, y, levelEnemy.isWalk);
+                return getEnemyFunc(x + game.boardWidthFrom, y  + game.boardHeightFrom, levelEnemy.isWalk);
             })
         }
     }
