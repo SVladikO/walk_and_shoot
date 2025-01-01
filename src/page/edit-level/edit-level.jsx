@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {Wrapper, Navigation, NavigationBtn, Row, Block} from './edit-level.style'
 
 import {ENEMY_TYPE} from '../../entity/unit/type';
+import { weapons } from '../../entity/gun/gun';
 import Units from '../../components/units/units'
 
 import gunPistolSrc from '../../images/gun1.png';
@@ -91,18 +92,7 @@ function EditLevel({levelForEdit, onShowMenuPage}) {
             <NavigationBtn onClick={() => setSelectedEnemies([])}>Clear enemies</NavigationBtn>
             <Wrapper>
                 <div>
-                    <Navigation>
-                        <div>
-                            <NavigationBtn
-                                isAddBlock={!isSelectUnit}
-                                onClick={() => setIsSelectUnit(false)}>
-                                Select block
-                            </NavigationBtn>
-                            /
-                            <NavigationBtn isAddUnit={isSelectUnit} onClick={() => setIsSelectUnit(true)}>Select
-                                unit</NavigationBtn>
-                        </div>
-                    </Navigation>
+                    
                     {
                         Array(trLength).fill(1).map(_ => (
                                 <Row>
@@ -154,9 +144,20 @@ function EditLevel({levelForEdit, onShowMenuPage}) {
                         Selected units:
                         <input value={`${JSON.stringify(selectedEnemies)}`}/>
                     </div>
-
                 </div>
-                <div>
+                <div style={{border: 'solid 1px red'}}>
+                <Navigation>
+                        <div>
+                            <NavigationBtn
+                                isAddBlock={!isSelectUnit}
+                                onClick={() => setIsSelectUnit(false)}>
+                                Select block
+                            </NavigationBtn>
+                            /
+                            <NavigationBtn isAddUnit={isSelectUnit} onClick={() => setIsSelectUnit(true)}>Select
+                                unit</NavigationBtn>
+                        </div>
+                    </Navigation>
                     {isSelectUnit &&
                         <Units
                             selectEnemyType={selectEnemyType}
@@ -166,6 +167,38 @@ function EditLevel({levelForEdit, onShowMenuPage}) {
 
                         />
                     }
+                    
+                     <table>
+                        <tr>
+                            <td>in bag</td>
+                            <td>in hand</td>
+                            <td>fire effect</td>
+                            <td>bullet destroyed</td>
+                            <td>bullet_avaliable</td>
+                            <td>damage</td>
+                            <td>speed</td>
+                            <td>sound_gun_shoot</td>
+                            <td>sound_gun_reload</td>
+                            <td>sound_gun_empty_shoot</td>
+                        </tr>
+                        {weapons.map(w => {
+                            return (
+                                <tr>
+                                    <td><img src={w.img.gun.in_bag} style={{height: '110px', width: 'auto'}} /></td>
+                                    <td><img src={w.img.gun.in_hand} /></td>
+                                    <td><img src={w.img.gun.fire_effect} /></td>
+                                    <td><img src={w.img.bullet.fly} style={{height: '40px', width: 'auto'}}/></td>
+                                    <td><img src={w.img.bullet.destroyed} style={{height: '40px', width: 'auto'}}/></td>
+                                    <td><img src={w.img.bullet.avaliable} style={{height: '40px', width: 'auto'}}/></td>
+                                    <td>{w.damage}</td>
+                                    <td>{w.speed}</td>
+                                    <td>{w.sound.gun.shoot}</td>
+                                    <td>{w.sound.gun.reload}</td>
+                                    <td>{w.sound.gun.empty_shoot}</td>
+                                </tr>
+                            )
+                        })}
+                    </table>
                 </div>
             </Wrapper>
         </div>
