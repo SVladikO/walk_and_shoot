@@ -3,7 +3,7 @@ import {setLocalStorage, LOCAL_STORAGE_KEY, getLocalStorage} from './localstorag
 
 const isUnitRandomWalkEnable = true;
 
-const levels = [
+export const levels = [
     // level 1
     {
         blockIds: [2, 18, 19, 21, 22, 23, 26, 28, 29, 30, 34, 38, 41, 42, 45, 58, 65, 69, 72, 76, 80, 81, 82, 84, 85, 87, 88, 89, 91, 92, 95, 101, 108, 110, 111],

@@ -21,9 +21,9 @@ class Game {
         // As units may move out of board or be partially hidden
         // I made design to move from border on the same distance.
         this.boardWidthFrom = distanceFromBorder;
-        this.boardWidthTo = window.innerWidth  - distanceFromBorder;
+        this.boardWidthTo = window.innerWidth - distanceFromBorder;
         this.boardHeightFrom = distanceFromBorder;
-        this.boardHeightTo = window.innerHeight  - distanceFromBorder - headerHeight;
+        this.boardHeightTo = window.innerHeight - distanceFromBorder - headerHeight;
 
         this.boardWidth = window.innerWidth;
         this.boardHeigh = window.innerHeight;
@@ -32,7 +32,7 @@ class Game {
         this.static_ctx = this.static_canvas_board.getContext("2d");
         this.static_ctx.canvas.width = this.boardWidth;
         this.static_ctx.canvas.height = this.boardHeigh;
-        
+
         this.canvas_board = document.getElementById('canvas_game_board');
         this.ctx = this.canvas_board.getContext("2d");
         this.ctx.canvas.width = this.boardWidth;
@@ -48,13 +48,11 @@ class Game {
         this.inPlay = false;
         this.levelId = 0;
         this.flyBullets = [];
-        this.user = null; 
+        this.user = null;
         this.enemies = null;
         this.rectangles = null;
         this.finishCoordinates = null;
 
-        this._addListeners();
-        
         const self = this;
         loop();
 
@@ -71,7 +69,7 @@ class Game {
         }
     }
 
-    start(levelIndex) {
+    start(level) {
         /**
          * We need this one to build block per level.
          * We cut bord on 16 horizontally, 8 vertically.
@@ -81,27 +79,26 @@ class Game {
          */
         this.screenMainCanvas = getScreen(this.getWidthLength(), this.getHeightLength());
 
-        const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS);
-        this.levelId = levelIndex;
         this.inPlay = true;
         this.user = getUser();
         this.user.reloadGun()
         this.flyBullets = [];
-        this.rectangles = this.screenMainCanvas.getBoxes(levels[levelIndex].blockIds);
+        this.rectangles = this.screenMainCanvas.getBoxes(level.blockIds);
         this.rectanglesForStaticBoard = this.rectangles;
-        this.rectanglesForActiveBoard = this.rectangles.map(([x, y, xTo, yTo]) =>(
+        this.rectanglesForActiveBoard = this.rectangles.map(([x, y, xTo, yTo]) => (
             [
-                x + this.boardWidthFrom, 
-                y + this.boardHeightFrom, 
-                xTo, 
+                x + this.boardWidthFrom,
+                y + this.boardHeightFrom,
+                xTo,
                 yTo
             ]));
 
-        this.enemies = this.screenMainCanvas.getEnemies(levels[levelIndex].enemies);
-        
-        this.prepareStaticBoard()
+        this.enemies = this.screenMainCanvas.getEnemies(level.enemies);
 
-        console.log('start(', {levelIndex, rec: this.rectangles})
+        this.prepareStaticBoard()
+        this._addListeners();
+
+        console.log('start(', {level, rec: this.rectangles})
     }
 
     prepareStaticBoard() {
@@ -134,7 +131,7 @@ class Game {
         this.enemies.forEach(enemy => enemy.unitRandomDirection())
         this.enemies.forEach(enemy => enemy.move())
         // Render dead enemies to static board
-        this.enemies.forEach(enemy =>  enemy.isDead() && enemy.render(this.user.x, this.user.y, this.static_ctx));
+        this.enemies.forEach(enemy => enemy.isDead() && enemy.render(this.user.x, this.user.y, this.static_ctx));
         // Delete dead enemies from array
         this.enemies = this.enemies.filter(enemy => !enemy.isDead());
 
@@ -142,8 +139,6 @@ class Game {
             // .filter(unit => this.user.isVisibleForMe(unit.x, unit.y))
             .filter(enemy => isUnutVisiable(enemy, this))
             .forEach(enemy => enemy.render(this.user.x, this.user.y, this.ctx))
-
-      
 
 
         // this.enemies = this.enemies.filter(unit => !unit.isDead())
@@ -192,52 +187,66 @@ class Game {
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     }
 
+    _addListeners() {
+        const self = this;
+        const onMouseOver = e => {
+            this.mousePositionX = e.clientX;
+            this.mousePositionY = e.clientY - 50
 
-   _addListeners() {
-    this.canvas_board.addEventListener("mousemove", e => {
-        this.mousePositionX = e.clientX;
-        this.mousePositionY = e.clientY - 50
-
-        if (game.user.bulletAmount === 0) {
-            showNoBulletNotification(e)
-       }
-    });
-
-    window.addEventListener("keypress", (event) => {
-        game.user.enableMove(event.key)   // user movement
-        if (event.key === ' ') {
-            game.user.reloadGun();        // reload weapon
-            this.updateBulletsAmountUI();
-            hideNoBulletNotification();
-        } 
-        
-        if (game.user.bulletAmount === 0) {
-            showNoBulletNotification(event);
+            if (self.user.bulletAmount === 0) {
+                showNoBulletNotification(e)
+            }
         }
 
-        game.drawAll();
-        
-    });
-
-    this.canvas_board.addEventListener("mousedown", (game => e => {
-            if (game.isShootModeAuto) {
-                game.user.isShootEnabled = true;
-            } else {
-                game.user.shootSingle();
+        const onKeyPressed = e => {
+            self.user.enableMove(e.key)   // user movement
+            if (e.key === ' ') {
+                self.user.reloadGun();        // reload weapon
+                this.updateBulletsAmountUI();
+                hideNoBulletNotification();
             }
 
-            if (game.user.bulletAmount === 0) {
+            if (self.user.bulletAmount === 0) {
+                showNoBulletNotification(e);
+            }
+
+            self.drawAll();
+        }
+
+        const onMouseDown = e => {
+            if (self.isShootModeAuto) {
+                self.user.isShootEnabled = true;
+            } else {
+                self.user.shootSingle();
+            }
+
+            if (self.user.bulletAmount === 0) {
                 showNoBulletNotification(e)
             }
 
             this.updateBulletsAmountUI()
-        })(game)
-    );
+        }
 
-    this.canvas_board.addEventListener("mouseup", (game => () => game.user.isShootEnabled = false)(game));
+        const onMouseUp = () => self.user.isShootEnabled = false;
+        const disableOppositeMove = e => self.inPlay && self.user.disableMove(e.key)
 
-}
+        const board = window.canvas_board_wrapper;
 
+        board.addEventListener("mousemove", onMouseOver);
+        board.addEventListener("keypress", onKeyPressed);
+        board.addEventListener("mousedown", onMouseDown);
+        board.addEventListener("mouseup", onMouseUp);
+        board.addEventListener('keyup', disableOppositeMove);
+
+        this.removeListeners = () => {
+            console.log('removeListeners')
+            board.removeEventListener("mousemove", onMouseOver);
+            board.removeEventListener("keypress", onKeyPressed);
+            board.removeEventListener("mousedown", onMouseDown);
+            board.removeEventListener("mouseup", onMouseUp);
+            board.removeEventListener('keyup', disableOppositeMove);
+        }
+    }
 }
 
 export const game = new Game();

@@ -62,7 +62,7 @@ function EditLevel({levelForEdit, onShowMenuPage}) {
     const tdLength = 16;
     let indexAccamulator = 0;
 
-    console.log({selectedEnemies})
+    // console.log({selectedEnemies})
 
     return (
         <div>

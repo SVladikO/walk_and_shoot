@@ -28,7 +28,7 @@ export default function Menu({onSelectLevel, onShowEditLevelPage, setLevelForEdi
 
         refLevels.forEach((ref, index) => {
             const rectangles = screen.getBoxes(levels[index].blockIds)
-            console.log('level: ', index, {rectangles})
+            // console.log('level: ', index, {rectangles})
             const ctx = ref.current.getContext('2d');
             ctx.canvas.width = 200;
             ctx.canvas.height = 100;
