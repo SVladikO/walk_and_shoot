@@ -86,7 +86,6 @@ const SoundController = () => {
 const Header = () => {
     const {settings: {isAutoShootEnabled}} = useSelector(state => state.app);
     const dispatch = useDispatch();
-    const {selectedGun} = useSelector(state => state.app.playRoom);
 
     const triggerShootAuto = () => {
         dispatch(isAutoShootEnabled ? disableAutoShoot() : enableAutoShoot())

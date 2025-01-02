@@ -1,7 +1,4 @@
-import {getPistolUnit, getGunUnit, getAkUnit} from '../entity/unit/index';
 import {setLocalStorage, LOCAL_STORAGE_KEY, getLocalStorage} from './localstorage';
-
-const isUnitRandomWalkEnable = true;
 
 export const levels = [
     // level 1

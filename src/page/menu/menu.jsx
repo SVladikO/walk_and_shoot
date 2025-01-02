@@ -18,7 +18,7 @@ import {style} from '../../util/settings';
 import {getScreen} from "../../util/screen";
 import {prepareCanvas} from "../../util/util";
 
-export default function Menu({onSelectLevel, onShowEditLevelPage, setLevelForEdit}) {
+export default function Menu({onSelectLevel, onShowEditLevelPage}) {
     const refLevels = [];
 
     const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS);

@@ -34,7 +34,6 @@ export const CanvasBoardWrapper = styled.div`
 `;
 
 export const CanvasBoard = styled.canvas`
-    display: 'flex';
     position: absolute;
     top: 0;
     left: 0;

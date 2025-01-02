@@ -8,8 +8,6 @@ import {getUser} from "../entity/unit";
 import {getScreen} from '../util/screen';
 import {showNoBulletNotification, hideNoBulletNotification} from './util';
 
-import {getLocalStorage, LOCAL_STORAGE_KEY} from './localstorage';
-
 const distanceFromBorder = 70;
 
 class Game {
