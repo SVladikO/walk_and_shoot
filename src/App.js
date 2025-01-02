@@ -1,4 +1,8 @@
 import {useState, useEffect} from "react";
+import { BrowserRouter, Routes, Route } from "react-router";
+
+
+
 import './App.css';
 import './util/levels.data.js'; //By import we put levels in localStorage
 import {Header, LineGroup, CanvasBoardWrapper, CanvasBoard} from './App.style.js';
@@ -117,25 +121,30 @@ function App() {
                 <CanvasBoard id="static_canvas_game_board" isVisible={!showMenuPage && !showTryAgainPage && !showEditLevelPage}/>
                 <CanvasBoard id="canvas_game_board" isVisible={!showMenuPage && !showTryAgainPage && !showEditLevelPage}/>
                  </CanvasBoardWrapper>
-            {showMenuPage && (
-                <MenuPage
-                    onSelectLevel={onSelectLevel}
-                    onShowEditLevelPage={onShowEditLevelPage}
-                    setLevelForEdit={setLevelForEdit}
-                />
-            )
-            }
-            {showEditLevelPage &&
-                <EditLevelPage
-                    levelForEdit={levelForEdit}
-                    onShowMenuPage={onShowMenuPage}
-                />
-            }
-            {showTryAgainPage &&
-                <TryAgainPage
-                    selectedLevelId={selectedLevelId}
-                    onTryAgain={onTryAgain}
-                    onShowMenuPage={onShowMenuPage}/>}
+
+                 <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={
+                            <MenuPage
+                            onSelectLevel={onSelectLevel}
+                            onShowEditLevelPage={onShowEditLevelPage}
+                            setLevelForEdit={setLevelForEdit}
+                        />
+                        } />
+                        <Route path="/1" element={
+                            <EditLevelPage
+                            levelForEdit={levelForEdit}
+                            onShowMenuPage={onShowMenuPage}
+                        />
+                        } />
+                        <Route path="/2" element={
+                            <TryAgainPage
+                            selectedLevelId={selectedLevelId}
+                            onTryAgain={onTryAgain}
+                            onShowMenuPage={onShowMenuPage}/>
+                        } />
+                    </Routes>
+                </BrowserRouter>
         </div>
     );
 }
