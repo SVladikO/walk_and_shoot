@@ -79,7 +79,7 @@ class Game {
 
         this.inPlay = true;
         this.user = getUser();
-        this.user.reloadGun()
+        this.user.reloadGun();
         this.flyBullets = [];
         this.rectangles = this.screenMainCanvas.getBoxes(level.blockIds);
         this.rectanglesForStaticBoard = this.rectangles;
@@ -230,19 +230,19 @@ class Game {
 
         const board = window.canvas_board_wrapper;
 
+        window.addEventListener("keypress", onKeyPressed);
+        window.addEventListener('keyup', disableOppositeMove);
         board.addEventListener("mousemove", onMouseOver);
-        board.addEventListener("keypress", onKeyPressed);
         board.addEventListener("mousedown", onMouseDown);
         board.addEventListener("mouseup", onMouseUp);
-        board.addEventListener('keyup', disableOppositeMove);
 
         this.removeListeners = () => {
             console.log('removeListeners')
+            window.removeEventListener("keypress", onKeyPressed);
+            window.removeEventListener('keyup', disableOppositeMove);
             board.removeEventListener("mousemove", onMouseOver);
-            board.removeEventListener("keypress", onKeyPressed);
             board.removeEventListener("mousedown", onMouseDown);
             board.removeEventListener("mouseup", onMouseUp);
-            board.removeEventListener('keyup', disableOppositeMove);
         }
     }
 }

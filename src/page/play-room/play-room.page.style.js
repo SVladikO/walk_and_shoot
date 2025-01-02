@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {headerHeight} from "../../App.style";
 
 export const Wrapper = styled.div`
     overflow: hidden;
