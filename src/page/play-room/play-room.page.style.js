@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {headerHeight} from "../../App.style";
 
 export const Wrapper = styled.div`
     overflow: hidden;
@@ -11,7 +12,6 @@ export const HeaderWrapper = styled.div`
     padding: 0 10px;
     z-index: 1;
     position: relative;
-    // border-bottom: solid 4px black;
 `;
 
 export const LineGroup = styled.div`
@@ -29,13 +29,11 @@ export const SoundWrapper = styled.div`
 
 export const CanvasBoardWrapper = styled.div`
   position: relative;
-    height: 100vh;
-    border: solid 2px black;
+    height: calc(100vh - ${headerHeight}px);
 `;
 
 export const CanvasBoard = styled.canvas`
     position: absolute;
     top: 0;
     left: 0;
-    border: solid 8px black;
 `;
