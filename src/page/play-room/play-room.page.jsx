@@ -60,11 +60,10 @@ const Header = () => {
 }
 
 const Settings = () => {
-    const {isSoundEnabled, isAutoShootEnabled, gameSpeed} = useSelector(state => state.app);
+    const {isSoundEnabled, gameSpeed} = useSelector(state => state.app);
     const dispatch = useDispatch();
 
     const onSwitchSound = () => isSoundEnabled ? dispatch(disableSound()) : dispatch(enableSound());
-    const onSwitchShootAutomatically = () => isAutoShootEnabled ? dispatch(disableAutoShoot()) : dispatch(enableAutoShoot());
 
     return (
         <SettingsWrapper>
@@ -72,8 +71,6 @@ const Settings = () => {
                 <div>
                     <Title>SETTINGS</Title>
                     <SettingsItem is={isSoundEnabled} label="Sound" onClick={onSwitchSound}/>
-                    <SettingsItem is={isAutoShootEnabled} label="All shoot automatically"
-                                  onClick={onSwitchShootAutomatically}/>
                     <MoreLessWrapper>
                         Game speed
                         <div>

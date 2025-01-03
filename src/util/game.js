@@ -37,7 +37,6 @@ class Game {
         this.ctx.canvas.height = this.boardHeigh;
         this.moveDrawPoint(this.ctx)
 
-        this.isAutoShootEnabled = false
         this.mousePositionX = 0;
         this.mousePositionY = 0;
 
@@ -146,17 +145,6 @@ class Game {
         showGameOver(this);
 
         this.renderEnd();
-
-        if (this.isAutoShootEnabled) {
-            this.enemies
-                // .filter(unit => game.user.isVisibleForMe(unit.x, unit.y))
-                .filter(enemy => isUnutVisiable(enemy, this))
-                .forEach(enemy => enemy.shootAutomaticaly())
-
-            this.user.shootAutomaticaly();
-            this.isAutoShootEnabled && this.onSetUserBulletsInClip(this.user.bulletAmount)
-        }
-
         this.user.move();
     }
 
@@ -206,12 +194,7 @@ class Game {
         }
 
         const onMouseDown = e => {
-            if (self.isAutoShootEnabled) {
-                self.user.isShootEnabled = true;
-                self.user.shootAutomaticaly();
-            } else {
-                self.user.shootSingle();
-            }
+            self.user.shootSingle();
 
             this.onSetUserBulletsInClip(self.user.bulletAmount)
         }
@@ -227,6 +210,14 @@ class Game {
         board.addEventListener("mousedown", onMouseDown);
         board.addEventListener("mouseup", onMouseUp);
 
+
+        const intervalId = setInterval(() => {
+            this.enemies
+                // .filter(unit => game.user.isVisibleForMe(unit.x, unit.y))
+                .filter(enemy => isUnutVisiable(enemy, this))
+                .forEach(enemy => enemy.shootSingle())
+        }, 1000)
+
         this.removeListeners = () => {
             console.log('removeListeners')
             window.removeEventListener("keypress", onKeyPressed);
@@ -234,6 +225,7 @@ class Game {
             board.removeEventListener("mousemove", onMouseOver);
             board.removeEventListener("mousedown", onMouseDown);
             board.removeEventListener("mouseup", onMouseUp);
+            clearInterval(intervalId)
         }
     }
 }

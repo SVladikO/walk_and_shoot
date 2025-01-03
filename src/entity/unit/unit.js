@@ -32,7 +32,6 @@ export class Unit {
 
         this.isRandomMoveEnable = isRandomMoveEnable;
         this.isShootEnabled = false;
-        this.shootSpeedAccamulator = weapon.shootSpeedStep;
         this.showFireFromGunImage = 0;
         this.weapon = weapon;
         this.bulletAmount = weapon.bulletAmount;
@@ -171,26 +170,6 @@ export class Unit {
         const bullets = this.getBullets()
         this.showFireFromGunImage = 3;
         game.flyBullets = [...game.flyBullets, ...bullets];
-    }
-
-    /**
-     * Click and keep mouse to shoot automatically.
-     */
-    shootAutomaticaly() {
-        const max = this.weapon.shootSpeedStep * this.bulletAmoun;
-
-        for (let i = 0; i < max; i++) {
-            if (!this.isShootEnabled || this.bulletAmount > 0) {
-                return;
-            }
-
-            if (!this.shootSpeedAccamulator) {
-                this.shootSpeedAccamulator = this.weapon.shootSpeedStep;
-                this.shootSingle();
-            }
-
-            this.shootSpeedAccamulator--;
-        }
     }
 
     /**

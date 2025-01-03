@@ -6,14 +6,12 @@ const appSlice = createSlice({
     initialState: {
         selectedLevel: 1,
         editLevel: 1,
-        isGamePaused: false,
-        selectedGun: null,
+        gameSpeed: 1,
         userBulletsInClip: 0,
         maxUserBulletsInClip: 0,
+        isGamePaused: false,
         isSoundEnabled: false,
-        isAutoShootEnabled: true,
         isShowSettings: false,
-        gameSpeed: 1,
     },
     reducers: {
         setSelectedLevel: ((state, payload) => {
@@ -44,14 +42,6 @@ const appSlice = createSlice({
         },
         decreaseGameSpeed: (state, {payload}) => {
             state.healthLevelgameSpeed -= payload
-        },
-        enableAutoShoot: state => {
-            game.isAutoShootEnabled = true;
-            state.isAutoShootEnabled = true
-        },
-        disableAutoShoot: state => {
-            game.isAutoShootEnabled = false;
-            state.isAutoShootEnabled = false
         },
         openSettings: state => {
             state.isShowSettings = true;
