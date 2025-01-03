@@ -1,17 +1,17 @@
 import {useState} from 'react';
 import {Block, Navigation, NavigationBtn, Row, Wrapper} from './edit-level.page.style'
 
-import {ENEMY_TYPE} from '../../entity/unit/type';
-import {weapons} from '../../entity/gun/gun';
+import {ENEMY_TYPE} from '../../util/unit/type';
+import {weapons} from '../../util/gun/gun';
 import Units from '../../components/units/units'
 
-import gunPistolSrc from '../../images/gun1.png';
-import gunAK47Src from '../../images/gun2.png';
-import gunGUNSrc from '../../images/gun3.png';
+import gunPistolSrc from '../../img/gun1.png';
+import gunAK47Src from '../../img/gun2.png';
+import gunGUNSrc from '../../img/gun3.png';
 
 import {getLocalStorage, LOCAL_STORAGE_KEY, setLocalStorage} from '../../util/localstorage';
 
-import {ReactComponent as WalkIcon} from '../../icons/walk.svg';
+import {ReactComponent as WalkIcon} from '../../img/icons/walk.svg';
 
 function EditLevelPage({levelForEdit, onShowMenuPage}) {
     const [isSelectUnit, setIsSelectUnit] = useState(true)

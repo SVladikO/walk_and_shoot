@@ -1,11 +1,11 @@
 import {Wrapper} from './gun-list.style'
 
-import gun1Img from '../../images/gun1.png';
-import gun2Img from '../../images/gun2.png';
-import gun3Img from '../../images/gun3.png';
+import gun1Img from '../../img/gun1.png';
+import gun2Img from '../../img/gun2.png';
+import gun3Img from '../../img/gun3.png';
 
 import {game} from '../../util/game';
-import {weapon_gun1, weapon_gun2, weapon_gun3} from "../../entity/gun/gun";
+import {weapon_gun1, weapon_gun2, weapon_gun3} from "../../util/gun/gun";
 
 export default function GunList({setUserBulletAmount}) {
     const setUserGun = gun => {

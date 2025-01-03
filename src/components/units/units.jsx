@@ -1,9 +1,9 @@
 import {UnitWrapper, Wrapper} from './units.style'
 
-import {ENEMY_TYPE} from "../../entity/unit/type";
-import gun1Img from '../../images/gun1.png';
-import gun2Img from '../../images/gun2.png';
-import gun3Img from '../../images/gun3.png';
+import {ENEMY_TYPE} from "../../util/unit/type";
+import gun1Img from '../../img/gun1.png';
+import gun2Img from '../../img/gun2.png';
+import gun3Img from '../../img/gun3.png';
 
 
 export default function Units({selectEnemyType, setSelectEnemyType, isEnemyWalk, setIsEnemyWalk}) {

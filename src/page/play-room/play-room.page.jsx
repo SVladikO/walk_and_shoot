@@ -21,7 +21,7 @@ import {
     Wrapper
 } from './play-room.page.style.js'
 
-import {ReactComponent as SettingsIcon} from "../../icons/settings.svg";
+import {ReactComponent as SettingsIcon} from "../../img/icons/settings.svg";
 
 import GunList from "../../components/gun-list/gun-list";
 import {game} from "../../util/game";

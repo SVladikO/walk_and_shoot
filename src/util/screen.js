@@ -1,5 +1,5 @@
-import {ENEMY_TYPE} from "../entity/unit/type";
-import {getAkUnit, getGunUnit, getPistolUnit} from "../entity/unit";
+import {ENEMY_TYPE} from "./unit/type";
+import {getAkUnit, getGunUnit, getPistolUnit} from "./unit";
 import {game} from './game';
 
 export function getScreen(width, height) {

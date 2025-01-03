@@ -1,19 +1,19 @@
 import {GUN_TYPE} from './type';
-import {getRandom} from '../../util/util';
+import {getRandom} from '../util';
 
-import gun1_in_bag from '../../images/gun1_in_bag.png';
-import gun1_in_hand from '../../images/gun1_in_hand.webp';
-import gun1_fire_effect from '../../images/gun1_fire_effect.webp';
+import gun1_in_bag from '../../img/gun1_in_bag.png';
+import gun1_in_hand from '../../img/gun1_in_hand.webp';
+import gun1_fire_effect from '../../img/gun1_fire_effect.webp';
 
-import gun1_bullet_fly from '../../images/gun1_bullet_fly.jpeg'
-import gun1_bullet_destroyed from '../../images/gun1_bullet_fly.jpeg'
-import gun1_bullet_avaliable from '../../images/gun1_bullet_fly.jpeg'
+import gun1_bullet_fly from '../../img/gun1_bullet_fly.jpeg'
+import gun1_bullet_destroyed from '../../img/gun1_bullet_fly.jpeg'
+import gun1_bullet_avaliable from '../../img/gun1_bullet_fly.jpeg'
 
-import gun2_in_bag from '../../images/gun2_in_bag.png';
-import gun2_in_hand from '../../images/gun2_in_hand.webp';
+import gun2_in_bag from '../../img/gun2_in_bag.png';
+import gun2_in_hand from '../../img/gun2_in_hand.webp';
 
-import gun3_in_bag from '../../images/gun3_in_bag.png';
-import gun3_in_hand from '../../images/gun3_in_hand.webp';
+import gun3_in_bag from '../../img/gun3_in_bag.png';
+import gun3_in_hand from '../../img/gun3_in_hand.webp';
 
 //pistol
 export const weapon_gun1 = {

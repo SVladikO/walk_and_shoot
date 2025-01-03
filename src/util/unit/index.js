@@ -1,6 +1,6 @@
 import {weapon_gun1, weapon_gun2, weapon_gun3} from "../gun/gun";
 import {UNIT_TYPE} from "./type";
-import {game} from '../../util/game';
+import {game} from '../game';
 import {Unit} from "./unit";
 
 
