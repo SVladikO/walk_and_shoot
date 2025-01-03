@@ -1,4 +1,5 @@
 import {createSlice, configureStore} from '@reduxjs/toolkit'
+import {game} from "../util/game";
 
 const appSlice = createSlice({
     name: 'app',
@@ -9,11 +10,9 @@ const appSlice = createSlice({
         selectedGun: null,
         userBulletsInClip: 0,
         maxUserBulletsInClip: 0,
-        settings: {
-            isSoundEnabled: true,
-            isAutoShootEnabled: true,
-            gameSpeed: 1,
-        },
+        isSoundEnabled: true,
+        isAutoShootEnabled: true,
+        gameSpeed: 1,
     },
     reducers: {
         setSelectedLevel: ((state, payload) => {
@@ -32,22 +31,26 @@ const appSlice = createSlice({
             state.selectedLevel--
         },
         enableSound: state => {
-            state.settings.isSoundEnabled = true;
+            game.isSoundEnabled = true;
+            state.isSoundEnabled = true;
         },
         disableSound: state => {
-            state.settings.isSoundEnabled = false;
+            game.isSoundEnabled = false;
+            state.isSoundEnabled = false;
         },
         increaseGameSpeed: (state, {payload}) => {
-            state.settings.gameSpeed += payload
+            state.healthLevelgameSpeed += payload
         },
         decreaseGameSpeed: (state, {payload}) => {
-            state.settings.gameSpeed -= payload
+            state.healthLevelgameSpeed -= payload
         },
         enableAutoShoot: state => {
-            state.settings.gameSpeed = true
+            game.isAutoShootEnabled = true;
+            state.isAutoShootEnabled = true
         },
         disableAutoShoot: state => {
-            state.settings.gameSpeed = false
+            game.isAutoShootEnabled = false;
+            state.isAutoShootEnabled = false
         },
     }
 })

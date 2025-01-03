@@ -14,7 +14,6 @@ const Board = () => {
     const onSetUserBulletsInClip = amount => dispatch(setUserBulletsInClip(amount));
     const onSetMaxUserBulletsInClip = amount => dispatch(setMaxUserBulletsInClip(amount));
 
-
     useEffect(() => {
         const updateBulletsAmountUI = () => {};
         // setUserBulletAmount(game.user.bulletAmount);

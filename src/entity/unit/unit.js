@@ -92,14 +92,14 @@ export class Unit {
         const maxY = game.boardHeightTo;
 
         const minX = game.boardWidthFrom;
-        const maxX =  game.boardWidthTo;
+        const maxX = game.boardWidthTo;
 
         if (this.moveDirection.w) {
             const modifiedY = this.y - game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['w'])
 
             // console.log('w', {modifiedY, minY, maxY});
-            
+
             if (isInCanvas(modifiedY, minY, maxY) && !isOnBlock(this.x, modifiedY, style.user.dorRadius)) {
                 this.y = modifiedY;
             }
@@ -127,7 +127,7 @@ export class Unit {
             const modifiedX = this.x + game.unitSpeedStep;
             this.disableOppositeMove(this.moveDirectionOpposite['d'])
             // console.log('d', {modifiedX, minX, maxX}, game.boardWidthTo, game.boardWidth);
-            if (isInCanvas(modifiedX,  minX, maxX) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
+            if (isInCanvas(modifiedX, minX, maxX) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
                 this.x = modifiedX;
             }
         }
@@ -149,7 +149,7 @@ export class Unit {
 
     reloadGun() {
         this.bulletAmount = this.weapon.reloadBulletAmount;
-        !game.isMute && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.reload, 0.4);
+        !game.isSoundEnabled && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.reload, 0.4);
     }
 
     /**
@@ -162,12 +162,12 @@ export class Unit {
 
         //Empty gun sound for no bullets.
         if (this.bulletAmount <= 0 && this.unitType === UNIT_TYPE.USER) {
-            !game.isMute && this.unitType === UNIT_TYPE.USER && playSound('./sound/gun-empty.mp3', 0.4)
+            !game.isSoundEnabled && this.unitType === UNIT_TYPE.USER && playSound('./sound/gun-empty.mp3', 0.4)
             return;
         }
 
         this.bulletAmount -= 1;
-        !game.isMute && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.shoot, .1);
+        !game.isSoundEnabled && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.shoot, .1);
         const bullets = this.getBullets()
         this.showFireFromGunImage = 3;
         game.flyBullets = [...game.flyBullets, ...bullets];
@@ -177,16 +177,20 @@ export class Unit {
      * Click and keep mouse to shoot automatically.
      */
     shootAutomaticaly() {
-        if (!this.isShootEnabled) {
-            return;
-        }
+        const max = this.weapon.shootSpeedStep * this.bulletAmoun;
 
-        if (!this.shootSpeedAccamulator) {
-            this.shootSpeedAccamulator = this.weapon.shootSpeedStep;
-            this.shootSingle();
-        }
+        for (let i = 0; i < max; i++) {
+            if (!this.isShootEnabled || this.bulletAmount > 0) {
+                return;
+            }
 
-        this.shootSpeedAccamulator--;
+            if (!this.shootSpeedAccamulator) {
+                this.shootSpeedAccamulator = this.weapon.shootSpeedStep;
+                this.shootSingle();
+            }
+
+            this.shootSpeedAccamulator--;
+        }
     }
 
     /**
@@ -295,8 +299,8 @@ export class Unit {
         this.renderBulletText(ctx);
 
         ctx.beginPath();
-      //  ctx.arc(this.x, this.y, style.user.dorRadius, 0, 300);
-      //  ctx.stroke();
+        //  ctx.arc(this.x, this.y, style.user.dorRadius, 0, 300);
+        //  ctx.stroke();
 
 
         ctx.translate(this.x, this.y)      // 1. Set x,y where we will rotate.

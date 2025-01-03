@@ -35,25 +35,25 @@ const PlayRoomPage = () => {
 }
 
 const SoundController = () => {
-    const {isSoundEnabled} = useSelector(state => state.app.settings);
+    const {isSoundEnabled} = useSelector(state => state.app);
     const dispatch = useDispatch();
 
     return (
         <SoundWrapper>
-            {isSoundEnabled && <MuteIcon onClick={() => dispatch(enableSound())}/>}
-            {!isSoundEnabled && <UnMuteIcon onClick={() => dispatch(disableSound())}/>}
+            {isSoundEnabled && <MuteIcon onClick={() => dispatch(disableSound())}/>}
+            {!isSoundEnabled && <UnMuteIcon onClick={() => dispatch(enableSound())}/>}
         </SoundWrapper>
     )
 }
 
 const Header = () => {
     const {
-        settings: {isAutoShootEnabled},
+        isAutoShootEnabled,
         userBulletsInClip
     } = useSelector(state => state.app);
 
     const dispatch = useDispatch();
-
+    console.log({isAutoShootEnabled})
     const triggerShootAuto = () => {
         dispatch(isAutoShootEnabled ? disableAutoShoot() : enableAutoShoot())
     }
@@ -67,7 +67,7 @@ const Header = () => {
                 <UserSpeed/>
             </LineGroup>
             <LineGroup>
-                <ShootAuto value={isAutoShootEnabled} onChangeHandler={triggerShootAuto} />
+                <ShootAuto value={true} onChangeHandler={triggerShootAuto} />
                 <GunList setUserBulletAmount={() => 'setUserBulletAmount'}/>
                 <Bullets amount={userBulletsInClip} maxAmount={game?.user?.weapon?.reloadBulletAmount || 8}/>
                 {/* <Health health={userHealth}/> */}

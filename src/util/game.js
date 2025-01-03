@@ -37,12 +37,12 @@ class Game {
         this.ctx.canvas.height = this.boardHeigh;
         this.moveDrawPoint(this.ctx)
 
-        this.isShootModeAuto = false
+        this.isAutoShootEnabled = false
         this.mousePositionX = 0;
         this.mousePositionY = 0;
 
         this.unitSpeedStep = 1;
-        this.isMute = true;
+        this.isSoundEnabled = true;
         this.inPlay = false;
         this.levelId = 0;
         this.flyBullets = [];
@@ -147,14 +147,14 @@ class Game {
 
         this.renderEnd();
 
-        if (this.isShootModeAuto) {
+        if (this.isAutoShootEnabled) {
             this.enemies
                 // .filter(unit => game.user.isVisibleForMe(unit.x, unit.y))
                 .filter(enemy => isUnutVisiable(enemy, this))
                 .forEach(enemy => enemy.shootAutomaticaly())
 
             this.user.shootAutomaticaly();
-            this.isShootModeAuto && this.onSetUserBulletsInClip(this.user.bulletAmount)
+            this.isAutoShootEnabled && this.onSetUserBulletsInClip(this.user.bulletAmount)
         }
 
         this.user.move();
@@ -189,6 +189,7 @@ class Game {
 
     _addListeners() {
         const self = this;
+
         const onMouseOver = e => {
             this.mousePositionX = e.clientX;
             this.mousePositionY = e.clientY - 50
@@ -205,8 +206,9 @@ class Game {
         }
 
         const onMouseDown = e => {
-            if (self.isShootModeAuto) {
+            if (self.isAutoShootEnabled) {
                 self.user.isShootEnabled = true;
+                self.user.shootAutomaticaly();
             } else {
                 self.user.shootSingle();
             }

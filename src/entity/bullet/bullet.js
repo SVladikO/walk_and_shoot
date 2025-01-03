@@ -68,7 +68,7 @@ export default class Bullet {
         game.ctx.fillStyle = this.isDead ? style.bullet.bgColorCrashed : style.bullet.bgColor;
 
         if (this.isKickedBox) {
-            // !isMute && playSound('./sound/missed.mp3', 0.01);
+            // !isSoundEnabled && playSound('./sound/missed.mp3', 0.01);
         }
 
         game.ctx.fill()
