@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {headerHeight} from "../../App.style";
 
 export const Wrapper = styled.div`
     overflow: hidden;
@@ -26,7 +27,7 @@ export const SettingsWrapper = styled.div`
 `;
 
 export const SettingsInnerWrapper = styled.div`
-    height: 400px;
+    min-height: 200px;
     width: 400px;
     padding: 20px 40px;
     margin: 0 auto;
@@ -72,7 +73,16 @@ export const Title = styled.div`
     text-align: center;
     margin: 0 0 20px;
 `;
-    
 
+export const CanvasBoardWrapper = styled.div`
+  position: relative;
+    height: calc(100vh - ${headerHeight}px);
+`;
+
+export const CanvasBoard = styled.canvas`
+    position: absolute;
+    top: 0;
+    left: 0;
+`;
 
 

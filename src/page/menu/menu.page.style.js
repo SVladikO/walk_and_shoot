@@ -27,6 +27,13 @@ export const LevelWrapper = styled.div`
     flex-direction: column;
     background: white;
     border: solid 2px white;
+    
+    & > div {
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+        padding: 4px 0;
+    }
 `;
 export const SubWrapper = styled.div`
     display: flex;

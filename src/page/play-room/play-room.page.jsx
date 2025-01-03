@@ -1,7 +1,12 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useSelector, useDispatch} from 'react-redux'
+
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
+
+import {levels} from "../../util/levels.data";
+
+import {setIsUserDead} from "../../features/app.slice";
 
 import {
     Wrapper,
@@ -12,13 +17,13 @@ import {
     Title,
     MoreLessWrapper,
     SettingsItemWrapper,
+    CanvasBoard,
+    CanvasBoardWrapper
 } from './play-room.page.style.js'
 
 import {ReactComponent as SettingsIcon} from "../../icons/settings.svg";
 
 import {
-    enableAutoShoot,
-    disableAutoShoot,
     enableSound,
     disableSound,
     closeSettings,
@@ -26,24 +31,39 @@ import {
 } from "../../features/app.slice";
 
 import GunList from "../../components/gun-list/gun-list";
-import Bullets from "../../components/bullets/bullets";
 import {game} from "../../util/game";
-
-import Board from "../../module/board/board";
+import {useNavigate} from "react-router";
 
 const PlayRoomPage = () => {
-    const {isShowSettings} = useSelector(state => state.app);
+    const {isShowSettings, isUserDead, selectedLevel} = useSelector(state => state.app);
+
+    const dispatch = useDispatch();
+    const onSetIsUserDead = is => dispatch(setIsUserDead(is));
+
+    useEffect(() => {
+        game.init({
+            onSetIsUserDead
+        });
+
+        game.start(levels[selectedLevel]);
+        return () => game.removeListeners();
+
+    }, []);
+
     return (
         <Wrapper>
             <Header/>
-            <Board/>
+            <CanvasBoardWrapper id="canvas_board_wrapper">
+                <CanvasBoard id="static_canvas_game_board"/>
+                <CanvasBoard id="canvas_game_board"/>
+            </CanvasBoardWrapper>
             {isShowSettings && <Settings/>}
+            {isUserDead && <TryAgainPopup/>}
         </Wrapper>
     )
 }
 
 const Header = () => {
-    const {userBulletsInClip} = useSelector(state => state.app);
     const dispatch = useDispatch();
 
     return (
@@ -51,8 +71,6 @@ const Header = () => {
             <LineGroup></LineGroup>
             <LineGroup>
                 <GunList setUserBulletAmount={() => 'setUserBulletAmount'}/>
-                <Bullets amount={userBulletsInClip} maxAmount={game?.user?.weapon?.reloadBulletAmount || 8}/>
-                {/* <Health health={userHealth}/> */}
                 <SettingsIcon onClick={() => dispatch(openSettings())}/>
             </LineGroup>
         </HeaderWrapper>
@@ -60,6 +78,7 @@ const Header = () => {
 }
 
 const Settings = () => {
+    let navigate = useNavigate();
     const {isSoundEnabled, gameSpeed} = useSelector(state => state.app);
     const dispatch = useDispatch();
 
@@ -81,7 +100,10 @@ const Settings = () => {
                     </MoreLessWrapper>
                 </div>
                 <div>
-                    <Button variant="contained">Menu</Button>
+                    <Button variant="contained" onClick={() => {
+                        dispatch(closeSettings())
+                        navigate("/")
+                    }}>Menu</Button>
                     <Button variant="contained" onClick={() => dispatch(closeSettings())}>Close</Button>
                 </div>
             </SettingsInnerWrapper>
@@ -95,6 +117,26 @@ const SettingsItem = ({is, label, onClick}) => {
             <span>{label}</span>
             <Switch checked={is} onClick={onClick}/>
         </SettingsItemWrapper>
+    )
+}
+
+const TryAgainPopup = () => {
+    let navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    return (
+        <SettingsWrapper>
+            <SettingsInnerWrapper>
+                <Title>GAME OWER</Title>
+                <div>
+                    <Button variant="contained" onClick={() => window.location.reload()}>Try again</Button>
+                    <Button variant="contained" onClick={() => {
+                        dispatch(setIsUserDead(false))
+                        navigate("/")
+                    }}>Menu</Button>
+                </div>
+            </SettingsInnerWrapper>
+        </SettingsWrapper>
     )
 }
 

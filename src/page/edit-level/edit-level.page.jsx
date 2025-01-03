@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Wrapper, Navigation, NavigationBtn, Row, Block} from './edit-level.style'
+import {Wrapper, Navigation, NavigationBtn, Row, Block} from './edit-level.page.style'
 
 import {ENEMY_TYPE} from '../../entity/unit/type';
 import { weapons } from '../../entity/gun/gun';
@@ -13,7 +13,7 @@ import {getLocalStorage, setLocalStorage, LOCAL_STORAGE_KEY} from '../../util/lo
 
 import {ReactComponent as WalkIcon} from '../../icons/walk.svg';
 
-function EditLevel({levelForEdit, onShowMenuPage}) {
+function EditLevelPage({levelForEdit, onShowMenuPage}) {
     const [isSelectUnit, setIsSelectUnit] = useState(true)
     const [isEnemyWalk, setIsEnemyWalk] = useState(false)
     const [selectEnemyType, setSelectEnemyType] = useState(ENEMY_TYPE.PISTOL)
@@ -205,4 +205,4 @@ function EditLevel({levelForEdit, onShowMenuPage}) {
     )
 }
 
-export default EditLevel;
+export default EditLevelPage;

@@ -1,4 +1,8 @@
 import React, {useEffect} from 'react';
+import Button from '@mui/material/Button';
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router";
+
 import {getLocalStorage, LOCAL_STORAGE_KEY} from '../../util/localstorage';
 import {
     Wrapper,
@@ -8,9 +12,9 @@ import {
     GameTitle,
     LevelWrapper,
     LevelTitle
-} from './menu.style.js';
+} from './menu.page.style.js';
 
-import {SecondaryButton} from '../../components/button/button'
+import {setSelectedLevel, setEditLevel} from "../../features/app.slice";
 
 import navigationImg from '../../images/navigation.png';
 
@@ -18,7 +22,9 @@ import {style} from '../../util/settings';
 import {getScreen} from "../../util/screen";
 import {prepareCanvas} from "../../util/util";
 
-export default function Menu({onSelectLevel, onShowEditLevelPage}) {
+export default function MenuPage() {
+    let navigate = useNavigate();
+    let dispatch = useDispatch();
     const refLevels = [];
 
     const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS);
@@ -52,14 +58,23 @@ export default function Menu({onSelectLevel, onShowEditLevelPage}) {
     const canvasLevels = levels.map((level, index) => {
         const ref = React.createRef();
         refLevels.push(ref);
+        // const redirect = index => window.location.href = `${window.location.origin}/play`;
+
         return (
-            <LevelWrapper key={index} onClick={() => onSelectLevel(index)}>
+            <LevelWrapper key={index}>
                 <LevelTitle>LEVEL {index + 1}</LevelTitle>
                 <Canvas ref={ref}/>
-                <button onClick={e => {
-                    e.stopPropagation();
-                    onShowEditLevelPage(index)
-                }}>EDIT MAP</button>
+                <div>
+                    <Button variant="contained" onClick={() => {
+                        dispatch(setEditLevel(index))
+                        navigate('/edit')
+                    }}>EDIT</Button>
+                    <Button variant="contained" onClick={() => {
+                        dispatch(setSelectedLevel(index))
+                        navigate('/play')
+
+                    }}>Play</Button>
+                </div>
             </LevelWrapper>
         )
     })
@@ -72,7 +87,10 @@ export default function Menu({onSelectLevel, onShowEditLevelPage}) {
             <SubWrapper>
                 {canvasLevels}
             </SubWrapper>
-            <SecondaryButton onClick={() => onShowEditLevelPage()}>CREATE NEW LEVEL</SecondaryButton>
+            <Button variant="contained" onClick={() => {
+                dispatch(setEditLevel(1000))
+                navigate('/edit')
+            }}>CREATE NEW LEVEL</Button>
             <NavigationWrapper>
                 <img src={navigationImg}/>
             </NavigationWrapper>

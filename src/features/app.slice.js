@@ -7,28 +7,15 @@ const appSlice = createSlice({
         selectedLevel: 1,
         editLevel: 1,
         gameSpeed: 1,
-        userBulletsInClip: 0,
-        maxUserBulletsInClip: 0,
+        isUserDead: false,
         isGamePaused: false,
         isSoundEnabled: false,
         isShowSettings: false,
     },
     reducers: {
-        setSelectedLevel: ((state, payload) => {
-            state.selectedLevel = payload.value;
+        setSelectedLevel: ((state, {payload}) => {
+            state.selectedLevel = payload;
         }),
-        setUserBulletsInClip: (state, {payload}) => {
-            state.userBulletsInClip = payload
-        },
-        setMaxUserBulletsInClip: (state, {payload}) => {
-            state.maxUserBulletsInClip = payload
-        },
-        incrementSelectedLevel: (state) => {
-            state.selectedLevel++
-        },
-        decrementSelectedLevel: (state) => {
-            state.selectedLevel--
-        },
         enableSound: state => {
             game.isSoundEnabled = true;
             state.isSoundEnabled = true;
@@ -53,19 +40,22 @@ const appSlice = createSlice({
             state.isGamePaused = false;
             game.inPlay = true;
         },
+        setIsUserDead: (state, {payload}) => {
+            state.isUserDead = payload;
+        },
+        setEditLevel: (state, {payload}) => {
+            state.editLevel = payload;
+        }
     }
 })
 export const {
-    enableAutoShoot,
-    disableAutoShoot,
-    incrementSelectedLevel,
-    decrementSelectedLevel,
+    setSelectedLevel,
     enableSound,
     disableSound,
-    setUserBulletsInClip,
-    setMaxUserBulletsInClip,
     openSettings,
     closeSettings,
+    setIsUserDead,
+    setEditLevel,
 } = appSlice.actions;
 
 const store = configureStore({

@@ -10,9 +10,8 @@ import {getScreen} from '../util/screen';
 const distanceFromBorder = 70;
 
 class Game {
-    init({onSetUserBulletsInClip, onSetMaxUserBulletsInClip}) {
-        this.onSetUserBulletsInClip = onSetUserBulletsInClip;
-        this.onSetMaxUserBulletsInClip = onSetMaxUserBulletsInClip;
+    init({onSetIsUserDead}) {
+        this.onSetIsUserDead = onSetIsUserDead;
 
         ////// BORD RELATED \\\\\\\
 
@@ -56,6 +55,7 @@ class Game {
         function loop() {
             if (self?.user?.isDead()) {
                 self.inPlay = false;
+                self.onSetIsUserDead(true)
             }
 
             if (self.inPlay) {
@@ -75,12 +75,9 @@ class Game {
          * @type {{screenStepY: number, screenStepX: number, getHorizontalSide(), getVerticalSide()}}
          */
         this.screenMainCanvas = getScreen(this.getWidthLength(), this.getHeightLength());
-        console.log(1111, 'start')
         this.inPlay = true;
         this.user = getUser();
         this.user.reloadGun();
-        this.onSetUserBulletsInClip(this.user.bulletAmount)
-        this.onSetMaxUserBulletsInClip(this.user.bulletAmount)
         this.flyBullets = [];
         this.rectangles = this.screenMainCanvas.getBoxes(level.blockIds);
         this.rectanglesForStaticBoard = this.rectangles;
@@ -154,7 +151,6 @@ class Game {
         // this.ctx.fillText('FINISH', this.finishCoordinates.x, this.finishCoordinates.y);
     }
 
-
     getWidthLength() {
         return this.boardWidthTo - this.boardWidthFrom;
     }
@@ -187,17 +183,12 @@ class Game {
             self.user.enableMove(e.key)   // user movement
             if (e.key === ' ') {
                 self.user.reloadGun();        // reload weapon
-                this.onSetUserBulletsInClip(self.user.bulletAmount);
             }
 
             self.drawAll();
         }
 
-        const onMouseDown = e => {
-            self.user.shootSingle();
-
-            this.onSetUserBulletsInClip(self.user.bulletAmount)
-        }
+        const onMouseDown = () =>  self.user.shootSingle();
 
         const onMouseUp = () => self.user.isShootEnabled = false;
         const disableOppositeMove = e => self.inPlay && self.user.disableMove(e.key)
@@ -209,7 +200,6 @@ class Game {
         board.addEventListener("mousemove", onMouseOver);
         board.addEventListener("mousedown", onMouseDown);
         board.addEventListener("mouseup", onMouseUp);
-
 
         const intervalId = setInterval(() => {
             this.enemies

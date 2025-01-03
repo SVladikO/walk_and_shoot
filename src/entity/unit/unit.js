@@ -159,6 +159,11 @@ export class Unit {
             return;
         }
 
+        if (this.bulletAmount <= 0 && this.unitType === UNIT_TYPE.UNIT) {
+            this.reloadGun()
+            return;
+        }
+
         //Empty gun sound for no bullets.
         if (this.bulletAmount <= 0 && this.unitType === UNIT_TYPE.USER) {
             game.isSoundEnabled && this.unitType === UNIT_TYPE.USER && playSound('./sound/gun-empty.mp3', 0.4)
@@ -249,7 +254,7 @@ export class Unit {
         // Bullets amount progress.
         ctx.beginPath();
         ctx.lineWidth = "2";
-        ctx.fillStyle = "blue";
+        ctx.fillStyle = "#2196F3";
         ctx.rect(x, y + progressHeight + 2, leftBulletAmount, progressHeight);
         ctx.fill();
 
