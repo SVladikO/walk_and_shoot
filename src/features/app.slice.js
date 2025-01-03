@@ -10,7 +10,7 @@ const appSlice = createSlice({
         selectedGun: null,
         userBulletsInClip: 0,
         maxUserBulletsInClip: 0,
-        isSoundEnabled: true,
+        isSoundEnabled: false,
         isAutoShootEnabled: true,
         isShowSettings: false,
         gameSpeed: 1,

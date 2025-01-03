@@ -42,7 +42,7 @@ class Game {
         this.mousePositionY = 0;
 
         this.unitSpeedStep = 1;
-        this.isSoundEnabled = true;
+        this.isSoundEnabled = false;
         this.inPlay = false;
         this.levelId = 0;
         this.flyBullets = [];
