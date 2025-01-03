@@ -6,7 +6,6 @@ import {
 import {headerHeight} from '../App.style';
 import {getUser} from "../entity/unit";
 import {getScreen} from '../util/screen';
-import {showNoBulletNotification, hideNoBulletNotification} from './util';
 
 const distanceFromBorder = 70;
 
@@ -193,10 +192,6 @@ class Game {
         const onMouseOver = e => {
             this.mousePositionX = e.clientX;
             this.mousePositionY = e.clientY - 50
-
-            if (self.user.bulletAmount === 0) {
-                showNoBulletNotification(e)
-            }
         }
 
         const onKeyPressed = e => {
@@ -204,11 +199,6 @@ class Game {
             if (e.key === ' ') {
                 self.user.reloadGun();        // reload weapon
                 this.onSetUserBulletsInClip(self.user.bulletAmount);
-                hideNoBulletNotification();
-            }
-
-            if (self.user.bulletAmount === 0) {
-                showNoBulletNotification(e);
             }
 
             self.drawAll();
@@ -219,10 +209,6 @@ class Game {
                 self.user.isShootEnabled = true;
             } else {
                 self.user.shootSingle();
-            }
-
-            if (self.user.bulletAmount === 0) {
-                showNoBulletNotification(e)
             }
 
             this.onSetUserBulletsInClip(self.user.bulletAmount)

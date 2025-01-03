@@ -10,11 +10,11 @@ export const getUser = (weapon = weapon_gun1) =>
 export const getUnit = (x, y, health, weapon, unitImageId, isRandomWalkEnable) =>
     new Unit(x, y, health, UNIT_TYPE.UNIT, weapon, unitImageId, isRandomWalkEnable);
 
-export const getPistolUnit = (x, y, isRandomWalkEnable, health = 3) =>
+export const getPistolUnit = (x, y, isRandomWalkEnable, health = 20) =>
     getUnit(x, y, health, weapon_gun1, 'userIconId2', isRandomWalkEnable);
 
-export const getAkUnit = (x, y, isRandomWalkEnable, health = 4) =>
+export const getAkUnit = (x, y, isRandomWalkEnable, health = 20) =>
     getUnit(x, y, health, weapon_gun2, 'userIconId2', isRandomWalkEnable);
 
-export const getGunUnit = (x, y, isRandomWalkEnable, health = 4) =>
+export const getGunUnit = (x, y, isRandomWalkEnable, health = 20) =>
     getUnit(x, y, health, weapon_gun3, 'userIconId2', isRandomWalkEnable);
