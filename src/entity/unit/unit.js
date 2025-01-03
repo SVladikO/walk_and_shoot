@@ -10,8 +10,6 @@ import {
     isOnBlock,
     isInRange,
     playSound,
-    // hideNoBulletNotification,
-    // showNoBulletNotification
 } from '../../util/util'
 
 export class Unit {
@@ -227,7 +225,7 @@ export class Unit {
         const y = this.y - 45;
 
         ctx.beginPath();
-        ctx.fillStyle = "red";
+        ctx.fillStyle = "blue";
         ctx.font = "12px Arial";
         ctx.fillText(`${this.bulletAmount}/${this.weapon.reloadBulletAmount} ${this.bulletAmount <= 0 ? ' - reload' : ''}`, x, y);
     }
@@ -239,42 +237,55 @@ export class Unit {
 
         const x = this.x - 30;
         const y = this.y - 40;
-        
-        const fullHealthLenght = 50;
+
+        const progressHeight = 5;
+        const progressWidth = 60;
+
+        // Progress background.
+        ctx.beginPath();
+        ctx.lineWidth = "4";
+        ctx.fillStyle = "black";
+        ctx.rect(x, y, progressWidth, progressHeight * 2 + 2);
+        ctx.fill();
 
         /**
-         * fullHealthLenght - this.maxHealth
+         * progressWidth - this.maxHealth
          * ???              - this.health
          */
-        const currentHealthLenght = fullHealthLenght * this.health / this.maxHealth;
-        
-        // Health white bg.
+        const healthLevel = progressWidth * this.health / this.maxHealth;
+        const healthPercentage = 100 * this.health / this.maxHealth;
+        // Health progress
         ctx.beginPath();
         ctx.lineWidth = "4";
-        ctx.fillStyle = "white";
-        ctx.rect(x, y, fullHealthLenght, 10);
+        ctx.fillStyle = getHealthColor(healthPercentage);
+        ctx.rect(x, y, healthLevel, progressHeight);
         ctx.fill();
 
-       // Health level
+        const leftBulletAmount = progressWidth * this.bulletAmount / this.weapon.bulletAmount;
+
+        // Bullets amount progress.
         ctx.beginPath();
-        ctx.lineWidth = "4";
-        ctx.fillStyle = "#fa2121";
-        ctx.rect(x, y, currentHealthLenght, 10);
+        ctx.lineWidth = "2";
+        ctx.fillStyle = "blue";
+        ctx.rect(x, y + progressHeight + 2, leftBulletAmount, progressHeight);
         ctx.fill();
 
-        // Health level
-        ctx.beginPath();
-        ctx.lineWidth = "4";
-        ctx.fillStyle = "#fa2121";
-        ctx.rect(x, y, currentHealthLenght, 10);
-        ctx.fill();
-
-        // Health border
+        // Border
         ctx.beginPath();
         ctx.lineWidth = "1";
         ctx.strokeStyle = "black";
-        ctx.rect(x, y, fullHealthLenght, 10);  
+        ctx.rect(x, y, progressWidth, progressHeight * 2 + 2);
         ctx.stroke();
+
+        function getHealthColor(health) {
+            if (health <= 30) {
+                return '#fa2121';
+            } else if (health <= 60) {
+                return '#f09121';
+            } else if (health <= 100) {
+                return '#21f021';
+            }
+        }
     }
 
     render(directionX, directionY, ctx) {
@@ -317,17 +328,6 @@ export class Unit {
 
     updateAngle(toX, toY) {
         this.angle = getRadianAngle(this.x, toX, this.y, toY)
-    }
-
-    updateAngleForMobile(fromX, fromY, ctx) {
-        const width = ctx.canvas.width;
-        const height = ctx.canvas.height;
-        const toX = 0; //width - moveTabletDirectionCenter.x;
-        const toY = 0; //height - moveTabletDirectionCenter.y;
-
-        var dx = fromX - toX;
-        var dy = fromY - toY;
-        this.angle = Math.atan2(dy, dx);
     }
 
     renderDirection(ctx) {
