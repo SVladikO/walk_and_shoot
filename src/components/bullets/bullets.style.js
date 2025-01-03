@@ -40,7 +40,7 @@ export const Notification = styled.div`
     padding: 10px;
     background: rgb(179, 0, 0);
     color: white;
-    height: 60px;
+    height: 50px;
     width: 180px;
     display: flex;
     justify-content: center;
