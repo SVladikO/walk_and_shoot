@@ -1,53 +1,75 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-import {CanvasBoard, CanvasBoardWrapper} from "./board.style";
+// Styles
+import { CanvasBoard, CanvasBoardWrapper } from "./board.style";
 
-import {game} from "../../util/game";
-import {levels} from "../../util/levels.data";
-import {useDispatch} from "react-redux";
+// Game imports
+import { game } from "../../util/game";
+import { levels } from "../../util/levels.data";
 
-import {setUserBulletsInClip, setMaxUserBulletsInClip} from "../../features/app.slice";
+// Redux actions
+import {
+  setUserBulletsInClip,
+  setMaxUserBulletsInClip
+} from "../../features/app.slice";
 
+/**
+ * Board
+ * A React component that renders two <canvas> elements:
+ *   - A static background (static_canvas_game_board)
+ *   - A dynamic layer for animations (canvas_game_board)
+ */
 const Board = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const onSetUserBulletsInClip = amount => dispatch(setUserBulletsInClip(amount));
-    const onSetMaxUserBulletsInClip = amount => dispatch(setMaxUserBulletsInClip(amount));
+  // Dispatchers for bullet status
+  const handleBulletsInClip = (amount) => {
+    dispatch(setUserBulletsInClip(amount));
+  };
+  const handleMaxBulletsInClip = (amount) => {
+    dispatch(setMaxUserBulletsInClip(amount));
+  };
 
+  // The main effect to initialize and start the game
+  useEffect(() => {
+    // Defensive check: ensure game object is properly loaded
+    if (!game) {
+      console.error("Game object is unavailable; cannot initialize game logic.");
+      return;
+    }
 
-    useEffect(() => {
-        const updateBulletsAmountUI = () => {};
-        // setUserBulletAmount(game.user.bulletAmount);
+    /**
+     * Initialize the game instance with callback references
+     * so that the game can update the Redux store about bullet states.
+     */
+    game.init({
+      onSetUserBulletsInClip: handleBulletsInClip,
+      onSetMaxUserBulletsInClip: handleMaxBulletsInClip
+      // You may also pass other callback references for UI if needed
+    });
 
-        game.init({onSetUserBulletsInClip, onSetMaxUserBulletsInClip});
-        game.start(levels[0]);
-        return () => game.removeListeners();
+    // Start the game with the first level (or any other level)
+    if (levels && levels.length > 0) {
+      game.start(levels[0]);
+    } else {
+      console.warn("No levels found. Game start skipped.");
+    }
 
-    }, []);
+    // Cleanup function: remove event listeners on unmount
+    return () => {
+      game.removeListeners();
+    };
+  }, [handleBulletsInClip, handleMaxBulletsInClip]);
 
-    return (
-        <CanvasBoardWrapper id="canvas_board_wrapper">
-            <CanvasBoard id="static_canvas_game_board"/>
-            <CanvasBoard id="canvas_game_board"/>
-        </CanvasBoardWrapper>
-    )
-}
+  return (
+    <CanvasBoardWrapper id="canvas_board_wrapper">
+      {/* The static canvas (for background) */}
+      <CanvasBoard id="static_canvas_game_board" />
+      {/* The dynamic canvas (for rendering bullets, animations, etc.) */}
+      <CanvasBoard id="canvas_game_board" />
+    </CanvasBoardWrapper>
+  );
+};
 
 export default Board;
-
-// import {isUnutVisiable} from "../../util/util";
-
-// setInterval(() => {
-//     if (!game.inPlay) {
-//         return
-//     }
-//
-//     game.enemies
-//         // .filter(unit => game.user.isVisibleForMe(unit.x, unit.y))
-//         .filter(enemy => isUnutVisiable(enemy, game))
-//         .forEach(enemy => enemy.shootSingle())
-//
-//     game.enemies.forEach(enemy => enemy.isShootEnabled = true);
-//     setTimeout(() => game.enemies.forEach(enemy => enemy.isShootEnabled = false), 1000);
-//
-// }, 2000)
