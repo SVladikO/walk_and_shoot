@@ -3,68 +3,51 @@ import {createSlice, configureStore} from '@reduxjs/toolkit'
 const appSlice = createSlice({
     name: 'app',
     initialState: {
-        availableLevels: [],
-        availableEnemies: [],
-        availableGuns: [],
         selectedLevel: 1,
         editLevel: 1,
+        isGamePaused: false,
+        selectedGun: null,
+        userBulletsInClip: 0,
+        maxUserBulletsInClip: 0,
         settings: {
             isSoundEnabled: true,
             isAutoShootEnabled: true,
             gameSpeed: 1,
-        },
-        // Data per level user play
-        playRoom: {
-            isGamePaused: false,
-            selectedGun: null,
-            user: {
-                health: 100,
-            },
-            enemies: [], // one array for dead and alive enemies
-            flyBullets: []
         },
     },
     reducers: {
         setSelectedLevel: ((state, payload) => {
             state.selectedLevel = payload.value;
         }),
-        incrementSelectedLevel: (state) => {state.selectedLevel++},
-        decrementSelectedLevel: (state) => {state.selectedLevel--},
+        setUserBulletsInClip: (state, {payload}) => {
+            state.userBulletsInClip = payload
+        },
+        setMaxUserBulletsInClip: (state, {payload}) => {
+            state.maxUserBulletsInClip = payload
+        },
+        incrementSelectedLevel: (state) => {
+            state.selectedLevel++
+        },
+        decrementSelectedLevel: (state) => {
+            state.selectedLevel--
+        },
         enableSound: state => {
             state.settings.isSoundEnabled = true;
         },
         disableSound: state => {
             state.settings.isSoundEnabled = false;
         },
-        increaseGameSpeed: (state, payload) => {
-            state.settings.gameSpeed += payload.value
+        increaseGameSpeed: (state, {payload}) => {
+            state.settings.gameSpeed += payload
         },
-        decreaseGameSpeed: (state, payload) => {
-            state.settings.gameSpeed -= payload.value
+        decreaseGameSpeed: (state, {payload}) => {
+            state.settings.gameSpeed -= payload
         },
         enableAutoShoot: state => {
             state.settings.gameSpeed = true
         },
         disableAutoShoot: state => {
             state.settings.gameSpeed = false
-        },
-
-        initUser: (state, payload) => {
-            state.playRoom.user = payload.value
-        },
-
-        initEnemies: (state, payload) => {
-            state.playRoom.enemies = payload.value
-        },
-        resetEnemies: (state) => {
-            state.playRoom.enemies = []
-        },
-
-        initFlyBullets: (state, payload) => {
-            state.playRoom.flyBullets = payload.value
-        },
-        resetFlyBullets: (state) => {
-            state.playRoom.flyBullets = []
         },
     }
 })
@@ -74,7 +57,9 @@ export const {
     incrementSelectedLevel,
     decrementSelectedLevel,
     enableSound,
-    disableSound
+    disableSound,
+    setUserBulletsInClip,
+    setMaxUserBulletsInClip,
 } = appSlice.actions;
 
 const store = configureStore({

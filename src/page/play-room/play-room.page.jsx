@@ -13,7 +13,7 @@ import {
     incrementSelectedLevel,
     decrementSelectedLevel,
     enableSound,
-    disableSound
+    disableSound,
 } from "../../features/app.slice";
 
 import {ThirdButton} from "../../components/button/button";
@@ -47,7 +47,11 @@ const SoundController = () => {
 }
 
 const Header = () => {
-    const {settings: {isAutoShootEnabled}} = useSelector(state => state.app);
+    const {
+        settings: {isAutoShootEnabled},
+        userBulletsInClip
+    } = useSelector(state => state.app);
+
     const dispatch = useDispatch();
 
     const triggerShootAuto = () => {
@@ -65,7 +69,7 @@ const Header = () => {
             <LineGroup>
                 <ShootAuto value={isAutoShootEnabled} onChangeHandler={triggerShootAuto} />
                 <GunList setUserBulletAmount={() => 'setUserBulletAmount'}/>
-                <Bullets amount={2} maxAmount={game?.user?.weapon?.reloadBulletAmount || 8}/>
+                <Bullets amount={userBulletsInClip} maxAmount={game?.user?.weapon?.reloadBulletAmount || 8}/>
                 {/* <Health health={userHealth}/> */}
             </LineGroup>
         </HeaderWrapper>

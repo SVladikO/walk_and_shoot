@@ -4,13 +4,22 @@ import {CanvasBoard, CanvasBoardWrapper} from "./board.style";
 
 import {game} from "../../util/game";
 import {levels} from "../../util/levels.data";
+import {useDispatch} from "react-redux";
+
+import {setUserBulletsInClip, setMaxUserBulletsInClip} from "../../features/app.slice";
 
 const Board = () => {
+    const dispatch = useDispatch();
+
+    const onSetUserBulletsInClip = amount => dispatch(setUserBulletsInClip(amount));
+    const onSetMaxUserBulletsInClip = amount => dispatch(setMaxUserBulletsInClip(amount));
+
+
     useEffect(() => {
         const updateBulletsAmountUI = () => {};
         // setUserBulletAmount(game.user.bulletAmount);
 
-        game.init(updateBulletsAmountUI);
+        game.init({onSetUserBulletsInClip, onSetMaxUserBulletsInClip});
         game.start(levels[0]);
         return () => game.removeListeners();
 

@@ -11,8 +11,9 @@ import {showNoBulletNotification, hideNoBulletNotification} from './util';
 const distanceFromBorder = 70;
 
 class Game {
-    init(updateBulletsAmountUI) {
-        this.updateBulletsAmountUI = updateBulletsAmountUI;
+    init({onSetUserBulletsInClip, onSetMaxUserBulletsInClip}) {
+        this.onSetUserBulletsInClip = onSetUserBulletsInClip;
+        this.onSetMaxUserBulletsInClip = onSetMaxUserBulletsInClip;
 
         ////// BORD RELATED \\\\\\\
 
@@ -80,6 +81,8 @@ class Game {
         this.inPlay = true;
         this.user = getUser();
         this.user.reloadGun();
+        this.onSetUserBulletsInClip(this.user.bulletAmount)
+        this.onSetMaxUserBulletsInClip(this.user.bulletAmount)
         this.flyBullets = [];
         this.rectangles = this.screenMainCanvas.getBoxes(level.blockIds);
         this.rectanglesForStaticBoard = this.rectangles;
@@ -152,7 +155,7 @@ class Game {
                 .forEach(enemy => enemy.shootAutomaticaly())
 
             this.user.shootAutomaticaly();
-            this.isShootModeAuto && this.updateBulletsAmountUI()
+            this.isShootModeAuto && this.onSetUserBulletsInClip(this.user.bulletAmount)
         }
 
         this.user.move();
@@ -200,7 +203,7 @@ class Game {
             self.user.enableMove(e.key)   // user movement
             if (e.key === ' ') {
                 self.user.reloadGun();        // reload weapon
-                this.updateBulletsAmountUI();
+                this.onSetUserBulletsInClip(self.user.bulletAmount);
                 hideNoBulletNotification();
             }
 
@@ -222,7 +225,7 @@ class Game {
                 showNoBulletNotification(e)
             }
 
-            this.updateBulletsAmountUI()
+            this.onSetUserBulletsInClip(self.user.bulletAmount)
         }
 
         const onMouseUp = () => self.user.isShootEnabled = false;
