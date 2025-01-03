@@ -1,24 +1,30 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {useSelector, useDispatch} from 'react-redux'
-import {NavLink} from "react-router";
+import Button from '@mui/material/Button';
+import Switch from '@mui/material/Switch';
 
-import {Wrapper, HeaderWrapper, LineGroup, SoundWrapper} from './play-room.page.style.js'
+import {
+    Wrapper,
+    HeaderWrapper,
+    LineGroup,
+    SettingsWrapper,
+    SettingsInnerWrapper,
+    Title,
+    MoreLessWrapper,
+    SettingsItemWrapper,
+} from './play-room.page.style.js'
 
-import {ReactComponent as MuteIcon} from "../../icons/mute.svg";
-import {ReactComponent as UnMuteIcon} from "../../icons/unmute.svg";
+import {ReactComponent as SettingsIcon} from "../../icons/settings.svg";
 
 import {
     enableAutoShoot,
     disableAutoShoot,
-    incrementSelectedLevel,
-    decrementSelectedLevel,
     enableSound,
     disableSound,
+    closeSettings,
+    openSettings,
 } from "../../features/app.slice";
 
-import {ThirdButton} from "../../components/button/button";
-import UserSpeed from "../../components/user-speed/user-speed";
-import ShootAuto from "../../components/shoot-auto/shoot-auto";
 import GunList from "../../components/gun-list/gun-list";
 import Bullets from "../../components/bullets/bullets";
 import {game} from "../../util/game";
@@ -26,65 +32,72 @@ import {game} from "../../util/game";
 import Board from "../../module/board/board";
 
 const PlayRoomPage = () => {
+    const {isShowSettings} = useSelector(state => state.app);
     return (
         <Wrapper>
             <Header/>
             <Board/>
+            {isShowSettings && <Settings/>}
         </Wrapper>
     )
 }
 
-const SoundController = () => {
-    const {isSoundEnabled} = useSelector(state => state.app);
-    const dispatch = useDispatch();
-
-    return (
-        <SoundWrapper>
-            {isSoundEnabled && <MuteIcon onClick={() => dispatch(disableSound())}/>}
-            {!isSoundEnabled && <UnMuteIcon onClick={() => dispatch(enableSound())}/>}
-        </SoundWrapper>
-    )
-}
-
 const Header = () => {
-    const {
-        isAutoShootEnabled,
-        userBulletsInClip
-    } = useSelector(state => state.app);
-
+    const {userBulletsInClip} = useSelector(state => state.app);
     const dispatch = useDispatch();
-    console.log({isAutoShootEnabled})
-    const triggerShootAuto = () => {
-        dispatch(isAutoShootEnabled ? disableAutoShoot() : enableAutoShoot())
-    }
 
     return (
         <HeaderWrapper>
+            <LineGroup></LineGroup>
             <LineGroup>
-                <NavLink to="/menu" end>Menu</NavLink>
-                <SoundController/>
-                <LevelController/>
-                <UserSpeed/>
-            </LineGroup>
-            <LineGroup>
-                <ShootAuto value={true} onChangeHandler={triggerShootAuto} />
                 <GunList setUserBulletAmount={() => 'setUserBulletAmount'}/>
                 <Bullets amount={userBulletsInClip} maxAmount={game?.user?.weapon?.reloadBulletAmount || 8}/>
                 {/* <Health health={userHealth}/> */}
+                <SettingsIcon onClick={() => dispatch(openSettings())}/>
             </LineGroup>
         </HeaderWrapper>
     )
 }
-const LevelController = () => {
-    const {selectedLevel} = useSelector(state => state.app);
+
+const Settings = () => {
+    const {isSoundEnabled, isAutoShootEnabled, gameSpeed} = useSelector(state => state.app);
     const dispatch = useDispatch();
 
+    const onSwitchSound = () => isSoundEnabled ? dispatch(disableSound()) : dispatch(enableSound());
+    const onSwitchShootAutomatically = () => isAutoShootEnabled ? dispatch(disableAutoShoot()) : dispatch(enableAutoShoot());
+
     return (
-        <>
-            <ThirdButton onClick={() => dispatch(decrementSelectedLevel())}>PREV</ThirdButton>
-            <div>LEVEL {selectedLevel}</div>
-            <ThirdButton onClick={() => dispatch(incrementSelectedLevel())}>NEXT</ThirdButton>
-        </>
+        <SettingsWrapper>
+            <SettingsInnerWrapper>
+                <div>
+                    <Title>SETTINGS</Title>
+                    <SettingsItem is={isSoundEnabled} label="Sound" onClick={onSwitchSound}/>
+                    <SettingsItem is={isAutoShootEnabled} label="All shoot automatically"
+                                  onClick={onSwitchShootAutomatically}/>
+                    <MoreLessWrapper>
+                        Game speed
+                        <div>
+                            <Button size="small" variant="contained">-</Button>
+                            {gameSpeed}
+                            <Button size="small" variant="contained">+</Button>
+                        </div>
+                    </MoreLessWrapper>
+                </div>
+                <div>
+                    <Button variant="contained">Menu</Button>
+                    <Button variant="contained" onClick={() => dispatch(closeSettings())}>Close</Button>
+                </div>
+            </SettingsInnerWrapper>
+        </SettingsWrapper>
+    )
+}
+
+const SettingsItem = ({is, label, onClick}) => {
+    return (
+        <SettingsItemWrapper>
+            <span>{label}</span>
+            <Switch checked={is} onClick={onClick}/>
+        </SettingsItemWrapper>
     )
 }
 

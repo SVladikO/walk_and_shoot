@@ -76,7 +76,7 @@ class Game {
          * @type {{screenStepY: number, screenStepX: number, getHorizontalSide(), getVerticalSide()}}
          */
         this.screenMainCanvas = getScreen(this.getWidthLength(), this.getHeightLength());
-
+        console.log(1111, 'start')
         this.inPlay = true;
         this.user = getUser();
         this.user.reloadGun();

@@ -19,10 +19,60 @@ export const LineGroup = styled.div`
     align-items: center;
 `;
 
-export const SoundWrapper = styled.div`
-    & > svg {
-        height: 40px;
-        width: 40px;
+export const SettingsWrapper = styled.div`
+    position: absolute;
+    top: 70px;
+    width: 100%;
+`;
+
+export const SettingsInnerWrapper = styled.div`
+    height: 400px;
+    width: 400px;
+    padding: 20px 40px;
+    margin: 0 auto;
+    background: white;
+    border: solid 1px black;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    
+    & > div {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: stretch;
+        gap: 10px;
     }
 `;
+
+export const SettingsItemWrapper = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+export const MoreLessWrapper = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    & > div {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    
+    & > div > button {
+        min-width: 40px !important;
+    }
+`;
+
+export const Title = styled.div`
+    text-align: center;
+    margin: 0 0 20px;
+`;
+    
+
+
 

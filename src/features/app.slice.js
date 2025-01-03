@@ -12,6 +12,7 @@ const appSlice = createSlice({
         maxUserBulletsInClip: 0,
         isSoundEnabled: true,
         isAutoShootEnabled: true,
+        isShowSettings: false,
         gameSpeed: 1,
     },
     reducers: {
@@ -52,6 +53,16 @@ const appSlice = createSlice({
             game.isAutoShootEnabled = false;
             state.isAutoShootEnabled = false
         },
+        openSettings: state => {
+            state.isShowSettings = true;
+            state.isGamePaused = true;
+            game.inPlay = false;
+        },
+        closeSettings: state => {
+            state.isShowSettings = false;
+            state.isGamePaused = false;
+            game.inPlay = true;
+        },
     }
 })
 export const {
@@ -63,6 +74,8 @@ export const {
     disableSound,
     setUserBulletsInClip,
     setMaxUserBulletsInClip,
+    openSettings,
+    closeSettings,
 } = appSlice.actions;
 
 const store = configureStore({

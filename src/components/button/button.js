@@ -12,9 +12,3 @@ export const SecondaryButton = styled.div`
     margin: 30px 0 0;
     color: rgba(255, 255, 255, 0.54);
 `;
-
-export const ThirdButton = styled.div`
-    border: solid 2px #000000;
-    padding: 10px;
-    color: #000000;
-`;
