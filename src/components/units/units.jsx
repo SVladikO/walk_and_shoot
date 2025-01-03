@@ -6,7 +6,6 @@ import gun2Img from '../../images/gun2.png';
 import gun3Img from '../../images/gun3.png';
 
 
-
 export default function Units({selectEnemyType, setSelectEnemyType, isEnemyWalk, setIsEnemyWalk}) {
     return (
         <Wrapper>

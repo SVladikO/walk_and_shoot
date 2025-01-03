@@ -5,16 +5,16 @@ import {useNavigate} from "react-router";
 
 import {getLocalStorage, LOCAL_STORAGE_KEY} from '../../util/localstorage';
 import {
-    Wrapper,
-    SubWrapper,
-    NavigationWrapper,
     Canvas,
     GameTitle,
+    LevelTitle,
     LevelWrapper,
-    LevelTitle
+    NavigationWrapper,
+    SubWrapper,
+    Wrapper
 } from './menu.page.style.js';
 
-import {setSelectedLevel, setEditLevel} from "../../features/app.slice";
+import {setEditLevel, setSelectedLevel} from "../../features/app.slice";
 
 import navigationImg from '../../images/navigation.png';
 

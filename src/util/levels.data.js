@@ -1,4 +1,4 @@
-import {setLocalStorage, LOCAL_STORAGE_KEY, getLocalStorage} from './localstorage';
+import {getLocalStorage, LOCAL_STORAGE_KEY, setLocalStorage} from './localstorage';
 
 export const levels = [
     // level 1

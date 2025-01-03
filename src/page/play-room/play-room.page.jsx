@@ -1,34 +1,27 @@
 import React, {useEffect} from "react";
-import {useSelector, useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
 
 import {levels} from "../../util/levels.data";
 
-import {setIsUserDead} from "../../features/app.slice";
+import {closeSettings, disableSound, enableSound, openSettings, setIsUserDead} from "../../features/app.slice";
 
 import {
-    Wrapper,
+    CanvasBoard,
+    CanvasBoardWrapper,
     HeaderWrapper,
     LineGroup,
-    SettingsWrapper,
-    SettingsInnerWrapper,
-    Title,
     MoreLessWrapper,
+    SettingsInnerWrapper,
     SettingsItemWrapper,
-    CanvasBoard,
-    CanvasBoardWrapper
+    SettingsWrapper,
+    Title,
+    Wrapper
 } from './play-room.page.style.js'
 
 import {ReactComponent as SettingsIcon} from "../../icons/settings.svg";
-
-import {
-    enableSound,
-    disableSound,
-    closeSettings,
-    openSettings,
-} from "../../features/app.slice";
 
 import GunList from "../../components/gun-list/gun-list";
 import {game} from "../../util/game";

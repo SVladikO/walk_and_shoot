@@ -1,15 +1,15 @@
 import {useState} from 'react';
-import {Wrapper, Navigation, NavigationBtn, Row, Block} from './edit-level.page.style'
+import {Block, Navigation, NavigationBtn, Row, Wrapper} from './edit-level.page.style'
 
 import {ENEMY_TYPE} from '../../entity/unit/type';
-import { weapons } from '../../entity/gun/gun';
+import {weapons} from '../../entity/gun/gun';
 import Units from '../../components/units/units'
 
 import gunPistolSrc from '../../images/gun1.png';
 import gunAK47Src from '../../images/gun2.png';
 import gunGUNSrc from '../../images/gun3.png';
 
-import {getLocalStorage, setLocalStorage, LOCAL_STORAGE_KEY} from '../../util/localstorage';
+import {getLocalStorage, LOCAL_STORAGE_KEY, setLocalStorage} from '../../util/localstorage';
 
 import {ReactComponent as WalkIcon} from '../../icons/walk.svg';
 

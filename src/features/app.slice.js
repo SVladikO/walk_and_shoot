@@ -1,4 +1,4 @@
-import {createSlice, configureStore} from '@reduxjs/toolkit'
+import {configureStore, createSlice} from '@reduxjs/toolkit'
 import {game} from "../util/game";
 
 const appSlice = createSlice({
