@@ -1,8 +1,8 @@
 import {Wrapper} from './gun-list.style'
 
-import gun1Img from '../../img/gun1.png';
-import gun2Img from '../../img/gun2.png';
-import gun3Img from '../../img/gun3.png';
+import gun1Img from '../../img/gun1_in_bag.webp';
+import gun2Img from '../../img/gun2_in_bag.webp';
+import gun3Img from '../../img/gun3_in_bag.webp';
 
 import {game} from '../../util/game';
 import {weapon_gun1, weapon_gun2, weapon_gun3} from "../../util/gun/gun";

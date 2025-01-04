@@ -16,7 +16,7 @@ import {
 
 import {setEditLevel, setSelectedLevel} from "../../features/app.slice";
 
-import navigationImg from '../../img/navigation.png';
+import navigationImg from '../../img/navigation.webp';
 
 import {style} from '../../util/settings';
 import {getScreen} from "../../util/screen";

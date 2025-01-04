@@ -2,6 +2,7 @@ import {isUnutVisiable, renderRectangle, showGameOver,} from "./util";
 import {headerHeight} from '../App.style';
 import {getUser} from "./unit";
 import {getScreen} from './screen';
+import {weapon_gun1} from "./gun/gun";
 
 const distanceFromBorder = 70;
 
@@ -97,6 +98,7 @@ class Game {
         }
 
         this.onSetIsUserDead(false)
+
         console.log('start(', {level, rec: this.rectangles})
     }
 

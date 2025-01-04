@@ -2,12 +2,11 @@ import {useState} from 'react';
 import {Block, Navigation, NavigationBtn, Row, Wrapper} from './edit-level.page.style'
 
 import {ENEMY_TYPE} from '../../util/unit/type';
-import {weapons} from '../../util/gun/gun';
 import Units from '../../components/units/units'
 
-import gunPistolSrc from '../../img/gun1.png';
-import gunAK47Src from '../../img/gun2.png';
-import gunGUNSrc from '../../img/gun3.png';
+import gunPistolSrc from '../../img/gun1_in_bag.webp';
+import gunAK47Src from '../../img/gun2_in_bag.webp';
+import gunGUNSrc from '../../img/gun3_in_bag.webp';
 
 import {getLocalStorage, LOCAL_STORAGE_KEY, setLocalStorage} from '../../util/localstorage';
 
@@ -181,23 +180,23 @@ function EditLevelPage({levelForEdit, onShowMenuPage}) {
                             <td>sound_gun_reload</td>
                             <td>sound_gun_empty_shoot</td>
                         </tr>
-                        {weapons.map(w => {
-                            return (
-                                <tr>
-                                    <td><img src={w.img.gun.in_bag} style={{height: '110px', width: 'auto'}} /></td>
-                                    <td><img src={w.img.gun.in_hand} /></td>
-                                    <td><img src={w.img.gun.fire_effect} /></td>
-                                    <td><img src={w.img.bullet.fly} style={{height: '40px', width: 'auto'}}/></td>
-                                    <td><img src={w.img.bullet.destroyed} style={{height: '40px', width: 'auto'}}/></td>
-                                    <td><img src={w.img.bullet.avaliable} style={{height: '40px', width: 'auto'}}/></td>
-                                    <td>{w.damage}</td>
-                                    <td>{w.speed}</td>
-                                    <td>{w.sound.gun.shoot}</td>
-                                    <td>{w.sound.gun.reload}</td>
-                                    <td>{w.sound.gun.empty_shoot}</td>
-                                </tr>
-                            )
-                        })}
+                        {/*{weapons.map(w => {*/}
+                        {/*    return (*/}
+                        {/*        <tr>*/}
+                        {/*            <td><img src={w.img.gun.in_bag} style={{height: '110px', width: 'auto'}} /></td>*/}
+                        {/*            <td><img src={w.img.gun.in_hand} /></td>*/}
+                        {/*            <td><img src={w.img.gun.fire_effect} /></td>*/}
+                        {/*            <td><img src={w.img.bullet.fly} style={{height: '40px', width: 'auto'}}/></td>*/}
+                        {/*            <td><img src={w.img.bullet.destroyed} style={{height: '40px', width: 'auto'}}/></td>*/}
+                        {/*            <td><img src={w.img.bullet.avaliable} style={{height: '40px', width: 'auto'}}/></td>*/}
+                        {/*            <td>{w.damage}</td>*/}
+                        {/*            <td>{w.speed}</td>*/}
+                        {/*            <td>{w.sound.gun.shoot}</td>*/}
+                        {/*            <td>{w.sound.gun.reload}</td>*/}
+                        {/*            <td>{w.sound.gun.empty_shoot}</td>*/}
+                        {/*        </tr>*/}
+                        {/*    )*/}
+                        {/*})}*/}
                     </table>
                 </div>
             </Wrapper>

@@ -1,23 +1,10 @@
 import {GUN_TYPE} from './type';
 import {getRandom} from '../util';
 
-import gun1_in_bag from '../../img/gun1_in_bag.png';
-import gun1_in_hand from '../../img/gun1_in_hand.webp';
-import gun1_fire_effect from '../../img/gun1_fire_effect.webp';
-
-import gun1_bullet_fly from '../../img/gun1_bullet_fly.jpeg'
-import gun1_bullet_destroyed from '../../img/gun1_bullet_fly.jpeg'
-import gun1_bullet_avaliable from '../../img/gun1_bullet_fly.jpeg'
-
-import gun2_in_bag from '../../img/gun2_in_bag.png';
-import gun2_in_hand from '../../img/gun2_in_hand.webp';
-
-import gun3_in_bag from '../../img/gun3_in_bag.png';
-import gun3_in_hand from '../../img/gun3_in_hand.webp';
-
 //pistol
 export const weapon_gun1 = {
-    imageId: 'gunIconId1',
+    imageId: 'gun1_in_hand_id',
+    imageFireId: 'gun1_fire_effect_id',
     type: GUN_TYPE.PISTOL,
     bulletAmount: 8,
     reloadBulletAmount: 8,
@@ -35,7 +22,8 @@ export const weapon_gun1 = {
 
 //ak
 export const weapon_gun2 = {
-    imageId: 'gunIconId2',
+    imageId: 'gun2_in_hand_id',
+    imageFireId: 'gun2_fire_effect_id',
     type: GUN_TYPE.AK,
     bulletAmount: 30,
     reloadBulletAmount: 30,
@@ -68,7 +56,8 @@ export const weapon_gun2 = {
 }
 //gun
 export const weapon_gun3 = {
-    imageId: 'gunIconId3',
+    imageId: 'gun3_in_hand_id',
+    imageFireId: 'gun3_fire_effect_id',
     type: GUN_TYPE.GUN,
     bulletAmount: 2,
     reloadBulletAmount: 2,
@@ -84,101 +73,26 @@ export const weapon_gun3 = {
     shoot: (angle, getBullet) => ([getBullet(angle - 0.3), getBullet(angle), getBullet(angle + 0.3)]),
 }
 
-const weapon = {
-    img: {
-        gun: {
-            in_bag: gun1_in_bag,
-            in_hand: gun1_in_hand,
-            fire_effect: gun1_fire_effect
-        },
-        bullet: {
-            fly: gun1_bullet_fly,
-            destroyed: gun1_bullet_destroyed,
-            avaliable: gun1_bullet_avaliable,
-        }
-    },
-    damage: 8,
-    speed: 2,
-    sound: {
-        gun: {
-            shoot: '',
-            reload: '',
-            empty_shoot: '',
-        }
-    }
-}
-
-export const weapons = [
-    // pistol
-    {
-        img: {
-            gun: {
-                in_bag: gun1_in_bag,
-                in_hand: gun1_in_hand,
-                fire_effect: gun1_fire_effect
-            },
-            bullet: {
-                fly: gun1_bullet_fly,
-                destroyed: gun1_bullet_destroyed,
-                avaliable: gun1_bullet_avaliable,
-            }
-        },
-        damage: 8,
-        speed: 2,
-        sound: {
-            gun: {
-                shoot: '',
-                reload: '',
-                empty_shoot: '',
-            }
-        }
-    },
-    // ak 47
-    {
-        img: {
-            gun: {
-                in_bag: gun2_in_bag,
-                in_hand: gun2_in_hand,
-                fire_effect: gun1_fire_effect
-            },
-            bullet: {
-                fly: gun1_bullet_fly,
-                destroyed: gun1_bullet_destroyed,
-                avaliable: gun1_bullet_avaliable,
-            }
-        },
-        damage: 8,
-        speed: 2,
-        sound: {
-            gun: {
-                shoot: '',
-                reload: '',
-                empty_shoot: '',
-            }
-        }
-    },
-    // winchester
-    {
-        img: {
-            gun: {
-                in_bag: gun3_in_bag,
-                in_hand: gun3_in_hand,
-                fire_effect: gun1_fire_effect
-            },
-            bullet: {
-                fly: gun1_bullet_fly,
-                destroyed: gun1_bullet_destroyed,
-                avaliable: gun1_bullet_avaliable,
-            }
-        },
-        damage: 8,
-        speed: 2,
-        sound: {
-            gun: {
-                shoot: '',
-                reload: '',
-                empty_shoot: '',
-            }
-        }
-    }
-]
+// const weapon = {
+//     img: {
+//         gun: {
+//             in_bag: gun1_in_bag,
+//             in_hand: gun1_in_hand,
+//             fire_effect: gun1_fire_effect
+//         },
+//         bullet: {
+//             fly: gun1_bullet_fly,
+//             destroyed: gun1_bullet_destroyed,
+//             avaliable: gun1_bullet_avaliable,
+//         }
+//     },
+//     damage: 8,
+//     speed: 2,
+//     sound: {
+//         gun: {
+//             shoot: '',
+//             reload: '',
+//             empty_shoot: '',
+//         }
+//     }
+// }

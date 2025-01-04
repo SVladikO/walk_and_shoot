@@ -287,11 +287,12 @@ export class Unit {
         if (!this.isDead()) {
             // 4. Draw gun
             const weaponImg = document.getElementById(this.weapon.imageId);
+
             ctx.drawImage(weaponImg, this.x, this.y - 5, 75, 40);
 
             // 4. Draw fire
             if (this.showFireFromGunImage) {
-                const weaponImgg = document.getElementById('gunFireIconId1');
+                const weaponImgg = document.getElementById(this.weapon.imageFireId);
                 ctx.drawImage(weaponImgg, this.x + 20, this.y - 23, 75, 40);
                 this.showFireFromGunImage -= 1;
             }
