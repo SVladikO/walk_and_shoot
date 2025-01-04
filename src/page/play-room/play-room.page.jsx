@@ -39,7 +39,10 @@ const PlayRoomPage = () => {
         });
 
         game.start(levels[selectedLevel]);
-        return () => game.removeListeners();
+        return () => {
+            game.stop();
+
+        }
 
     }, []);
 

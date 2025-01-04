@@ -44,22 +44,11 @@ class Game {
         this.enemies = null;
         this.rectangles = null;
         this.finishCoordinates = null;
+        this.myReqId = 0;
+    }
 
-        const self = this;
-        loop();
-
-        function loop() {
-            if (self?.user?.isDead()) {
-                self.inPlay = false;
-                self.onSetIsUserDead(true)
-            }
-
-            if (self.inPlay) {
-                self.drawAll();
-            }
-
-            window.requestAnimationFrame(loop);
-        }
+    stopAnimation() {
+        window.cancelAnimationFrame(this.myReqId)
     }
 
     start(level) {
@@ -90,6 +79,24 @@ class Game {
         this.prepareStaticBoard()
         this._addListeners();
 
+        const self = this;
+        loop();
+
+        function loop() {
+            console.log('loop', 1)
+
+            if (self?.user?.isDead()) {
+                self.stop();
+            }
+
+            if (self.inPlay) {
+                self.drawAll();
+            }
+
+            self.myReqId = window.requestAnimationFrame(loop);
+        }
+
+        this.onSetIsUserDead(false)
         console.log('start(', {level, rec: this.rectangles})
     }
 
@@ -105,8 +112,11 @@ class Game {
 
     stop() {
         this.inPlay = false;
+        this.onSetIsUserDead(true)
         this.enemies = [];
         this.rectangles = [];
+        this.stopAnimation();
+        this.removeListeners();
     }
 
     drawAll() {
