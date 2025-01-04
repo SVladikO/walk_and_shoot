@@ -5,6 +5,8 @@ import {getRandom} from '../util';
 export const weapon_gun1 = {
     imageId: 'gun1_in_hand_id',
     imageFireId: 'gun1_fire_effect_id',
+    imgFirePositionY: -23,
+    imgFirePositionX: 20,
     type: GUN_TYPE.PISTOL,
     bulletAmount: 8,
     reloadBulletAmount: 8,
@@ -24,6 +26,8 @@ export const weapon_gun1 = {
 export const weapon_gun2 = {
     imageId: 'gun2_in_hand_id',
     imageFireId: 'gun2_fire_effect_id',
+    imgFirePositionY: -20,
+    imgFirePositionX: 60,
     type: GUN_TYPE.AK,
     bulletAmount: 30,
     reloadBulletAmount: 30,
@@ -58,6 +62,8 @@ export const weapon_gun2 = {
 export const weapon_gun3 = {
     imageId: 'gun3_in_hand_id',
     imageFireId: 'gun3_fire_effect_id',
+    imgFirePositionY: -23,
+    imgFirePositionX: 40,
     type: GUN_TYPE.GUN,
     bulletAmount: 2,
     reloadBulletAmount: 2,

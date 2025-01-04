@@ -292,8 +292,8 @@ export class Unit {
 
             // 4. Draw fire
             if (this.showFireFromGunImage) {
-                const weaponImgg = document.getElementById(this.weapon.imageFireId);
-                ctx.drawImage(weaponImgg, this.x + 20, this.y - 23, 75, 40);
+                const fireImg = document.getElementById(this.weapon.imageFireId);
+                ctx.drawImage(fireImg, this.x + this.weapon.imgFirePositionX, this.y + this.weapon.imgFirePositionY, 75, 40);
                 this.showFireFromGunImage -= 1;
             }
         }
