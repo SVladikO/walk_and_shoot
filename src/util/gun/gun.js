@@ -48,22 +48,23 @@ export const weapon_gun2 = {
     bulletDeadRadius: 15,
     distanceStep: 2,
     rechargeTime: 2,
-    shoot: (angle, getBullet) => {
-        let bullets = [];
-
-        const isBulletRebound = getRandom(1, 5) % 2 > 0;
-        const isBulletFlyUp = getRandom(1, 5) % 2 > 0;
-
-        if (isBulletRebound) {
-            isBulletFlyUp
-                ? bullets.push(getBullet(angle + getRandom(1, 5) / 10))
-                : bullets.push(getBullet(angle - getRandom(1, 5) / 10))
-        } else {
-            bullets.push(getBullet(angle));
-        }
-
-        return bullets;
-    },
+    shoot: (angle, getBullet) => ([getBullet(angle)]),
+    // shoot: (angle, getBullet) => {
+    //     let bullets = [];
+    //
+    //     const isBulletRebound = getRandom(1, 5) % 2 > 0;
+    //     const isBulletFlyUp = getRandom(1, 5) % 2 > 0;
+    //
+    //     if (isBulletRebound) {
+    //         isBulletFlyUp
+    //             ? bullets.push(getBullet(angle + getRandom(1, 5) / 10))
+    //             : bullets.push(getBullet(angle - getRandom(1, 5) / 10))
+    //     } else {
+    //         bullets.push(getBullet(angle));
+    //     }
+    //
+    //     return bullets;
+    // },
 }
 //gun
 export const weapon_gun3 = {
