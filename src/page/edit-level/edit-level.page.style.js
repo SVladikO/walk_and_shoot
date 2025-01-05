@@ -40,21 +40,23 @@ export const Block = styled.div`
                     ? `color: white; background: black;`
                     : p.isIncludeUnit
                             ? `background: #63f663;`
-                            : `color: darkgrey;`
+                            : p.isUserPosition
+                                    ? `background: #7fb7ff;`
+                                    : `color: darkgrey;`
     }
 
     position: relative;
 
     & > img {
         height: 10px;
-        widht: auto;
+        width: auto;
         position: absolute;
         bottom: 0;
     }
 
     & > svg {
         height: 10px;
-        widht: auto;
+        width: auto;
         position: absolute;
         top: 0;
         right: 0;

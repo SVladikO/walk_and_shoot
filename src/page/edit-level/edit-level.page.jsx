@@ -29,9 +29,10 @@ import {levels} from "../../util/levels.data";
 import {ENEMY_TYPE} from '../../util/unit/type';
 import {getLocalStorage, LOCAL_STORAGE_KEY, setLocalStorage} from '../../util/localstorage';
 
-const ADD_TYPE = {
+const INTERACTION_TYPE = {
     ADD_BLOCK: 'ADD_BLOCK',
-    ADD_ENEMY: 'ADD_ENEMY'
+    ADD_ENEMY: 'ADD_ENEMY',
+    ADD_USER_POSITION: 'ADD_USER_POSITION',
 }
 
 function EditLevelPage() {
@@ -41,10 +42,11 @@ function EditLevelPage() {
     const [mapInteraction, setMapInteraction] = useState({
         isEnemyWalk: false,
         selectedEnemyType: ENEMY_TYPE.PISTOL,
-        addType: ADD_TYPE.ADD_ENEMY,
+        interactionTyp: INTERACTION_TYPE.ADD_ENEMY,
     })
 
     const [selectedEnemies, setSelectedEnemies] = useState(levelForEdit.enemies || [])
+    const [userPosition, setUserPosition] = useState(levelForEdit.userStartPosition)
     const [selectedBlocks, setSelectedBlocks] = useState(levelForEdit.blockIds || [])
 
     const clearBlocks = () => {
@@ -64,6 +66,8 @@ function EditLevelPage() {
             />
             <Wrapper>
                 <Map
+                    userPosition={userPosition}
+                    setUserPosition={setUserPosition}
                     selectedEnemies={selectedEnemies}
                     setSelectedEnemies={setSelectedEnemies}
                     selectedBlocks={selectedBlocks}
@@ -130,25 +134,31 @@ const ControlButtons = ({
 
 function Units({mapInteraction, setMapInteraction}) {
     const onChangeSelectedEnemyType = type => {
-        setMapInteraction({...mapInteraction, selectedEnemyType: type, addType: ADD_TYPE.ADD_ENEMY})
+        setMapInteraction({...mapInteraction, selectedEnemyType: type, interactionTyp: INTERACTION_TYPE.ADD_ENEMY})
     }
 
-    const isSelectedEnemy = type => mapInteraction.selectedEnemyType === type && mapInteraction.addType === ADD_TYPE.ADD_ENEMY;
+    const isSelectedEnemy = type => mapInteraction.selectedEnemyType === type && mapInteraction.interactionTyp === INTERACTION_TYPE.ADD_ENEMY;
 
     return (
         <WrapperUnits>
-
-
-
+            <UnitItem
+                label="Change user start position"
+                isSelected={mapInteraction.interactionTyp === INTERACTION_TYPE.ADD_USER_POSITION}
+                onClickHandler={() => setMapInteraction({
+                    ...mapInteraction,
+                    selectedEnemyType: undefined,
+                    interactionTyp: INTERACTION_TYPE.ADD_USER_POSITION
+                })}
+            />
             <UnitItem
                 label="Add block"
                 onClickHandler={() =>
                     setMapInteraction({
                         selectedEnemyType: undefined,
-                        addType: ADD_TYPE.ADD_BLOCK,
+                        interactionTyp: INTERACTION_TYPE.ADD_BLOCK,
                     })
                 }
-                isSelected={mapInteraction.addType === ADD_TYPE.ADD_BLOCK}
+                isSelected={mapInteraction.interactionTyp === INTERACTION_TYPE.ADD_BLOCK}
             />
             <UnitItem
                 gunImgSrc={gun1_in_bag_src}
@@ -177,15 +187,12 @@ function Units({mapInteraction, setMapInteraction}) {
                 />
                 User walk
             </div>
-               <UnitItem
-                   label="Change user start position"
-                   onClickHandler={() => {}}
-               />
+
         </WrapperUnits>
     )
 }
 
-function UnitItem({label = 'Add unit', onClickHandler, gunImgSrc, bulletImgSrc, isSelected, children}) {
+function UnitItem({label = 'Add unit', onClickHandler, gunImgSrc, bulletImgSrc, isSelected}) {
     return (
 
         <WrapperUnit onClick={onClickHandler} isSelected={isSelected}>
@@ -199,6 +206,8 @@ function UnitItem({label = 'Add unit', onClickHandler, gunImgSrc, bulletImgSrc, 
 }
 
 const Map = ({
+                 userPosition,
+                 setUserPosition,
                  selectedEnemies,
                  selectedBlocks,
                  setSelectedBlocks,
@@ -230,19 +239,32 @@ const Map = ({
     }
 
     const onBlockClick = index => () => {
-        if (mapInteraction.addType === ADD_TYPE.ADD_ENEMY) {
+        if (mapInteraction.interactionTyp === INTERACTION_TYPE.ADD_ENEMY) {
             const isIncludeUnit = selectedEnemies.map(el => el.index).includes(index);
-            isIncludeUnit
-                ? deleteUnit(index)
-                : addUnit(index)
 
-            return
+            if (isIncludeUnit) {
+                deleteUnit(index)
+            } else {
+                addUnit(index)
+                deleteBlock(index)
+            }
         }
 
-        const isIncludeBlock = selectedBlocks.includes(index);
-        isIncludeBlock
-            ? deleteBlock(index)
-            : addBlock(index)
+        if (mapInteraction.interactionTyp === INTERACTION_TYPE.ADD_BLOCK) {
+            const isIncludeBlock = selectedBlocks.includes(index);
+            if (isIncludeBlock) {
+                deleteBlock(index)
+            } else {
+                addBlock(index)
+                deleteUnit(index)
+            }
+        }
+
+        if (mapInteraction.interactionTyp === INTERACTION_TYPE.ADD_USER_POSITION) {
+            setUserPosition(index)
+            deleteBlock(index)
+            deleteUnit(index)
+        }
     }
 
     return (
@@ -275,6 +297,7 @@ const Map = ({
                                         <Block
                                             isIncludeUnit={!!unit}
                                             isIncludeBlock={selectedBlocks.includes(index)}
+                                            isUserPosition={index === userPosition}
                                             // isSelectUnit={isSelectUnit}
                                             onClick={onBlockClick(index)}
                                         >
