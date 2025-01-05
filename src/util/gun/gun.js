@@ -5,6 +5,7 @@ import {getRandom} from '../util';
 export const weapon_gun1 = {
     imageId: 'gun1_in_hand_id',
     imageFireId: 'gun1_fire_effect_id',
+    imageFlyBulletId: 'gun1_bullet_fly_id',
     imgFirePositionY: -23,
     imgFirePositionX: 20,
     type: GUN_TYPE.PISTOL,
@@ -26,6 +27,7 @@ export const weapon_gun1 = {
 export const weapon_gun2 = {
     imageId: 'gun2_in_hand_id',
     imageFireId: 'gun2_fire_effect_id',
+    imageFlyBulletId: 'gun2_bullet_fly_id',
     imgFirePositionY: -20,
     imgFirePositionX: 60,
     type: GUN_TYPE.AK,
@@ -62,6 +64,7 @@ export const weapon_gun2 = {
 export const weapon_gun3 = {
     imageId: 'gun3_in_hand_id',
     imageFireId: 'gun3_fire_effect_id',
+    imageFlyBulletId: 'gun3_bullet_fly_id',
     imgFirePositionY: -23,
     imgFirePositionX: 40,
     type: GUN_TYPE.GUN,
@@ -76,7 +79,7 @@ export const weapon_gun3 = {
     bulletDeadRadius: 15,
     distanceStep: 2,
     rechargeTime: 2,
-    shoot: (angle, getBullet) => ([getBullet(angle - 0.3), getBullet(angle), getBullet(angle + 0.3)]),
+    shoot: (angle, getBullet) => ([getBullet(angle - 0.2), getBullet(angle), getBullet(angle + 0.2)]),
 }
 
 // const weapon = {

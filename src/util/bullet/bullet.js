@@ -64,8 +64,17 @@ export default class Bullet {
 
     render() {
         game.ctx.beginPath();
-        game.ctx.arc(this.lastX, this.lastY, this.isDead ? this.bulletDeadRadius : style.bullet.radius, 0, 2 * Math.PI);
-        game.ctx.fillStyle = this.isDead ? style.bullet.bgColorCrashed : style.bullet.bgColor;
+        const imageFlyBullet = document.getElementById(this.weapon.imageFlyBulletId);
+
+        game.ctx.translate(this.lastX, this.lastY);      // 1. Set x,y where we will rotate.
+        game.ctx.rotate(game.user.angle);                // 2. Rotate
+        game.ctx.translate(-this.lastX, -this.lastY);    // 3. Move back coordinates to (HZ)
+
+        game.ctx.drawImage(imageFlyBullet, this.lastX-10, this.lastY-10, 20, 10);
+
+        game.ctx.rotate(game.user.angle);                // 5. Rotate back
+        game.ctx.setTransform(1, 0, 0, 1, 0, 0);         // 6. Reset center back.
+
 
         if (this.isKickedBox) {
             // !isSoundEnabled && playSound('./sound/missed.mp3', 0.01);
