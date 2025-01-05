@@ -42,15 +42,16 @@ export const Block = styled.div`
                             ? `background: #63f663;`
                             : `color: darkgrey;`
     }
-    
+
     position: relative;
-    
+
     & > img {
         height: 10px;
         widht: auto;
         position: absolute;
         bottom: 0;
-    } 
+    }
+
     & > svg {
         height: 10px;
         widht: auto;
@@ -66,21 +67,29 @@ export const WrapperUnits = styled.div`
     flex-direction: column;
 `;
 
+export const GunImg = styled.img`
+    max-height: 60px;
+    min-height: 60px;
+`;
+
+export const BulletImg = styled.img`
+    max-height: 20px;
+    min-height: 20px;
+`;
+
+export const InnerWrapperUnit = styled.div`
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+`
 export const WrapperUnit = styled.div`
     border: solid 1px black;
     border-radius: 5px;
-
-    display: flex;
-    gap: 10px;
-    justify-content: left;
-    align-items: center;
+    width: 250px;
+    
 
     padding: 5px;
 
     background: ${p => p.isSelected ? '#63f663' : 'white'};
-
-    & > img {
-        height: 50px;
-        width: auto;
-    }
 `;

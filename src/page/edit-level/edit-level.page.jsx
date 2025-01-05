@@ -2,11 +2,27 @@ import {useState} from 'react';
 import {useSelector} from "react-redux";
 import Button from '@mui/material/Button';
 
-import {Block, ButtonWrapper, Row, Wrapper, MapWrapper, WrapperUnits, WrapperUnit} from './edit-level.page.style'
+import {
+    Block,
+    ButtonWrapper,
+    Row,
+    Wrapper,
+    MapWrapper,
+    WrapperUnits,
+    WrapperUnit,
+    GunImg,
+    BulletImg,
+    InnerWrapperUnit
+} from './edit-level.page.style'
 
-import gun1_in_bag_src from '../../img/gun3_in_bag.webp';
+import gun1_in_bag_src from '../../img/gun1_in_bag.webp';
 import gun2_in_bag_src from '../../img/gun2_in_bag.webp';
-import gun3_in_bag_src from '../../img/gun1_in_bag.webp';
+import gun3_in_bag_src from '../../img/gun3_in_bag.webp';
+
+import gun1_bullet_fly from '../../img/gun1_bullet_fly.webp';
+import gun2_bullet_fly from '../../img/gun2_bullet_fly.webp';
+import gun3_bullet_fly from '../../img/gun3_bullet_fly.webp';
+
 import {ReactComponent as WalkIcon} from '../../img/icons/walk.svg';
 
 import {levels} from "../../util/levels.data";
@@ -121,7 +137,11 @@ function Units({mapInteraction, setMapInteraction}) {
 
     return (
         <WrapperUnits>
+
+
+
             <UnitItem
+                label="Add block"
                 onClickHandler={() =>
                     setMapInteraction({
                         selectedEnemyType: undefined,
@@ -129,40 +149,51 @@ function Units({mapInteraction, setMapInteraction}) {
                     })
                 }
                 isSelected={mapInteraction.addType === ADD_TYPE.ADD_BLOCK}
-            >Add block</UnitItem>
+            />
             <UnitItem
-                imgSrc={gun3_in_bag_src}
+                gunImgSrc={gun1_in_bag_src}
+                bulletImgSrc={gun1_bullet_fly}
                 onClickHandler={() => onChangeSelectedEnemyType(ENEMY_TYPE.PISTOL)}
                 isSelected={isSelectedEnemy(ENEMY_TYPE.PISTOL)}
             />
             <UnitItem
-                imgSrc={gun2_in_bag_src}
+                gunImgSrc={gun2_in_bag_src}
+                bulletImgSrc={gun2_bullet_fly}
                 onClickHandler={() => onChangeSelectedEnemyType(ENEMY_TYPE.AK47)}
                 isSelected={isSelectedEnemy(ENEMY_TYPE.AK47)}
             />
             <UnitItem
-                imgSrc={gun1_in_bag_src}
+                gunImgSrc={gun3_in_bag_src}
+                bulletImgSrc={gun3_bullet_fly}
                 onClickHandler={() => onChangeSelectedEnemyType(ENEMY_TYPE.GUN)}
                 isSelected={isSelectedEnemy(ENEMY_TYPE.GUN)}
             />
 
-            <div>Should user walk ? (
+            <div>
                 <input
                     type="checkbox"
                     value={mapInteraction.isEnemyWalk}
                     onChange={() => setMapInteraction({...mapInteraction, isEnemyWalk: !mapInteraction.isEnemyWalk})}
                 />
-                )
+                User walk
             </div>
+               <UnitItem
+                   label="Change user start position"
+                   onClickHandler={() => {}}
+               />
         </WrapperUnits>
     )
 }
 
-function UnitItem({onClickHandler, imgSrc, isSelected, children}) {
+function UnitItem({label = 'Add unit', onClickHandler, gunImgSrc, bulletImgSrc, isSelected, children}) {
     return (
+
         <WrapperUnit onClick={onClickHandler} isSelected={isSelected}>
-            <img src={imgSrc} alt=""/>
-            {children}
+            <div>{label}</div>
+            <InnerWrapperUnit>
+                <GunImg src={gunImgSrc} alt=""/>
+                <BulletImg src={bulletImgSrc} alt=""/>
+            </InnerWrapperUnit>
         </WrapperUnit>
     )
 }
