@@ -1,30 +1,25 @@
 import styled from 'styled-components';
 
+export const ButtonWrapper = styled.div`
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    padding: 10px;
+`;
+
 export const Wrapper = styled.div`
     background: white;
     padding: 50px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 10px;
 `;
 
-export const Navigation = styled.div`
-    padding: 10px 0;
+export const MapWrapper = styled.div`
+    background: white;
     display: flex;
-    justify-content: right;
-    gap: 15px;
-`;
-
-export const NavigationBtn = styled.button`
-    padding: 8px;
-    border: solid 1px black;
-    border-radius: 4px;
-    color: black;
-    font-size: 18px;
-    
-    ${p => p.isAddUnit && `background: #63f663; `}
-    ${p => p.isAddBlock && `background: black; color: white`}
-`;
+    flex-direction: column;
+`
 
 export const Row = styled.div`
     display: flex;
@@ -62,5 +57,30 @@ export const Block = styled.div`
         position: absolute;
         top: 0;
         right: 0;
+    }
+`;
+
+export const WrapperUnits = styled.div`
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+`;
+
+export const WrapperUnit = styled.div`
+    border: solid 1px black;
+    border-radius: 5px;
+
+    display: flex;
+    gap: 10px;
+    justify-content: left;
+    align-items: center;
+
+    padding: 5px;
+
+    background: ${p => p.isSelected ? '#63f663' : 'white'};
+
+    & > img {
+        height: 50px;
+        width: auto;
     }
 `;

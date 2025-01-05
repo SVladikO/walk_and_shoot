@@ -1,24 +1,182 @@
 import {useState} from 'react';
-import {Block, Navigation, NavigationBtn, Row, Wrapper} from './edit-level.page.style'
+import {useSelector} from "react-redux";
+import Button from '@mui/material/Button';
 
-import {ENEMY_TYPE} from '../../util/unit/type';
-import Units from '../../components/units/units'
+import {Block, ButtonWrapper, Row, Wrapper, MapWrapper, WrapperUnits, WrapperUnit} from './edit-level.page.style'
 
-import gunPistolSrc from '../../img/gun1_in_bag.webp';
-import gunAK47Src from '../../img/gun2_in_bag.webp';
-import gunGUNSrc from '../../img/gun3_in_bag.webp';
-
-import {getLocalStorage, LOCAL_STORAGE_KEY, setLocalStorage} from '../../util/localstorage';
-
+import gun1_in_bag_src from '../../img/gun3_in_bag.webp';
+import gun2_in_bag_src from '../../img/gun2_in_bag.webp';
+import gun3_in_bag_src from '../../img/gun1_in_bag.webp';
 import {ReactComponent as WalkIcon} from '../../img/icons/walk.svg';
 
-function EditLevelPage({levelForEdit, onShowMenuPage}) {
-    const [isSelectUnit, setIsSelectUnit] = useState(true)
-    const [isEnemyWalk, setIsEnemyWalk] = useState(false)
-    const [selectEnemyType, setSelectEnemyType] = useState(ENEMY_TYPE.PISTOL)
+import {levels} from "../../util/levels.data";
+import {ENEMY_TYPE} from '../../util/unit/type';
+import {getLocalStorage, LOCAL_STORAGE_KEY, setLocalStorage} from '../../util/localstorage';
+
+const ADD_TYPE = {
+    ADD_BLOCK: 'ADD_BLOCK',
+    ADD_ENEMY: 'ADD_ENEMY'
+}
+
+function EditLevelPage() {
+    const {selectedLevel} = useSelector(state => state.app);
+    const levelForEdit = levels[selectedLevel];
+
+    const [mapInteraction, setMapInteraction] = useState({
+        isEnemyWalk: false,
+        selectedEnemyType: ENEMY_TYPE.PISTOL,
+        addType: ADD_TYPE.ADD_ENEMY,
+    })
 
     const [selectedEnemies, setSelectedEnemies] = useState(levelForEdit.enemies || [])
     const [selectedBlocks, setSelectedBlocks] = useState(levelForEdit.blockIds || [])
+
+    const clearBlocks = () => {
+        setSelectedBlocks([])
+        setSelectedEnemies([])
+    }
+
+    return (
+        <div>
+            <ControlButtons
+                clearBlocks={clearBlocks}
+                levelForEdit={levelForEdit}
+                selectedBlocks={selectedBlocks}
+                selectedEnemies={selectedEnemies}
+                setSelectedEnemies={setSelectedEnemies}
+                setSelectedBlocks={setSelectedBlocks}
+            />
+            <Wrapper>
+                <Map
+                    selectedEnemies={selectedEnemies}
+                    setSelectedEnemies={setSelectedEnemies}
+                    selectedBlocks={selectedBlocks}
+                    setSelectedBlocks={setSelectedBlocks}
+                    mapInteraction={mapInteraction}
+                />
+                <Units
+                    mapInteraction={mapInteraction}
+                    setMapInteraction={setMapInteraction}
+
+                />
+            </Wrapper>
+            <div>
+                Selected blocks:
+                <input value={`[${selectedBlocks.sort((a, b) => a - b).join(', ')}]`}/>
+            </div>
+            <div>
+                Selected units:
+                <input value={`${JSON.stringify(selectedEnemies)}`}/>
+            </div>
+        </div>
+    )
+}
+
+const ControlButtons = ({
+                            levelForEdit,
+                            selectedBlocks,
+                            selectedEnemies,
+                            clearBlocks,
+                            setSelectedEnemies,
+                            setSelectedBlocks
+                        }) => {
+    const onSaveEditedLevel = () => {
+        const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS);
+
+        if (levelForEdit.id) {
+            //Update level data
+            const level = levels.find(level => level.id === levelForEdit.id)
+            level.blockIds = selectedBlocks;
+            level.enemies = selectedEnemies;
+            setLocalStorage(LOCAL_STORAGE_KEY.LEVELS, levels);
+        } else {
+            //Add new level
+            setLocalStorage(LOCAL_STORAGE_KEY.LEVELS, [...levels, {
+                id: levels.length + 1,
+                enemies: selectedEnemies,
+                blockIds: selectedBlocks
+            }])
+        }
+    }
+
+    return (
+        <ButtonWrapper>
+            <Button size="small" variant="contained">MENU</Button>
+            <Button size="small" variant="contained" color="success" onClick={onSaveEditedLevel}>Save level</Button>
+            <Button size="small" variant="contained" color="error" onClick={() => setSelectedBlocks([])}>Clear
+                blocks</Button>
+            <Button size="small" variant="contained" color="error" onClick={() => setSelectedEnemies([])}>Clear
+                enemies</Button>
+            <Button size="small" variant="contained" color="error" onClick={clearBlocks}>Clear board</Button>
+        </ButtonWrapper>
+    )
+}
+
+function Units({mapInteraction, setMapInteraction}) {
+    const onChangeSelectedEnemyType = type => {
+        setMapInteraction({...mapInteraction, selectedEnemyType: type, addType: ADD_TYPE.ADD_ENEMY})
+    }
+
+    const isSelectedEnemy = type => mapInteraction.selectedEnemyType === type && mapInteraction.addType === ADD_TYPE.ADD_ENEMY;
+
+    return (
+        <WrapperUnits>
+            <UnitItem
+                onClickHandler={() =>
+                    setMapInteraction({
+                        selectedEnemyType: undefined,
+                        addType: ADD_TYPE.ADD_BLOCK,
+                    })
+                }
+                isSelected={mapInteraction.addType === ADD_TYPE.ADD_BLOCK}
+            >Add block</UnitItem>
+            <UnitItem
+                imgSrc={gun3_in_bag_src}
+                onClickHandler={() => onChangeSelectedEnemyType(ENEMY_TYPE.PISTOL)}
+                isSelected={isSelectedEnemy(ENEMY_TYPE.PISTOL)}
+            />
+            <UnitItem
+                imgSrc={gun2_in_bag_src}
+                onClickHandler={() => onChangeSelectedEnemyType(ENEMY_TYPE.AK47)}
+                isSelected={isSelectedEnemy(ENEMY_TYPE.AK47)}
+            />
+            <UnitItem
+                imgSrc={gun1_in_bag_src}
+                onClickHandler={() => onChangeSelectedEnemyType(ENEMY_TYPE.GUN)}
+                isSelected={isSelectedEnemy(ENEMY_TYPE.GUN)}
+            />
+
+            <div>Should user walk ? (
+                <input
+                    type="checkbox"
+                    value={mapInteraction.isEnemyWalk}
+                    onChange={() => setMapInteraction({...mapInteraction, isEnemyWalk: !mapInteraction.isEnemyWalk})}
+                />
+                )
+            </div>
+        </WrapperUnits>
+    )
+}
+
+function UnitItem({onClickHandler, imgSrc, isSelected, children}) {
+    return (
+        <WrapperUnit onClick={onClickHandler} isSelected={isSelected}>
+            <img src={imgSrc} alt=""/>
+            {children}
+        </WrapperUnit>
+    )
+}
+
+const Map = ({
+                 selectedEnemies,
+                 selectedBlocks,
+                 setSelectedBlocks,
+                 setSelectedEnemies,
+                 mapInteraction
+             }) => {
+    const trLength = 8;
+    const tdLength = 16;
+    let indexAccamulator = 0;
 
     const addBlock = index => {
         setSelectedBlocks([...selectedBlocks, index])
@@ -29,20 +187,19 @@ function EditLevelPage({levelForEdit, onShowMenuPage}) {
     }
 
     const addUnit = index => {
-        setSelectedEnemies([...selectedEnemies, {type: selectEnemyType, index, isWalk: isEnemyWalk}])
+        setSelectedEnemies([...selectedEnemies, {
+            type: mapInteraction.selectedEnemyType,
+            index,
+            isWalk: mapInteraction.isEnemyWalk
+        }])
     }
 
     const deleteUnit = index => {
         setSelectedEnemies([...selectedEnemies.filter(el => el.index !== index)])
     }
 
-    const clearBlocks = () => {
-        setSelectedBlocks([])
-        setSelectedEnemies([])
-    }
-
     const onBlockClick = index => () => {
-        if (isSelectUnit) {
+        if (mapInteraction.addType === ADD_TYPE.ADD_ENEMY) {
             const isIncludeUnit = selectedEnemies.map(el => el.index).includes(index);
             isIncludeUnit
                 ? deleteUnit(index)
@@ -57,150 +214,51 @@ function EditLevelPage({levelForEdit, onShowMenuPage}) {
             : addBlock(index)
     }
 
-    const trLength = 8;
-    const tdLength = 16;
-    let indexAccamulator = 0;
-
-    // console.log({selectedEnemies})
-
     return (
-        <div>
+        <MapWrapper>
+            {
+                Array(trLength).fill(1).map(_ => (
+                        <Row>
+                            {
+                                Array(tdLength).fill(1).map(__ => {
+                                    const index = indexAccamulator++
+                                    const unit = selectedEnemies.find(el => el.index === index)
 
-            <NavigationBtn onClick={onShowMenuPage}>MENU</NavigationBtn>
-            <NavigationBtn onClick={() => {
-                const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS);
+                                    let gunSrc;
 
-                if (levelForEdit.id) {
-                    //Update level data
-                    const level = levels.find(level => level.id === levelForEdit.id)
-                    level.blockIds = selectedBlocks;
-                    level.enemies = selectedEnemies;
-                    setLocalStorage(LOCAL_STORAGE_KEY.LEVELS, levels);
-                } else {
-                    //Add new level
-                    setLocalStorage(LOCAL_STORAGE_KEY.LEVELS, [...levels, {
-                        id: levels.length + 1,
-                        enemies: selectedEnemies,
-                        blockIds: selectedBlocks
-                    }])
-                }
-                onShowMenuPage();
-            }}>Save level
-            </NavigationBtn>
-            <NavigationBtn onClick={clearBlocks}>Clear board</NavigationBtn>
-            <NavigationBtn onClick={() => setSelectedEnemies([])}>Clear enemies</NavigationBtn>
-            <Wrapper>
-                <div>
-                    
-                    {
-                        Array(trLength).fill(1).map(_ => (
-                                <Row>
-                                    {
-                                        Array(tdLength).fill(1).map(__ => {
-                                            const index = indexAccamulator++
-                                            const unit = selectedEnemies.find(el => el.index === index)
-
-                                            let gunSrc;
-
-                                            if (unit) {
-                                                switch (unit.type) {
-                                                    case ENEMY_TYPE.PISTOL:
-                                                        gunSrc = gunPistolSrc;
-                                                        break;
-                                                    case ENEMY_TYPE.AK47:
-                                                        gunSrc = gunAK47Src;
-                                                        break;
-                                                    case ENEMY_TYPE.GUN:
-                                                        gunSrc = gunGUNSrc;
-                                                        break;
-                                                }
-                                            }
-
-                                            return (
-                                                <Block
-                                                    isIncludeUnit={!!unit}
-                                                    isIncludeBlock={selectedBlocks.includes(index)}
-                                                    isSelectUnit={isSelectUnit}
-                                                    onClick={onBlockClick(index)}
-                                                >
-                                                    {index}
-                                                    {gunSrc && <img src={gunSrc}/>}
-                                                    {unit && unit.isWalk && <WalkIcon/>}
-                                                </Block>
-                                            )
-                                        })
+                                    if (unit) {
+                                        switch (unit.type) {
+                                            case ENEMY_TYPE.PISTOL:
+                                                gunSrc = gun3_in_bag_src;
+                                                break;
+                                            case ENEMY_TYPE.AK47:
+                                                gunSrc = gun2_in_bag_src;
+                                                break;
+                                            case ENEMY_TYPE.GUN:
+                                                gunSrc = gun1_in_bag_src;
+                                                break;
+                                        }
                                     }
-                                </Row>
-                            )
-                        )
-                    }
-                    <div>
-                        Selected blocks:
-                        <input value={`[${selectedBlocks.sort((a, b) => a - b).join(', ')}]`}/>
-                    </div>
 
-                    <div>
-                        Selected units:
-                        <input value={`${JSON.stringify(selectedEnemies)}`}/>
-                    </div>
-                </div>
-                <div style={{border: 'solid 1px red'}}>
-                <Navigation>
-                        <div>
-                            <NavigationBtn
-                                isAddBlock={!isSelectUnit}
-                                onClick={() => setIsSelectUnit(false)}>
-                                Select block
-                            </NavigationBtn>
-                            /
-                            <NavigationBtn isAddUnit={isSelectUnit} onClick={() => setIsSelectUnit(true)}>Select
-                                unit</NavigationBtn>
-                        </div>
-                    </Navigation>
-                    {isSelectUnit &&
-                        <Units
-                            selectEnemyType={selectEnemyType}
-                            setSelectEnemyType={setSelectEnemyType}
-                            isEnemyWalk={isEnemyWalk}
-                            setIsEnemyWalk={setIsEnemyWalk}
-
-                        />
-                    }
-                    
-                     <table>
-                        <tr>
-                            <td>in bag</td>
-                            <td>in hand</td>
-                            <td>fire effect</td>
-                            <td>bullet destroyed</td>
-                            <td>bullet_avaliable</td>
-                            <td>damage</td>
-                            <td>speed</td>
-                            <td>sound_gun_shoot</td>
-                            <td>sound_gun_reload</td>
-                            <td>sound_gun_empty_shoot</td>
-                        </tr>
-                        {/*{weapons.map(w => {*/}
-                        {/*    return (*/}
-                        {/*        <tr>*/}
-                        {/*            <td><img src={w.img.gun.in_bag} style={{height: '110px', width: 'auto'}} /></td>*/}
-                        {/*            <td><img src={w.img.gun.in_hand} /></td>*/}
-                        {/*            <td><img src={w.img.gun.fire_effect} /></td>*/}
-                        {/*            <td><img src={w.img.bullet.fly} style={{height: '40px', width: 'auto'}}/></td>*/}
-                        {/*            <td><img src={w.img.bullet.destroyed} style={{height: '40px', width: 'auto'}}/></td>*/}
-                        {/*            <td><img src={w.img.bullet.avaliable} style={{height: '40px', width: 'auto'}}/></td>*/}
-                        {/*            <td>{w.damage}</td>*/}
-                        {/*            <td>{w.speed}</td>*/}
-                        {/*            <td>{w.sound.gun.shoot}</td>*/}
-                        {/*            <td>{w.sound.gun.reload}</td>*/}
-                        {/*            <td>{w.sound.gun.empty_shoot}</td>*/}
-                        {/*        </tr>*/}
-                        {/*    )*/}
-                        {/*})}*/}
-                    </table>
-                </div>
-            </Wrapper>
-        </div>
+                                    return (
+                                        <Block
+                                            isIncludeUnit={!!unit}
+                                            isIncludeBlock={selectedBlocks.includes(index)}
+                                            // isSelectUnit={isSelectUnit}
+                                            onClick={onBlockClick(index)}
+                                        >
+                                            {index}
+                                            {gunSrc && <img src={gunSrc}/>}
+                                            {unit && unit.isWalk && <WalkIcon/>}
+                                        </Block>
+                                    )
+                                })
+                            }
+                        </Row>
+                    )
+                )
+            }
+        </MapWrapper>
     )
 }
 

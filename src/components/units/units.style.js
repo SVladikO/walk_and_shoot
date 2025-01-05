@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-    padding: 44px 10px 10px ;
+export const WrapperUnits = styled.div`
     display: flex;
     gap: 10px;
     flex-direction: column;
 `;
 
-export const UnitWrapper = styled.div`
+export const WrapperUnit = styled.div`
     border: solid 1px black;
     border-radius: 5px;
 
