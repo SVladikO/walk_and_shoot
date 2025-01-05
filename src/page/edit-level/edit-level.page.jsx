@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {useSelector} from "react-redux";
+import {useNavigate} from "react-router";
 import Button from '@mui/material/Button';
 
 import {
@@ -28,6 +29,7 @@ import {ReactComponent as WalkIcon} from '../../img/icons/walk.svg';
 import {levels} from "../../util/levels.data";
 import {ENEMY_TYPE} from '../../util/unit/type';
 import {getLocalStorage, LOCAL_STORAGE_KEY, setLocalStorage} from '../../util/localstorage';
+import {URL} from "../../App";
 
 const INTERACTION_TYPE = {
     ADD_BLOCK: 'ADD_BLOCK',
@@ -100,6 +102,8 @@ const ControlButtons = ({
                             setSelectedEnemies,
                             setSelectedBlocks
                         }) => {
+    let navigate = useNavigate();
+
     const onSaveEditedLevel = () => {
         const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS);
 
@@ -121,7 +125,7 @@ const ControlButtons = ({
 
     return (
         <ButtonWrapper>
-            <Button size="small" variant="contained">MENU</Button>
+            <Button size="small" variant="contained" onClick={() => navigate(URL.MENU)}>MENU</Button>
             <Button size="small" variant="contained" color="success" onClick={onSaveEditedLevel}>Save level</Button>
             <Button size="small" variant="contained" color="error" onClick={() => setSelectedBlocks([])}>Clear
                 blocks</Button>
@@ -302,7 +306,7 @@ const Map = ({
                                             onClick={onBlockClick(index)}
                                         >
                                             {index}
-                                            {gunSrc && <img src={gunSrc}/>}
+                                            {gunSrc && <img src={gunSrc} alt="gun image"/>}
                                             {unit && unit.isWalk && <WalkIcon/>}
                                         </Block>
                                     )
