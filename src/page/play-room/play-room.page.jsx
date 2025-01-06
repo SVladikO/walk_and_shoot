@@ -67,13 +67,9 @@ const PlayRoomPage = () => {
             isBigBulletsImageEnabled,
             isVisibleAllEnemy,
         });
-
         game.start(levels[selectedLevel]);
-        return () => {
-            game.stop();
 
-        }
-
+        return () => game.stop();
     }, []);
 
     return (
@@ -84,7 +80,7 @@ const PlayRoomPage = () => {
                 <CanvasBoard id="canvas_game_board"/>
             </CanvasBoardWrapper>
             {isShowSettings && <Settings/>}
-            {isUserDead && <TryAgainPopup/>}
+            {isUserDead && <TryAgainPopup />}
         </Wrapper>
     )
 }
@@ -172,13 +168,17 @@ const SettingsItem = ({is, label, onClick}) => {
 const TryAgainPopup = () => {
     let navigate = useNavigate();
     const dispatch = useDispatch();
+    const {selectedLevel,  levels,} = useSelector(state => state.app);
 
     return (
         <SettingsWrapper>
             <SettingsInnerWrapper>
                 <Title>GAME OWER</Title>
                 <div>
-                    <Button variant="contained" onClick={() => window.location.reload()}>Try again</Button>
+                    <Button variant="contained" onClick={() => {
+                        game.stop();
+                        game.start(levels[selectedLevel])
+                    }}>Try again</Button>
                     <Button variant="contained" onClick={() => {
                         dispatch(setIsUserDead(false))
                         navigate("/")

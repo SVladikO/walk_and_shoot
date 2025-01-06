@@ -2,6 +2,7 @@ import {isUnutVisiable, renderRectangle, showGameOver,} from "./utils";
 import {headerHeight} from '../App.style';
 import {getUser} from "./constructors";
 import {getScreen} from './screen';
+import {style} from "./settings";
 
 const distanceFromBorder = 70;
 
@@ -119,8 +120,6 @@ class Game {
         }
 
         this.onSetIsUserDead(false)
-
-        console.log('start(', {level, rec: this.rectangles})
     }
 
     prepareStaticBoard() {
@@ -130,7 +129,7 @@ class Game {
         // renderRectangle(this.static_ctx, [0, 0, this.boardWidth, this.boardHeigh], '#f7ff00')
         // renderRectangle(this.static_ctx, [this.boardWidthFrom, this.boardHeightFrom, this.getWidthLength(), this.getHeightLength()], '#f2a739b3')
         // this.moveDrawPoint(this.static_ctx)
-        this.rectanglesForActiveBoard.map(rec => renderRectangle(this.static_ctx, rec, '#bf7200'))
+        this.rectanglesForActiveBoard.map(rec => renderRectangle(this.static_ctx, rec, style.box.bgColor))
     }
 
     stop() {
