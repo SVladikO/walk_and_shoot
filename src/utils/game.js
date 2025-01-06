@@ -20,11 +20,13 @@ class Game {
              isEnemySoundEnabled,
              isBulletFlyLimited,
              isUserControlBulletDirection,
-             isBigBulletsImageEnabled
+             isBigBulletsImageEnabled,
+             isVisibleAllEnemy
          }) {
         this.onSetIsUserDead = onSetIsUserDead;
         this.isUserControlBulletDirection = isUserControlBulletDirection;
         this.isBigBulletsImageEnabled = isBigBulletsImageEnabled;
+        this.isVisibleAllEnemy = isVisibleAllEnemy;
 
         ////// BORD RELATED \\\\\\\
 
@@ -160,7 +162,7 @@ class Game {
 
         this.enemies
             // .filter(unit => this.user.isVisibleForMe(unit.x, unit.y))
-            .filter(enemy => isUnutVisiable(enemy, this))
+            .filter(enemy => isUnutVisiable(enemy, this) || this.isVisibleAllEnemy)
             .forEach(enemy => enemy.render(this.user.x, this.user.y, this.ctx))
 
 

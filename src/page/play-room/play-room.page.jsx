@@ -17,7 +17,8 @@ import {
     disableEnemySound,
     setIsBulletFlyLimited,
     setIspUserControlBulletDirection,
-    setIsBigBulletsImageEnabled
+    setIsBigBulletsImageEnabled,
+    setIsVisibleAllEnemy
 } from "../../features/app.slice";
 
 import {
@@ -48,7 +49,8 @@ const PlayRoomPage = () => {
         gameSpeed,
         isBulletFlyLimited,
         isUserControlBulletDirection,
-        isBigBulletsImageEnabled
+        isBigBulletsImageEnabled,
+        isVisibleAllEnemy
     } = useSelector(state => state.app);
 
     const dispatch = useDispatch();
@@ -62,7 +64,8 @@ const PlayRoomPage = () => {
             isBulletFlyLimited,
             gameSpeed,
             isUserControlBulletDirection,
-            isBigBulletsImageEnabled
+            isBigBulletsImageEnabled,
+            isVisibleAllEnemy,
         });
 
         game.start(levels[selectedLevel]);
@@ -108,7 +111,8 @@ const Settings = () => {
         gameSpeed,
         isBulletFlyLimited,
         isUserControlBulletDirection,
-        isBigBulletsImageEnabled
+        isBigBulletsImageEnabled,
+        isVisibleAllEnemy
     } = useSelector(state => state.app);
     const dispatch = useDispatch();
 
@@ -121,6 +125,7 @@ const Settings = () => {
     const onSwitchBulletFlyLimited = () => dispatch(setIsBulletFlyLimited(!isBulletFlyLimited))
     const onSwitchIsUserControlBulletDirection = () => dispatch(setIspUserControlBulletDirection(!isUserControlBulletDirection))
     const onSwitchBigBulletImage = () => dispatch(setIsBigBulletsImageEnabled(!isBigBulletsImageEnabled))
+    const onChangeAllEnemyVisible = () => dispatch(setIsVisibleAllEnemy(!isVisibleAllEnemy))
 
     return (
         <SettingsWrapper>
@@ -133,6 +138,7 @@ const Settings = () => {
                                   onClick={onSwitchBulletFlyLimited}/>
                     <SettingsItem is={isUserControlBulletDirection} label="User controll bullet direction" onClick={onSwitchIsUserControlBulletDirection}/>
                     <SettingsItem is={isBigBulletsImageEnabled} label="Big bullet image" onClick={onSwitchBigBulletImage}/>
+                    <SettingsItem is={isVisibleAllEnemy} label="All enemy visible" onClick={onChangeAllEnemyVisible}/>
                     <MoreLessWrapper>
                         Game speed
                         <div>

@@ -15,6 +15,7 @@ const defaultState = {
     isShowSettings: false,
     isUserControlBulletDirection: false,
     isBigBulletsImageEnabled: false,
+    isVisibleAllEnemy: false,
     levels
 }
 
@@ -82,6 +83,10 @@ const appSlice = createSlice({
         setIsBigBulletsImageEnabled: (state, {payload}) => {
             state.isBigBulletsImageEnabled = payload;
             game.isBigBulletsImageEnabled = payload;
+        },
+        setIsVisibleAllEnemy: (state, {payload}) => {
+            state.isVisibleAllEnemy = payload;
+            game.isVisibleAllEnemy = payload;
         }
     }
 })
@@ -101,7 +106,8 @@ export const {
     disableEnemySound,
     setIsBulletFlyLimited,
     setIspUserControlBulletDirection,
-    setIsBigBulletsImageEnabled
+    setIsBigBulletsImageEnabled,
+    setIsVisibleAllEnemy
 
 } = appSlice.actions;
 
