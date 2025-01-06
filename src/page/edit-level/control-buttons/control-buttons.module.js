@@ -22,12 +22,11 @@ const ControlButtons = ({
     const onSaveLevelForEdit = () => {
         const levelForEdit = {enemies, blockIds, userStartPosition};
         const newLevels = levels.map((level, index) => index === levelForEditIndex ? levelForEdit : level);
-        const updatedLevels = [...levels, levelForEdit];
 
-        if (levelForEditIndex < levels.length - 1) {
-            dispatch(updateLevels(newLevels));
+        if (levelForEditIndex === -1) {
+            dispatch(updateLevels([...levels, levelForEdit]))
         } else {
-            dispatch(updateLevels(updatedLevels))
+            dispatch(updateLevels(newLevels));
         }
     }
 

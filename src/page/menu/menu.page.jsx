@@ -84,8 +84,7 @@ export default function MenuPage() {
                 {canvasLevels}
             </SubWrapper>
             <Button variant="contained" onClick={() => {
-                dispatch(setLevelForEditIndex(1000))
-                dispatch(setLevelForEditIndex(1000))
+                dispatch(setLevelForEditIndex(-1))
                 navigate('/edit')
             }}>CREATE NEW LEVEL</Button>
             <NavigationWrapper>

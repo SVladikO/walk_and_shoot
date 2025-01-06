@@ -11,10 +11,19 @@ import {useSelector} from "react-redux";
 
 function EditLevelPage() {
     const {levelForEditIndex, levels} = useSelector(state => state.app);
+    let editLevel = levels[levelForEditIndex];
 
-    const [blockIds, setBlockIds] = useState(levels[levelForEditIndex].blockIds);
-    const [enemies, setEnemies] = useState(levels[levelForEditIndex].enemies);
-    const [userStartPosition, setUserStartPosition] = useState(levels[levelForEditIndex].userStartPosition);
+    if (levelForEditIndex === -1) {
+        editLevel = {
+            blockIds: [],
+            enemies: [],
+            userStartPosition: {rowIndex: 0, colIndex: 0, blockId: 0},
+        }
+    }
+
+    const [blockIds, setBlockIds] = useState(editLevel.blockIds);
+    const [enemies, setEnemies] = useState(editLevel.enemies);
+    const [userStartPosition, setUserStartPosition] = useState(editLevel.userStartPosition);
 
     const [mapInteraction, setMapInteraction] = useState({
         isEnemyWalk: false,
