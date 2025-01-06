@@ -7,9 +7,10 @@ import {style} from "./settings";
 const distanceFromBorder = 70;
 
 function getUserCoordinatesFromPosition({colIndex, rowIndex}, {screenStepX, screenStepY}) {
+    // +1 because 0 is the first index in array
     return {
-        x: (colIndex + 1) * screenStepX, // 15,
-        y: (rowIndex + 1) * screenStepY    // 7
+        x: (colIndex + 1) * screenStepX + screenStepX / 2,
+        y: (rowIndex + 1) * screenStepY + screenStepY / 2,
     }
 }
 
