@@ -18,6 +18,11 @@ export const LineGroup = styled.div`
     display: flex;
     gap: 15px;
     align-items: center;
+
+    & > svg {
+        height: 40px;
+        width: 40px;
+    }
 `;
 
 export const SettingsWrapper = styled.div`
