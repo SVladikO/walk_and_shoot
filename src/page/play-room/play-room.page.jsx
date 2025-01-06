@@ -7,12 +7,14 @@ import Switch from '@mui/material/Switch';
 
 import {
     closeSettings,
-    disableSound,
-    enableSound,
+    disableUserSound,
+    enableUserSound,
     openSettings,
     setIsUserDead,
     increaseGameSpeed,
-    decreaseGameSpeed
+    decreaseGameSpeed,
+    enableEnemySound,
+    disableEnemySound
 } from "../../features/app.slice";
 
 import {
@@ -38,7 +40,8 @@ const PlayRoomPage = () => {
         isUserDead,
         selectedLevel,
         levels,
-        isSoundEnabled,
+        isUserSoundEnabled,
+        isEnemySoundEnabled,
         gameSpeed
     } = useSelector(state => state.app);
 
@@ -48,7 +51,8 @@ const PlayRoomPage = () => {
     useEffect(() => {
         game.init({
             onSetIsUserDead,
-            isSoundEnabled,
+            isUserSoundEnabled,
+            isEnemySoundEnabled,
             gameSpeed
         });
 
@@ -89,10 +93,12 @@ const Header = () => {
 
 const Settings = () => {
     let navigate = useNavigate();
-    const {isSoundEnabled, gameSpeed} = useSelector(state => state.app);
+    const {isUserSoundEnabled, isEnemySoundEnabled, gameSpeed} = useSelector(state => state.app);
     const dispatch = useDispatch();
 
-    const onSwitchSound = () => isSoundEnabled ? dispatch(disableSound()) : dispatch(enableSound());
+    const onSwitchUserSound = () => isUserSoundEnabled ? dispatch(disableUserSound()) : dispatch(enableUserSound());
+    const onSwitchEnemySound = () => isEnemySoundEnabled ? dispatch(disableEnemySound()) : dispatch(enableEnemySound());
+
     const onIncreaseGameSpeed = () => dispatch(increaseGameSpeed())
     const onDecreaseGameSpeed = () => dispatch(decreaseGameSpeed())
     return (
@@ -100,7 +106,9 @@ const Settings = () => {
             <SettingsInnerWrapper>
                 <div>
                     <Title>SETTINGS</Title>
-                    <SettingsItem is={isSoundEnabled} label="Sound" onClick={onSwitchSound}/>
+                    <SettingsItem is={isUserSoundEnabled} label="User shoot sound" onClick={onSwitchUserSound}/>
+                    <SettingsItem is={isEnemySoundEnabled} label="Enemy shoot sound" onClick={onSwitchEnemySound}/>
+                    <SettingsItem is={isUserSoundEnabled} label="Limit bullet fly distance" onClick={onSwitchUserSound}/>
                     <MoreLessWrapper>
                         Game speed
                         <div>

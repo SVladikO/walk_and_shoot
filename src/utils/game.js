@@ -13,7 +13,7 @@ function getUserCoordinatesFromPosition({colIndex, rowIndex}, {screenStepX, scre
 }
 
 class Game {
-    init({onSetIsUserDead, isSoundEnabled=false, gameSpeed=1}) {
+    init({onSetIsUserDead, isUserSoundEnabled, gameSpeed, isEnemySoundEnabled}) {
         this.onSetIsUserDead = onSetIsUserDead;
 
         ////// BORD RELATED \\\\\\\
@@ -43,7 +43,8 @@ class Game {
         this.mousePositionY = 0;
 
         this.gameSpeed = gameSpeed;
-        this.isSoundEnabled = isSoundEnabled;
+        this.isUserSoundEnabled = isUserSoundEnabled;
+        this.isEnemySoundEnabled = isEnemySoundEnabled;
         this.inPlay = false;
         this.levelId = 0;
         this.flyBullets = [];
@@ -220,7 +221,7 @@ class Game {
             this.enemies
                 // .filter(unit => game.user.isVisibleForMe(unit.x, unit.y))
                 .filter(enemy => isUnutVisiable(enemy, this))
-                .forEach(enemy => enemy.shootSingle())
+                .forEach(enemy => game.inPlay && enemy.shootSingle())
         }, 1000)
 
         this.removeListeners = () => {

@@ -77,7 +77,7 @@ export default class Bullet {
 
 
         if (this.isKickedBox) {
-            // !isSoundEnabled && playSound('./sound/missed.mp3', 0.01);
+            // !isUserSoundEnabled && playSound('./sound/missed.mp3', 0.01);
         }
 
         game.ctx.fill()

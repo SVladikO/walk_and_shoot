@@ -9,7 +9,8 @@ const defaultState = {
     gameSpeed: 2,
     isUserDead: false,
     isGamePaused: false,
-    isSoundEnabled: false,
+    isUserSoundEnabled: false,
+    isEnemySoundEnabled: false,
     isShowSettings: false,
     levels
 }
@@ -23,13 +24,21 @@ const appSlice = createSlice({
         setSelectedLevel: ((state, {payload}) => {
             state.selectedLevel = payload;
         }),
-        enableSound: state => {
-            game.isSoundEnabled = true;
-            state.isSoundEnabled = true;
+        enableUserSound: state => {
+            game.isUserSoundEnabled = true;
+            state.isUserSoundEnabled = true;
         },
-        disableSound: state => {
-            game.isSoundEnabled = false;
-            state.isSoundEnabled = false;
+        disableUserSound: state => {
+            game.isUserSoundEnabled = false;
+            state.isUserSoundEnabled = false;
+        },
+        enableEnemySound: state => {
+            game.isEnemySoundEnabled = true;
+            state.isEnemySoundEnabled = true;
+        },
+        disableEnemySound: state => {
+            game.isEnemySoundEnabled = false;
+            state.isEnemySoundEnabled = false;
         },
         increaseGameSpeed: state => {
             state.gameSpeed += 1;
@@ -63,8 +72,8 @@ const appSlice = createSlice({
 })
 export const {
     setSelectedLevel,
-    enableSound,
-    disableSound,
+    enableUserSound,
+    disableUserSound,
     openSettings,
     closeSettings,
     setIsUserDead,
@@ -72,7 +81,9 @@ export const {
     updateLevels,
     setLevelForEdit,
     increaseGameSpeed,
-    decreaseGameSpeed
+    decreaseGameSpeed,
+    enableEnemySound,
+    disableEnemySound
 
 } = appSlice.actions;
 

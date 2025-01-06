@@ -141,7 +141,8 @@ export class Unit {
 
     reloadGun() {
         this.bulletAmount = this.weapon.reloadBulletAmount;
-        game.isSoundEnabled && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.reload, 0.4);
+        game.isUserSoundEnabled && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.reload, 0.4);
+        game.isEnemySoundEnabled && this.unitType === UNIT_TYPE.UNIT && playSound(this.weapon.sound.reload, 0.4);
     }
 
     /**
@@ -159,12 +160,14 @@ export class Unit {
 
         //Empty gun sound for no bullets.
         if (this.bulletAmount <= 0 && this.unitType === UNIT_TYPE.USER) {
-            game.isSoundEnabled && this.unitType === UNIT_TYPE.USER && playSound('./sound/gun-empty.mp3', 0.4)
+            game.isUserSoundEnabled && this.unitType === UNIT_TYPE.USER && playSound('./sound/gun-empty.mp3', 0.4)
+            game.isEnemySoundEnabled && this.unitType === UNIT_TYPE.UNIT && playSound('./sound/gun-empty.mp3', 0.4)
             return;
         }
 
         this.bulletAmount -= 1;
-        game.isSoundEnabled && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.shoot, .1);
+        game.isUserSoundEnabled && this.unitType === UNIT_TYPE.USER && playSound(this.weapon.sound.shoot, .1);
+        game.isEnemySoundEnabled && this.unitType === UNIT_TYPE.UNIT && playSound(this.weapon.sound.shoot, .1);
         const bullets = this.getBullets()
         this.showFireFromGunImage = 3;
         game.flyBullets = [...game.flyBullets, ...bullets];
