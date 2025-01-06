@@ -14,7 +14,9 @@ import {
     increaseGameSpeed,
     decreaseGameSpeed,
     enableEnemySound,
-    disableEnemySound, setIsBulletFlyLimited
+    disableEnemySound,
+    setIsBulletFlyLimited,
+    setIspUserControlBulletDirection
 } from "../../features/app.slice";
 
 import {
@@ -43,7 +45,8 @@ const PlayRoomPage = () => {
         isUserSoundEnabled,
         isEnemySoundEnabled,
         gameSpeed,
-        isBulletFlyLimited
+        isBulletFlyLimited,
+        isUserControlBulletDirection
     } = useSelector(state => state.app);
 
     const dispatch = useDispatch();
@@ -55,7 +58,8 @@ const PlayRoomPage = () => {
             isUserSoundEnabled,
             isEnemySoundEnabled,
             isBulletFlyLimited,
-            gameSpeed
+            gameSpeed,
+            isUserControlBulletDirection
         });
 
         game.start(levels[selectedLevel]);
@@ -95,7 +99,13 @@ const Header = () => {
 
 const Settings = () => {
     let navigate = useNavigate();
-    const {isUserSoundEnabled, isEnemySoundEnabled, gameSpeed, isBulletFlyLimited} = useSelector(state => state.app);
+    const {
+        isUserSoundEnabled,
+        isEnemySoundEnabled,
+        gameSpeed,
+        isBulletFlyLimited,
+        isUserControlBulletDirection
+    } = useSelector(state => state.app);
     const dispatch = useDispatch();
 
     const onSwitchUserSound = () => isUserSoundEnabled ? dispatch(disableUserSound()) : dispatch(enableUserSound());
@@ -105,6 +115,7 @@ const Settings = () => {
     const onDecreaseGameSpeed = () => dispatch(decreaseGameSpeed())
 
     const onSwitchBulletFlyLimited = () => dispatch(setIsBulletFlyLimited(!isBulletFlyLimited))
+    const onSwitchIsUserControlBulletDirection = () => dispatch(setIspUserControlBulletDirection(!isUserControlBulletDirection))
 
     return (
         <SettingsWrapper>
@@ -113,7 +124,9 @@ const Settings = () => {
                     <Title>SETTINGS</Title>
                     <SettingsItem is={isUserSoundEnabled} label="User shoot sound" onClick={onSwitchUserSound}/>
                     <SettingsItem is={isEnemySoundEnabled} label="Enemy shoot sound" onClick={onSwitchEnemySound}/>
-                    <SettingsItem is={isBulletFlyLimited} label="Limit bullet distance" onClick={onSwitchBulletFlyLimited}/>
+                    <SettingsItem is={isBulletFlyLimited} label="Limit bullet distance"
+                                  onClick={onSwitchBulletFlyLimited}/>
+                    <SettingsItem is={isUserControlBulletDirection} label="User controll bullet direction" onClick={onSwitchIsUserControlBulletDirection}/>
                     <MoreLessWrapper>
                         Game speed
                         <div>

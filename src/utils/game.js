@@ -7,14 +7,22 @@ const distanceFromBorder = 70;
 
 function getUserCoordinatesFromPosition({colIndex, rowIndex}, {screenStepX, screenStepY}) {
     return {
-        x: (colIndex + 1) *  screenStepX, // 15,
-        y: (rowIndex +1) * screenStepY    // 7
+        x: (colIndex + 1) * screenStepX, // 15,
+        y: (rowIndex + 1) * screenStepY    // 7
     }
 }
 
 class Game {
-    init({onSetIsUserDead, isUserSoundEnabled, gameSpeed, isEnemySoundEnabled, isBulletFlyLimited}) {
+    init({
+             onSetIsUserDead,
+             isUserSoundEnabled,
+             gameSpeed,
+             isEnemySoundEnabled,
+             isBulletFlyLimited,
+             isUserControlBulletDirection
+         }) {
         this.onSetIsUserDead = onSetIsUserDead;
+        this.isUserControlBulletDirection = isUserControlBulletDirection;
 
         ////// BORD RELATED \\\\\\\
 
@@ -205,7 +213,7 @@ class Game {
             self.drawAll();
         }
 
-        const onMouseDown = () =>  self.user.shootSingle();
+        const onMouseDown = () => self.user.shootSingle();
 
         const onMouseUp = () => self.user.isShootEnabled = false;
         const disableOppositeMove = e => self.inPlay && self.user.disableMove(e.key)

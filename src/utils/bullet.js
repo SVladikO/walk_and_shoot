@@ -26,8 +26,9 @@ export default class Bullet {
     }
 
     move() {
-        this.lastX = this.lastX + Math.cos(this.angle) * this.flyStep;
-        this.lastY = this.lastY + Math.sin(this.angle) * this.flyStep;
+        const angle = game.isUserControlBulletDirection && this.ownerType === UNIT_TYPE.USER ? game.user.angle : this.angle;
+        this.lastX = this.lastX + Math.cos(angle) * this.flyStep;
+        this.lastY = this.lastY + Math.sin(angle) * this.flyStep;
 
         if (this.isMaxDistance() && game.isBulletFlyLimited) {
             this.isDead = true;
@@ -64,13 +65,13 @@ export default class Bullet {
 
     render() {
         game.ctx.beginPath();
+        const angle = game.isUserControlBulletDirection && this.ownerType === UNIT_TYPE.USER ? game.user.angle : this.angle;
         const imageFlyBullet = document.getElementById(this.weapon.imageFlyBulletId);
-
         game.ctx.translate(this.lastX, this.lastY);      // 1. Set x,y where we will rotate.
-        game.ctx.rotate(game.user.angle);                // 2. Rotate
+        game.ctx.rotate(angle);                          // 2. Rotate
         game.ctx.translate(-this.lastX, -this.lastY);    // 3. Move back coordinates to (HZ)
 
-        game.ctx.drawImage(imageFlyBullet, this.lastX-10, this.lastY-10, 20, 10);
+        game.ctx.drawImage(imageFlyBullet, this.lastX - 10, this.lastY - 10, 20, 10);
 
         game.ctx.rotate(game.user.angle);                // 5. Rotate back
         game.ctx.setTransform(1, 0, 0, 1, 0, 0);         // 6. Reset center back.
