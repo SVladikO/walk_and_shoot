@@ -1,6 +1,6 @@
 import {BulletImg, GunImg, InnerWrapperUnit, Wrapper, WrapperUnit} from "./units.module.style";
 
-import {ENEMY_TYPE, INTERACTION_TYPE} from "../../../util/types";
+import {ENEMY_TYPE, INTERACTION_TYPE} from "../../../utils/types";
 
 import gun1_in_bag_src from "../../../img/gun1_in_bag.webp";
 import gun1_bullet_fly from "../../../img/gun1_bullet_fly.webp";

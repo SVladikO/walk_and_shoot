@@ -17,9 +17,9 @@ import {setLevelForEditIndex, setSelectedLevel} from "../../features/app.slice";
 
 import navigationImg from '../../img/navigation.webp';
 
-import {style} from '../../util/settings';
-import {getScreen} from "../../util/screen";
-import {prepareCanvas} from "../../util/util";
+import {style} from '../../utils/settings';
+import {getScreen} from "../../utils/screen";
+import {prepareCanvas} from "../../utils/utils";
 
 export default function MenuPage() {
     const navigate = useNavigate();

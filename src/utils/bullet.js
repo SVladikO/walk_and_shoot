@@ -1,4 +1,4 @@
-import {getDistance, isOnBlock, isOutOfRange} from './util'
+import {getDistance, isOnBlock, isOutOfRange} from './utils'
 import {UNIT_TYPE} from "./types";
 import {game} from './game';
 import {style} from './settings';

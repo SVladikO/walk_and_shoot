@@ -3,7 +3,7 @@ import {weapon_gun3} from "./gun";
 import Bullet from './bullet';
 import {style} from './settings';
 import {game} from './game';
-import {getRadianAngle, getRandom, isInCanvas, isInRange, isOnBlock, playSound,} from './util'
+import {getRadianAngle, getRandom, isInCanvas, isInRange, isOnBlock, playSound,} from './utils'
 
 export class Unit {
     constructor(

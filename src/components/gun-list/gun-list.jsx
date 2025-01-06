@@ -4,8 +4,8 @@ import gun1Img from '../../img/gun1_in_bag.webp';
 import gun2Img from '../../img/gun2_in_bag.webp';
 import gun3Img from '../../img/gun3_in_bag.webp';
 
-import {game} from '../../util/game';
-import {weapon_gun1, weapon_gun2, weapon_gun3} from "../../util/gun";
+import {game} from '../../utils/game';
+import {weapon_gun1, weapon_gun2, weapon_gun3} from "../../utils/gun";
 
 export default function GunList({setUserBulletAmount}) {
     const setUserGun = gun => {

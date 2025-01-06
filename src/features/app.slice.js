@@ -1,7 +1,7 @@
 import {configureStore, createSlice} from '@reduxjs/toolkit'
-import {game} from "../util/game";
-import {LOCAL_STORAGE_KEY, LocalStorage} from "../util/localStorage";
-import {levels} from "../util/levels.data";
+import {game} from "../utils/game";
+import {LOCAL_STORAGE_KEY, LocalStorage} from "../utils/localStorage";
+import {levels} from "../utils/levels.data";
 
 const defaultState = {
     selectedLevel: 1,

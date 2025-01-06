@@ -22,7 +22,7 @@ import {
 
 import {ReactComponent as SettingsIcon} from "../../img/icons/settings.svg";
 import GunList from "../../components/gun-list/gun-list";
-import {game} from "../../util/game";
+import {game} from "../../utils/game";
 
 const PlayRoomPage = () => {
     const {isShowSettings, isUserDead, selectedLevel, levels} = useSelector(state => state.app);

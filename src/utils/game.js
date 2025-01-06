@@ -1,4 +1,4 @@
-import {isUnutVisiable, renderRectangle, showGameOver,} from "./util";
+import {isUnutVisiable, renderRectangle, showGameOver,} from "./utils";
 import {headerHeight} from '../App.style';
 import {getUser} from "./constructors";
 import {getScreen} from './screen';
