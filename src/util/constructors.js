@@ -1,5 +1,5 @@
-import {weapon_gun1, weapon_gun2, weapon_gun3} from "../gun/gun";
-import {UNIT_TYPE} from "./type";
+import {weapon_gun1, weapon_gun2, weapon_gun3} from "./gun";
+import {UNIT_TYPE} from "./types";
 import {Unit} from "./unit";
 
 

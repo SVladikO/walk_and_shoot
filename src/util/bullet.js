@@ -1,7 +1,7 @@
-import {getDistance, isOnBlock, isOutOfRange} from '../util'
-import {UNIT_TYPE} from "../unit/type";
-import {game} from '../game';
-import {style} from '../settings';
+import {getDistance, isOnBlock, isOutOfRange} from './util'
+import {UNIT_TYPE} from "./types";
+import {game} from './game';
+import {style} from './settings';
 
 export default class Bullet {
     constructor(fromX, fromY, angle, weapon, ownerType) {

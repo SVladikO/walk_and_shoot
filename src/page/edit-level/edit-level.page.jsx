@@ -1,8 +1,8 @@
 import {useState} from 'react';
 import {Wrapper} from './edit-level.page.style'
 
-import {ENEMY_TYPE} from '../../util/unit/type';
-import {INTERACTION_TYPE} from './util'
+import {ENEMY_TYPE} from '../../util/types';
+import {INTERACTION_TYPE} from '../../util/types.js'
 
 import ControlButtons from './control-buttons/control-buttons.module';
 import Map from './map/map.module';

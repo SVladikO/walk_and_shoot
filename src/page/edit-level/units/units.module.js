@@ -1,14 +1,13 @@
 import {BulletImg, GunImg, InnerWrapperUnit, Wrapper, WrapperUnit} from "./units.module.style";
 
+import {ENEMY_TYPE, INTERACTION_TYPE} from "../../../util/types";
+
 import gun1_in_bag_src from "../../../img/gun1_in_bag.webp";
 import gun1_bullet_fly from "../../../img/gun1_bullet_fly.webp";
-import {ENEMY_TYPE} from "../../../util/unit/type";
 import gun2_in_bag_src from "../../../img/gun2_in_bag.webp";
 import gun2_bullet_fly from "../../../img/gun2_bullet_fly.webp";
 import gun3_in_bag_src from "../../../img/gun3_in_bag.webp";
 import gun3_bullet_fly from "../../../img/gun3_bullet_fly.webp";
-
-import {INTERACTION_TYPE} from '../util'
 
 function Units({mapInteraction, setMapInteraction}) {
     const onChangeSelectedEnemyType = type => {

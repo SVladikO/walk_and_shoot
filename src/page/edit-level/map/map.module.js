@@ -1,12 +1,12 @@
 import {Block, MapWrapper, Row} from "./map.module.style";
 
-import {ENEMY_TYPE} from "../../../util/unit/type";
+import {ENEMY_TYPE} from "../../../util/types";
 import gun3_in_bag_src from "../../../img/gun3_in_bag.webp";
 import gun2_in_bag_src from "../../../img/gun2_in_bag.webp";
 import gun1_in_bag_src from "../../../img/gun1_in_bag.webp";
 import {ReactComponent as WalkIcon} from '../../../img/icons/walk.svg';
 
-import {INTERACTION_TYPE} from '../util'
+import {INTERACTION_TYPE} from '../../../util/types'
 
 const trLength = 8;
 const tdLength = 16;

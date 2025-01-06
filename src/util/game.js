@@ -1,6 +1,6 @@
 import {isUnutVisiable, renderRectangle, showGameOver,} from "./util";
 import {headerHeight} from '../App.style';
-import {getUser} from "./unit";
+import {getUser} from "./constructors";
 import {getScreen} from './screen';
 
 const distanceFromBorder = 70;

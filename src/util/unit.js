@@ -1,9 +1,9 @@
-import {UNIT_TYPE} from "./type";
-import {weapon_gun3} from "../gun/gun";
-import Bullet from '../bullet/bullet';
-import {style} from '../settings';
-import {game} from '../game';
-import {getRadianAngle, getRandom, isInCanvas, isInRange, isOnBlock, playSound,} from '../util'
+import {UNIT_TYPE} from "./types";
+import {weapon_gun3} from "./gun";
+import Bullet from './bullet';
+import {style} from './settings';
+import {game} from './game';
+import {getRadianAngle, getRandom, isInCanvas, isInRange, isOnBlock, playSound,} from './util'
 
 export class Unit {
     constructor(

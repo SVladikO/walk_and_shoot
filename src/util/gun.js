@@ -1,5 +1,5 @@
-import {GUN_TYPE} from './type';
-import {getRandom} from '../util';
+import {GUN_TYPE} from './types';
+import {getRandom} from './util';
 
 //pistol
 export const weapon_gun1 = {
