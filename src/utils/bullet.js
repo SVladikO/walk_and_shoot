@@ -29,7 +29,7 @@ export default class Bullet {
         this.lastX = this.lastX + Math.cos(this.angle) * this.flyStep;
         this.lastY = this.lastY + Math.sin(this.angle) * this.flyStep;
 
-        if (this.isMaxDistance()) {
+        if (this.isMaxDistance() && game.isBulletFlyLimited) {
             this.isDead = true;
             return;
         }

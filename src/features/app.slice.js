@@ -11,6 +11,7 @@ const defaultState = {
     isGamePaused: false,
     isUserSoundEnabled: false,
     isEnemySoundEnabled: false,
+    isBulletFlyLimited: true,
     isShowSettings: false,
     levels
 }
@@ -68,6 +69,10 @@ const appSlice = createSlice({
         updateLevels: (state, {payload}) => {
             state.levels = payload;
         },
+        setIsBulletFlyLimited: (state, {payload}) => {
+            state.isBulletFlyLimited = payload;
+            game.isBulletFlyLimited = payload;
+        }
     }
 })
 export const {
@@ -83,7 +88,8 @@ export const {
     increaseGameSpeed,
     decreaseGameSpeed,
     enableEnemySound,
-    disableEnemySound
+    disableEnemySound,
+    setIsBulletFlyLimited
 
 } = appSlice.actions;
 

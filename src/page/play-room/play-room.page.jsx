@@ -14,7 +14,7 @@ import {
     increaseGameSpeed,
     decreaseGameSpeed,
     enableEnemySound,
-    disableEnemySound
+    disableEnemySound, setIsBulletFlyLimited
 } from "../../features/app.slice";
 
 import {
@@ -42,7 +42,8 @@ const PlayRoomPage = () => {
         levels,
         isUserSoundEnabled,
         isEnemySoundEnabled,
-        gameSpeed
+        gameSpeed,
+        isBulletFlyLimited
     } = useSelector(state => state.app);
 
     const dispatch = useDispatch();
@@ -53,6 +54,7 @@ const PlayRoomPage = () => {
             onSetIsUserDead,
             isUserSoundEnabled,
             isEnemySoundEnabled,
+            isBulletFlyLimited,
             gameSpeed
         });
 
@@ -93,7 +95,7 @@ const Header = () => {
 
 const Settings = () => {
     let navigate = useNavigate();
-    const {isUserSoundEnabled, isEnemySoundEnabled, gameSpeed} = useSelector(state => state.app);
+    const {isUserSoundEnabled, isEnemySoundEnabled, gameSpeed, isBulletFlyLimited} = useSelector(state => state.app);
     const dispatch = useDispatch();
 
     const onSwitchUserSound = () => isUserSoundEnabled ? dispatch(disableUserSound()) : dispatch(enableUserSound());
@@ -101,6 +103,9 @@ const Settings = () => {
 
     const onIncreaseGameSpeed = () => dispatch(increaseGameSpeed())
     const onDecreaseGameSpeed = () => dispatch(decreaseGameSpeed())
+
+    const onSwitchBulletFlyLimited = () => dispatch(setIsBulletFlyLimited(!isBulletFlyLimited))
+
     return (
         <SettingsWrapper>
             <SettingsInnerWrapper>
@@ -108,7 +113,7 @@ const Settings = () => {
                     <Title>SETTINGS</Title>
                     <SettingsItem is={isUserSoundEnabled} label="User shoot sound" onClick={onSwitchUserSound}/>
                     <SettingsItem is={isEnemySoundEnabled} label="Enemy shoot sound" onClick={onSwitchEnemySound}/>
-                    <SettingsItem is={isUserSoundEnabled} label="Limit bullet fly distance" onClick={onSwitchUserSound}/>
+                    <SettingsItem is={isBulletFlyLimited} label="Limit bullet distance" onClick={onSwitchBulletFlyLimited}/>
                     <MoreLessWrapper>
                         Game speed
                         <div>

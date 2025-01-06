@@ -13,7 +13,7 @@ function getUserCoordinatesFromPosition({colIndex, rowIndex}, {screenStepX, scre
 }
 
 class Game {
-    init({onSetIsUserDead, isUserSoundEnabled, gameSpeed, isEnemySoundEnabled}) {
+    init({onSetIsUserDead, isUserSoundEnabled, gameSpeed, isEnemySoundEnabled, isBulletFlyLimited}) {
         this.onSetIsUserDead = onSetIsUserDead;
 
         ////// BORD RELATED \\\\\\\
@@ -45,6 +45,7 @@ class Game {
         this.gameSpeed = gameSpeed;
         this.isUserSoundEnabled = isUserSoundEnabled;
         this.isEnemySoundEnabled = isEnemySoundEnabled;
+        game.isBulletFlyLimited = isBulletFlyLimited;
         this.inPlay = false;
         this.levelId = 0;
         this.flyBullets = [];
