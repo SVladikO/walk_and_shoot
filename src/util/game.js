@@ -2,9 +2,15 @@ import {isUnutVisiable, renderRectangle, showGameOver,} from "./util";
 import {headerHeight} from '../App.style';
 import {getUser} from "./unit";
 import {getScreen} from './screen';
-import {weapon_gun1} from "./gun/gun";
 
 const distanceFromBorder = 70;
+
+function getUserCoordinatesFromPosition({colIndex, rowIndex}, {screenStepX, screenStepY}) {
+    return {
+        x: (colIndex + 1) *  screenStepX, // 15,
+        y: (rowIndex +1) * screenStepY    // 7
+    }
+}
 
 class Game {
     init({onSetIsUserDead}) {
@@ -62,7 +68,8 @@ class Game {
          */
         this.screenMainCanvas = getScreen(this.getWidthLength(), this.getHeightLength());
         this.inPlay = true;
-        this.user = getUser();
+        const userStartCoordinates = getUserCoordinatesFromPosition(level.userStartPosition, this.screenMainCanvas);
+        this.user = getUser(userStartCoordinates.x, userStartCoordinates.y);
         this.user.reloadGun();
         this.flyBullets = [];
         this.rectangles = this.screenMainCanvas.getBoxes(level.blockIds);

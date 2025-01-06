@@ -1,17 +1,24 @@
 import {configureStore, createSlice} from '@reduxjs/toolkit'
 import {game} from "../util/game";
+import {LOCAL_STORAGE_KEY, LocalStorage} from "../util/localStorage";
+import {levels} from "../util/levels.data";
+
+const defaultState = {
+    selectedLevel: 1,
+    levelForEditIndex: 0,
+    gameSpeed: 1,
+    isUserDead: false,
+    isGamePaused: false,
+    isSoundEnabled: false,
+    isShowSettings: false,
+    levels
+}
+
+const state = LocalStorage.get(LOCAL_STORAGE_KEY.REDUX_STATE)?.app || defaultState;
 
 const appSlice = createSlice({
     name: 'app',
-    initialState: {
-        selectedLevel: 1,
-        editLevel: 1,
-        gameSpeed: 1,
-        isUserDead: false,
-        isGamePaused: false,
-        isSoundEnabled: false,
-        isShowSettings: false,
-    },
+    initialState: state,
     reducers: {
         setSelectedLevel: ((state, {payload}) => {
             state.selectedLevel = payload;
@@ -43,9 +50,13 @@ const appSlice = createSlice({
         setIsUserDead: (state, {payload}) => {
             state.isUserDead = payload;
         },
-        setEditLevel: (state, {payload}) => {
-            state.editLevel = payload;
-        }
+        setLevelForEditIndex: (state, {payload}) => {
+            console.log('setLevelForEditIndex', payload)
+            state.levelForEditIndex = payload;
+        },
+        updateLevels: (state, {payload}) => {
+            state.levels = payload;
+        },
     }
 })
 export const {
@@ -55,7 +66,9 @@ export const {
     openSettings,
     closeSettings,
     setIsUserDead,
-    setEditLevel,
+    setLevelForEditIndex,
+    updateLevels,
+    setLevelForEdit
 } = appSlice.actions;
 
 const store = configureStore({

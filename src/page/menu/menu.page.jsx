@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
 import Button from '@mui/material/Button';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 
-import {getLocalStorage, LOCAL_STORAGE_KEY} from '../../util/localstorage';
 import {
     Canvas,
     GameTitle,
@@ -14,7 +13,7 @@ import {
     Wrapper
 } from './menu.page.style.js';
 
-import {setEditLevel, setSelectedLevel} from "../../features/app.slice";
+import {setLevelForEditIndex, setSelectedLevel} from "../../features/app.slice";
 
 import navigationImg from '../../img/navigation.webp';
 
@@ -23,12 +22,11 @@ import {getScreen} from "../../util/screen";
 import {prepareCanvas} from "../../util/util";
 
 export default function MenuPage() {
-    let navigate = useNavigate();
-    let dispatch = useDispatch();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const refLevels = [];
-
-    const levels = getLocalStorage(LOCAL_STORAGE_KEY.LEVELS);
-
+    const {levels} = useSelector(state => state.app)
+    console.log('menuPage', {levels})
     useEffect(() => {
         const screen = getScreen(200, 100);
 
@@ -66,19 +64,17 @@ export default function MenuPage() {
                 <Canvas ref={ref}/>
                 <div>
                     <Button variant="contained" onClick={() => {
-                        dispatch(setEditLevel(index))
+                        dispatch(setLevelForEditIndex(index))
                         navigate('/edit')
                     }}>EDIT</Button>
                     <Button variant="contained" onClick={() => {
                         dispatch(setSelectedLevel(index))
                         navigate('/play')
-
                     }}>Play</Button>
                 </div>
             </LevelWrapper>
         )
     })
-
 
     return (
         <Wrapper>
@@ -88,7 +84,8 @@ export default function MenuPage() {
                 {canvasLevels}
             </SubWrapper>
             <Button variant="contained" onClick={() => {
-                dispatch(setEditLevel(1000))
+                dispatch(setLevelForEditIndex(1000))
+                dispatch(setLevelForEditIndex(1000))
                 navigate('/edit')
             }}>CREATE NEW LEVEL</Button>
             <NavigationWrapper>

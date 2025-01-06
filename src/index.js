@@ -6,6 +6,12 @@ import {store} from './store';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {LocalStorage, LOCAL_STORAGE_KEY} from './util/localStorage';
+
+LocalStorage.set(LOCAL_STORAGE_KEY.REDUX_STATE, store.getState());
+store.subscribe(() => {
+    LocalStorage.set(LOCAL_STORAGE_KEY.REDUX_STATE, store.getState());
+})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

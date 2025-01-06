@@ -1,10 +1,9 @@
 import React, {useEffect} from "react";
+import {useNavigate} from "react-router";
 import {useDispatch, useSelector} from 'react-redux'
 
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
-
-import {levels} from "../../util/levels.data";
 
 import {closeSettings, disableSound, enableSound, openSettings, setIsUserDead} from "../../features/app.slice";
 
@@ -22,13 +21,11 @@ import {
 } from './play-room.page.style.js'
 
 import {ReactComponent as SettingsIcon} from "../../img/icons/settings.svg";
-
 import GunList from "../../components/gun-list/gun-list";
 import {game} from "../../util/game";
-import {useNavigate} from "react-router";
 
 const PlayRoomPage = () => {
-    const {isShowSettings, isUserDead, selectedLevel} = useSelector(state => state.app);
+    const {isShowSettings, isUserDead, selectedLevel, levels} = useSelector(state => state.app);
 
     const dispatch = useDispatch();
     const onSetIsUserDead = is => dispatch(setIsUserDead(is));
