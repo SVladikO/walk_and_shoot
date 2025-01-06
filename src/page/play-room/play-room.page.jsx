@@ -25,14 +25,15 @@ import GunList from "../../components/gun-list/gun-list";
 import {game} from "../../utils/game";
 
 const PlayRoomPage = () => {
-    const {isShowSettings, isUserDead, selectedLevel, levels} = useSelector(state => state.app);
+    const {isShowSettings, isUserDead, selectedLevel, levels, isSoundEnabled} = useSelector(state => state.app);
 
     const dispatch = useDispatch();
     const onSetIsUserDead = is => dispatch(setIsUserDead(is));
 
     useEffect(() => {
         game.init({
-            onSetIsUserDead
+            onSetIsUserDead,
+            isSoundEnabled
         });
 
         game.start(levels[selectedLevel]);
