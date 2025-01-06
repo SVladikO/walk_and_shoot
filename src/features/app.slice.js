@@ -6,7 +6,7 @@ import {levels} from "../utils/levels.data";
 const defaultState = {
     selectedLevel: 1,
     levelForEditIndex: 0,
-    gameSpeed: 1,
+    gameSpeed: 2,
     isUserDead: false,
     isGamePaused: false,
     isSoundEnabled: false,
@@ -31,11 +31,13 @@ const appSlice = createSlice({
             game.isSoundEnabled = false;
             state.isSoundEnabled = false;
         },
-        increaseGameSpeed: (state, {payload}) => {
-            state.healthLevelgameSpeed += payload
+        increaseGameSpeed: state => {
+            state.gameSpeed += 1;
+            game.gameSpeed += 1;
         },
-        decreaseGameSpeed: (state, {payload}) => {
-            state.healthLevelgameSpeed -= payload
+        decreaseGameSpeed: state => {
+            state.gameSpeed -= 1;
+            game.gameSpeed -= 1;
         },
         openSettings: state => {
             state.isShowSettings = true;
@@ -68,7 +70,10 @@ export const {
     setIsUserDead,
     setLevelForEditIndex,
     updateLevels,
-    setLevelForEdit
+    setLevelForEdit,
+    increaseGameSpeed,
+    decreaseGameSpeed
+
 } = appSlice.actions;
 
 const store = configureStore({

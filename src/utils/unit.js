@@ -87,7 +87,7 @@ export class Unit {
         const maxX = game.boardWidthTo;
 
         if (this.moveDirection.w) {
-            const modifiedY = this.y - game.unitSpeedStep;
+            const modifiedY = this.y - game.gameSpeed;
             this.disableOppositeMove(this.moveDirectionOpposite['w'])
 
             // console.log('w', {modifiedY, minY, maxY});
@@ -98,7 +98,7 @@ export class Unit {
         }
 
         if (this.moveDirection.s) {
-            const modifiedY = this.y + game.unitSpeedStep;
+            const modifiedY = this.y + game.gameSpeed;
             this.disableOppositeMove(this.moveDirectionOpposite['s'])
 
             // console.log('s', {modifiedY, minY, maxY});
@@ -108,7 +108,7 @@ export class Unit {
         }
 
         if (this.moveDirection.a) {
-            const modifiedX = this.x - game.unitSpeedStep;
+            const modifiedX = this.x - game.gameSpeed;
             this.disableOppositeMove(this.moveDirectionOpposite['a'])
             // console.log('a', {modifiedX, minX, maxX});
             if (isInCanvas(modifiedX, minX, maxX) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {
@@ -116,7 +116,7 @@ export class Unit {
             }
         }
         if (this.moveDirection.d) {
-            const modifiedX = this.x + game.unitSpeedStep;
+            const modifiedX = this.x + game.gameSpeed;
             this.disableOppositeMove(this.moveDirectionOpposite['d'])
             // console.log('d', {modifiedX, minX, maxX}, game.boardWidthTo, game.boardWidth);
             if (isInCanvas(modifiedX, minX, maxX) && !isOnBlock(modifiedX, this.y, style.user.dorRadius)) {

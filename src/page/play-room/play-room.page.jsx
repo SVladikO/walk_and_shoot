@@ -5,7 +5,15 @@ import {useDispatch, useSelector} from 'react-redux'
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
 
-import {closeSettings, disableSound, enableSound, openSettings, setIsUserDead} from "../../features/app.slice";
+import {
+    closeSettings,
+    disableSound,
+    enableSound,
+    openSettings,
+    setIsUserDead,
+    increaseGameSpeed,
+    decreaseGameSpeed
+} from "../../features/app.slice";
 
 import {
     CanvasBoard,
@@ -25,7 +33,14 @@ import GunList from "../../components/gun-list/gun-list";
 import {game} from "../../utils/game";
 
 const PlayRoomPage = () => {
-    const {isShowSettings, isUserDead, selectedLevel, levels, isSoundEnabled} = useSelector(state => state.app);
+    const {
+        isShowSettings,
+        isUserDead,
+        selectedLevel,
+        levels,
+        isSoundEnabled,
+        gameSpeed
+    } = useSelector(state => state.app);
 
     const dispatch = useDispatch();
     const onSetIsUserDead = is => dispatch(setIsUserDead(is));
@@ -33,7 +48,8 @@ const PlayRoomPage = () => {
     useEffect(() => {
         game.init({
             onSetIsUserDead,
-            isSoundEnabled
+            isSoundEnabled,
+            gameSpeed
         });
 
         game.start(levels[selectedLevel]);
@@ -77,7 +93,8 @@ const Settings = () => {
     const dispatch = useDispatch();
 
     const onSwitchSound = () => isSoundEnabled ? dispatch(disableSound()) : dispatch(enableSound());
-
+    const onIncreaseGameSpeed = () => dispatch(increaseGameSpeed())
+    const onDecreaseGameSpeed = () => dispatch(decreaseGameSpeed())
     return (
         <SettingsWrapper>
             <SettingsInnerWrapper>
@@ -87,9 +104,9 @@ const Settings = () => {
                     <MoreLessWrapper>
                         Game speed
                         <div>
-                            <Button size="small" variant="contained">-</Button>
+                            <Button size="small" variant="contained" onClick={onDecreaseGameSpeed}>-</Button>
                             {gameSpeed}
-                            <Button size="small" variant="contained">+</Button>
+                            <Button size="small" variant="contained" onClick={onIncreaseGameSpeed}>+</Button>
                         </div>
                     </MoreLessWrapper>
                 </div>

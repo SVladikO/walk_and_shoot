@@ -13,7 +13,7 @@ function getUserCoordinatesFromPosition({colIndex, rowIndex}, {screenStepX, scre
 }
 
 class Game {
-    init({onSetIsUserDead, isSoundEnabled=false}) {
+    init({onSetIsUserDead, isSoundEnabled=false, gameSpeed=1}) {
         this.onSetIsUserDead = onSetIsUserDead;
 
         ////// BORD RELATED \\\\\\\
@@ -42,7 +42,7 @@ class Game {
         this.mousePositionX = 0;
         this.mousePositionY = 0;
 
-        this.unitSpeedStep = 1;
+        this.gameSpeed = gameSpeed;
         this.isSoundEnabled = isSoundEnabled;
         this.inPlay = false;
         this.levelId = 0;

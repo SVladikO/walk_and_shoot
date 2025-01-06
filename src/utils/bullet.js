@@ -13,7 +13,7 @@ export default class Bullet {
         this.weapon = weapon; //
         this.damage = 2; //
         this.radius = 5; //
-        this.flyStep = 8;
+        this.flyStep = 8 + game.gameSpeed;
         this.currentDistance = 0; //
         this.isDead = false;
         this.isKickedBox = false;
