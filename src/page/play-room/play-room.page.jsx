@@ -16,7 +16,8 @@ import {
     enableEnemySound,
     disableEnemySound,
     setIsBulletFlyLimited,
-    setIspUserControlBulletDirection
+    setIspUserControlBulletDirection,
+    setIsBigBulletsImageEnabled
 } from "../../features/app.slice";
 
 import {
@@ -46,7 +47,8 @@ const PlayRoomPage = () => {
         isEnemySoundEnabled,
         gameSpeed,
         isBulletFlyLimited,
-        isUserControlBulletDirection
+        isUserControlBulletDirection,
+        isBigBulletsImageEnabled
     } = useSelector(state => state.app);
 
     const dispatch = useDispatch();
@@ -59,7 +61,8 @@ const PlayRoomPage = () => {
             isEnemySoundEnabled,
             isBulletFlyLimited,
             gameSpeed,
-            isUserControlBulletDirection
+            isUserControlBulletDirection,
+            isBigBulletsImageEnabled
         });
 
         game.start(levels[selectedLevel]);
@@ -104,7 +107,8 @@ const Settings = () => {
         isEnemySoundEnabled,
         gameSpeed,
         isBulletFlyLimited,
-        isUserControlBulletDirection
+        isUserControlBulletDirection,
+        isBigBulletsImageEnabled
     } = useSelector(state => state.app);
     const dispatch = useDispatch();
 
@@ -116,6 +120,7 @@ const Settings = () => {
 
     const onSwitchBulletFlyLimited = () => dispatch(setIsBulletFlyLimited(!isBulletFlyLimited))
     const onSwitchIsUserControlBulletDirection = () => dispatch(setIspUserControlBulletDirection(!isUserControlBulletDirection))
+    const onSwitchBigBulletImage = () => dispatch(setIsBigBulletsImageEnabled(!isBigBulletsImageEnabled))
 
     return (
         <SettingsWrapper>
@@ -127,6 +132,7 @@ const Settings = () => {
                     <SettingsItem is={isBulletFlyLimited} label="Limit bullet distance"
                                   onClick={onSwitchBulletFlyLimited}/>
                     <SettingsItem is={isUserControlBulletDirection} label="User controll bullet direction" onClick={onSwitchIsUserControlBulletDirection}/>
+                    <SettingsItem is={isBigBulletsImageEnabled} label="Big bullet image" onClick={onSwitchBigBulletImage}/>
                     <MoreLessWrapper>
                         Game speed
                         <div>

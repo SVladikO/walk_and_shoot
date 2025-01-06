@@ -19,10 +19,12 @@ class Game {
              gameSpeed,
              isEnemySoundEnabled,
              isBulletFlyLimited,
-             isUserControlBulletDirection
+             isUserControlBulletDirection,
+             isBigBulletsImageEnabled
          }) {
         this.onSetIsUserDead = onSetIsUserDead;
         this.isUserControlBulletDirection = isUserControlBulletDirection;
+        this.isBigBulletsImageEnabled = isBigBulletsImageEnabled;
 
         ////// BORD RELATED \\\\\\\
 

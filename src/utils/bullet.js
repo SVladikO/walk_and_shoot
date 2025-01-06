@@ -71,7 +71,10 @@ export default class Bullet {
         game.ctx.rotate(angle);                          // 2. Rotate
         game.ctx.translate(-this.lastX, -this.lastY);    // 3. Move back coordinates to (HZ)
 
-        game.ctx.drawImage(imageFlyBullet, this.lastX - 10, this.lastY - 10, 20, 10);
+        const imgWidth = game.isBigBulletsImageEnabled ? 60 : 20;
+        const imgheight = game.isBigBulletsImageEnabled ? 30 : 10;
+
+        game.ctx.drawImage(imageFlyBullet, this.lastX - 10, this.lastY - 10, imgWidth, imgheight);
 
         game.ctx.rotate(game.user.angle);                // 5. Rotate back
         game.ctx.setTransform(1, 0, 0, 1, 0, 0);         // 6. Reset center back.

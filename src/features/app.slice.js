@@ -14,6 +14,7 @@ const defaultState = {
     isBulletFlyLimited: true,
     isShowSettings: false,
     isUserControlBulletDirection: false,
+    isBigBulletsImageEnabled: false,
     levels
 }
 
@@ -77,6 +78,10 @@ const appSlice = createSlice({
         setIspUserControlBulletDirection: (state, {payload}) => {
             state.isUserControlBulletDirection = payload;
             game.isUserControlBulletDirection = payload;
+        },
+        setIsBigBulletsImageEnabled: (state, {payload}) => {
+            state.isBigBulletsImageEnabled = payload;
+            game.isBigBulletsImageEnabled = payload;
         }
     }
 })
@@ -95,7 +100,8 @@ export const {
     enableEnemySound,
     disableEnemySound,
     setIsBulletFlyLimited,
-    setIspUserControlBulletDirection
+    setIspUserControlBulletDirection,
+    setIsBigBulletsImageEnabled
 
 } = appSlice.actions;
 
