@@ -19,7 +19,7 @@ function EditLevelPage() {
     const [mapInteraction, setMapInteraction] = useState({
         isEnemyWalk: false,
         selectedEnemyType: ENEMY_TYPE.PISTOL,
-        interactionTyp: INTERACTION_TYPE.ADD_ENEMY,
+        interactionType: INTERACTION_TYPE.ADD_ENEMY,
     })
 
     return (

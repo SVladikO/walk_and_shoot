@@ -65,7 +65,7 @@ export function getScreen(width, height) {
                 const [x,y] = enemyCoordinate;
 
                 let getEnemyFunc;
-
+                console.log(3333, levelEnemy.type)
                 switch (levelEnemy.type) {
                     case ENEMY_TYPE.PISTOL:
                         getEnemyFunc = getPistolUnit;

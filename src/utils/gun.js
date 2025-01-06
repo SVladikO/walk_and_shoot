@@ -1,5 +1,4 @@
 import {GUN_TYPE} from './types';
-import {getRandom} from './utils';
 
 //pistol
 export const weapon_gun1 = {
@@ -30,7 +29,7 @@ export const weapon_gun2 = {
     imageFlyBulletId: 'gun2_bullet_fly_id',
     imgFirePositionY: -20,
     imgFirePositionX: 60,
-    type: GUN_TYPE.AK,
+    type: GUN_TYPE.AK47,
     bulletAmount: 30,
     reloadBulletAmount: 30,
     maxDistance: 1000,

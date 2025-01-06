@@ -41,7 +41,7 @@ const Map = ({
     }
 
     const onBlockClick = (blockId, rowIndex, colIndex) => () => {
-        if (mapInteraction.interactionTyp === INTERACTION_TYPE.ADD_ENEMY) {
+        if (mapInteraction.interactionType === INTERACTION_TYPE.ADD_ENEMY) {
             const isIncludeUnit = enemies.map(el => el.index).includes(blockId);
 
             if (isIncludeUnit) {
@@ -52,7 +52,7 @@ const Map = ({
             }
         }
 
-        if (mapInteraction.interactionTyp === INTERACTION_TYPE.ADD_BLOCK) {
+        if (mapInteraction.interactionType === INTERACTION_TYPE.ADD_BLOCK) {
             const isIncludeBlock = blockIds.includes(blockId);
             if (isIncludeBlock) {
                 deleteBlock(blockId)
@@ -62,7 +62,7 @@ const Map = ({
             }
         }
 
-        if (mapInteraction.interactionTyp === INTERACTION_TYPE.ADD_USER_POSITION) {
+        if (mapInteraction.interactionType === INTERACTION_TYPE.ADD_USER_POSITION) {
             setUserStartPosition({rowIndex, colIndex, blockId})
             deleteBlock(blockId)
             deleteUnit(blockId)

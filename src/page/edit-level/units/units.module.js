@@ -11,20 +11,20 @@ import gun3_bullet_fly from "../../../img/gun3_bullet_fly.webp";
 
 function Units({mapInteraction, setMapInteraction}) {
     const onChangeSelectedEnemyType = type => {
-        setMapInteraction({...mapInteraction, selectedEnemyType: type, interactionTyp: INTERACTION_TYPE.ADD_ENEMY})
+        setMapInteraction({...mapInteraction, selectedEnemyType: type, interactionType: INTERACTION_TYPE.ADD_ENEMY})
     }
 
-    const isSelectedEnemy = type => mapInteraction.selectedEnemyType === type && mapInteraction.interactionTyp === INTERACTION_TYPE.ADD_ENEMY;
+    const isSelectedEnemy = type => mapInteraction.selectedEnemyType === type && mapInteraction.interactionType === INTERACTION_TYPE.ADD_ENEMY;
 
     return (
         <Wrapper>
             <UnitItem
                 label="Change user start position"
-                isSelected={mapInteraction.interactionTyp === INTERACTION_TYPE.ADD_USER_POSITION}
+                isSelected={mapInteraction.interactionType === INTERACTION_TYPE.ADD_USER_POSITION}
                 onClickHandler={() => setMapInteraction({
                     ...mapInteraction,
                     selectedEnemyType: undefined,
-                    interactionTyp: INTERACTION_TYPE.ADD_USER_POSITION
+                    interactionType: INTERACTION_TYPE.ADD_USER_POSITION
                 })}
             />
             <UnitItem
@@ -32,10 +32,10 @@ function Units({mapInteraction, setMapInteraction}) {
                 onClickHandler={() =>
                     setMapInteraction({
                         selectedEnemyType: undefined,
-                        interactionTyp: INTERACTION_TYPE.ADD_BLOCK,
+                        interactionType: INTERACTION_TYPE.ADD_BLOCK,
                     })
                 }
-                isSelected={mapInteraction.interactionTyp === INTERACTION_TYPE.ADD_BLOCK}
+                isSelected={mapInteraction.interactionType === INTERACTION_TYPE.ADD_BLOCK}
             />
             <UnitItem
                 gunImgSrc={gun1_in_bag_src}

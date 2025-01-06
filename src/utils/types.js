@@ -1,6 +1,6 @@
 export const GUN_TYPE = {
     PISTOL: 'PISTOL',
-    AK: 'AK',
+    AK47: 'AK47',
     GUN: 'GUN',
 }
 
