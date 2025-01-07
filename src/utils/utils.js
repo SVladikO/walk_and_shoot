@@ -29,8 +29,9 @@ export function isInRange(num, min, max) {
 /**
  * Check is new user coordinates move on block
  *iK
- * @param x
- * @param y
+ * @param objX User x coordinate
+ * @param objY User y coordinate
+ * @param objRadius User radius
  * @returns {boolean}
  */
 export function isOnBlock(objX, objY, objRadius) {
@@ -41,10 +42,7 @@ export function isOnBlock(objX, objY, objRadius) {
         const minY = y - objRadius;
         const maxY = minY + height + objRadius * 2;
 
-        const is = isInRange(objX, minX, maxX) && isInRange(objY, minY, maxY)
-        // console.log(1234, is, `x ${minX} < ${userX} < ${maxX} ::: y ${minY} < ${userY} < ${maxY}`)
-
-        return is;
+        return isInRange(objX, minX, maxX) && isInRange(objY, minY, maxY)
     })
 
     return !!rect;
@@ -83,17 +81,24 @@ export function playSound(src, volume = 0.2) {
 
 export function changeUserHealth() {
     const user_healt_progress = document.getElementById('user_healt_progress')
-    const healthProgres = game.user.health * 100 / game.user.maxHealth
-    user_healt_progress.value = healthProgres;
+    user_healt_progress.value  = game.user.health * 100 / game.user.maxHealth
 }
 
-export function renderRectangle(ctx, block, bgColor='black') {
+export function renderRectangle(ctx, block, options = {}) {
+    const {
+        backgroundColor = style.box.bgColor,
+        borderColor=style.box.borderColor,
+        isBgEnabled=true,
+    } = options;
+
     ctx.beginPath();
     const [x, y, width, height] = block;
     ctx.rect(x, y, width, height);
-    ctx.fillStyle = bgColor;
-    ctx.fill()
-    ctx.strokeStyle = bgColor;
+    if (isBgEnabled) {
+        ctx.fillStyle = backgroundColor;
+        ctx.fill()
+    }
+    ctx.strokeStyle = borderColor;
     ctx.lineWidth = style.box.borderLineWidth;
     ctx.stroke();
     ctx.strokeStyle = style.box.borderColor;

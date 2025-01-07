@@ -129,7 +129,18 @@ class Game {
         // renderRectangle(this.static_ctx, [0, 0, this.boardWidth, this.boardHeigh], '#f7ff00')
         // renderRectangle(this.static_ctx, [this.boardWidthFrom, this.boardHeightFrom, this.getWidthLength(), this.getHeightLength()], '#f2a739b3')
         // this.moveDrawPoint(this.static_ctx)
-        this.rectanglesForActiveBoard.map(rec => renderRectangle(this.static_ctx, rec, style.box.bgColor))
+        this.rectanglesForActiveBoard.map(rec => renderRectangle(this.static_ctx, rec))
+
+        //Render room border to let players see where they can walk.
+        const fromX = distanceFromBorder;
+        const fromY = distanceFromBorder;
+        const toX = this.boardWidth - distanceFromBorder * 2;
+        const toY = this.boardHeigh - distanceFromBorder * 2;
+        const options = {
+            isBgEnabled: false,
+            borderColor: style.board.borderColor
+        };
+        renderRectangle(this.static_ctx, [fromX, fromY, toX, toY], options)
     }
 
     stop() {
@@ -220,8 +231,6 @@ class Game {
 
         const onMouseUp = () => self.user.isShootEnabled = false;
         const disableOppositeMove = e => self.inPlay && self.user.disableMove(e.key)
-
-        const board = window.canvas_board_wrapper;
 
         window.addEventListener("keypress", onKeyPressed);
         window.addEventListener('keyup', disableOppositeMove);

@@ -1,14 +1,15 @@
 export const style = {
     board: {
         bgColor: 'grey',
+        borderColor: "rgba(228,103,0,0.56)",
     },
     box: {
-        bgColor: '#000',
-        borderColor: "#000",
-        borderLineWidth: 6,
+        bgColor: "rgba(228,103,0,0.68)",
+        borderColor: "rgba(228,103,0,0.68)",
+        borderLineWidth: 2,
     },
     user: {
-        bgColor: '#000',
+        bgColor: "rgba(228,103,0,0.68)",
         dorRadius: 20,
     },
     bullet: {
