@@ -33,7 +33,7 @@ export const weapon_gun2 = {
     bulletAmount: 30,
     reloadBulletAmount: 30,
     maxDistance: 1000,
-    damage: 2,
+    damage: 3,
     sound: {
         reload: './sound/gun1_recharge.mp3',
         shoot: './sound/gun2_shoot.mp3',
@@ -70,7 +70,7 @@ export const weapon_gun3 = {
     bulletAmount: 2,
     reloadBulletAmount: 2,
     maxDistance: 450,
-    damage: 4,
+    damage: 2.5,
     sound: {
         reload: './sound/gun3_recharge.mp3',
         shoot: './sound/gun3_shoot.mp3',
@@ -78,7 +78,13 @@ export const weapon_gun3 = {
     bulletDeadRadius: 15,
     distanceStep: 2,
     rechargeTime: 2,
-    shoot: (angle, getBullet) => ([getBullet(angle - 0.2), getBullet(angle), getBullet(angle + 0.2)]),
+    shoot: (angle, getBullet) => ([
+        getBullet(angle - 0.2),
+        getBullet(angle - 0.1),
+        getBullet(angle),
+        getBullet(angle + 0.1),
+        getBullet(angle + 0.2),
+    ]),
 }
 
 // const weapon = {
