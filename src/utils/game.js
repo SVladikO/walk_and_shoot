@@ -1,5 +1,4 @@
 import {isUnutVisiable, renderRectangle, showGameOver,} from "./utils";
-import {headerHeight} from '../App.style';
 import {getUser} from "./constructors";
 import {getScreen} from './screen';
 import {style} from "./settings";
@@ -37,7 +36,7 @@ class Game {
         this.boardWidthFrom = distanceFromBorder;
         this.boardWidthTo = window.innerWidth - distanceFromBorder;
         this.boardHeightFrom = distanceFromBorder;
-        this.boardHeightTo = window.innerHeight - distanceFromBorder - headerHeight;
+        this.boardHeightTo = window.innerHeight - distanceFromBorder;
 
         this.boardWidth = window.innerWidth;
         this.boardHeigh = window.innerHeight;
@@ -205,7 +204,7 @@ class Game {
 
         const onMouseOver = e => {
             this.mousePositionX = e.clientX;
-            this.mousePositionY = e.clientY - 50
+            this.mousePositionY = e.clientY
         }
 
         const onKeyPressed = e => {
@@ -226,9 +225,9 @@ class Game {
 
         window.addEventListener("keypress", onKeyPressed);
         window.addEventListener('keyup', disableOppositeMove);
-        board.addEventListener("mousemove", onMouseOver);
-        board.addEventListener("mousedown", onMouseDown);
-        board.addEventListener("mouseup", onMouseUp);
+        window.addEventListener("mousemove", onMouseOver);
+        window.addEventListener("mousedown", onMouseDown);
+        window.addEventListener("mouseup", onMouseUp);
 
         const intervalId = setInterval(() => {
             this.enemies
@@ -241,9 +240,9 @@ class Game {
             console.log('removeListeners')
             window.removeEventListener("keypress", onKeyPressed);
             window.removeEventListener('keyup', disableOppositeMove);
-            board.removeEventListener("mousemove", onMouseOver);
-            board.removeEventListener("mousedown", onMouseDown);
-            board.removeEventListener("mouseup", onMouseUp);
+            window.removeEventListener("mousemove", onMouseOver);
+            window.removeEventListener("mousedown", onMouseDown);
+            window.removeEventListener("mouseup", onMouseUp);
             clearInterval(intervalId)
         }
     }

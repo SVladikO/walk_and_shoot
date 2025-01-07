@@ -1,17 +1,18 @@
 import styled from "styled-components";
-import {headerHeight} from "../../App.style";
 
 export const Wrapper = styled.div`
     overflow: hidden;
 `;
 export const HeaderWrapper = styled.div`
-    background: white;
+    position: absolute;
+    left: 0;
+    right: 0;
+    //background: #eabd41;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 10px;
-    z-index: 1;
-    position: relative;
+    z-index: 1;  
 `;
 
 export const LineGroup = styled.div`
@@ -36,7 +37,8 @@ export const SettingsInnerWrapper = styled.div`
     width: 400px;
     padding: 20px 40px;
     margin: 0 auto;
-    background: white;
+    color: white;
+    background: #45516a;
     border: solid 1px black;
     display: flex;
     justify-content: space-between;
@@ -81,7 +83,7 @@ export const Title = styled.div`
 
 export const CanvasBoardWrapper = styled.div`
   position: relative;
-    height: calc(100vh - ${headerHeight}px);
+    height: 100vh;
 `;
 
 export const CanvasBoard = styled.canvas`
