@@ -7,8 +7,6 @@ export const Wrapper = styled.div`
     align-items: center;
     color: white;
     gap: 40px;
-    position: absolute;
-    top: 0;
     width: 100%;
     height: 200%;
     padding: 40px 0 1000px 0;
