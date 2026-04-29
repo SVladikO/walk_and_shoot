@@ -17,7 +17,7 @@ import {setLevelForEditIndex, setSelectedLevel} from "../../features/app.slice";
 
 import navigationImg from '../../img/navigation.webp';
 
-import {style} from '../../utils/settings';
+import {menuStyle} from '../../utils/settings';
 import {getScreen} from "../../utils/screen";
 import {prepareCanvas} from "../../utils/utils";
 
@@ -41,11 +41,11 @@ export default function MenuPage() {
                 ctx.beginPath();
                 const [x, y, width, height] = rec;
                 ctx.rect(x, y, width, height);
-                ctx.fillStyle = style.box.bgColor;
+                ctx.fillStyle = menuStyle.box.bgColor;
                 ctx.fill()
 
-                ctx.strokeStyle = style.box.borderColor;
-                ctx.lineWidth = style.box.borderLineWidth;
+                ctx.strokeStyle = menuStyle.box.borderColor;
+                ctx.lineWidth = menuStyle.box.borderLineWidth;
                 ctx.stroke();
                 ctx.strokeStyle = 'white';
                 ctx.lineWidth = 1;

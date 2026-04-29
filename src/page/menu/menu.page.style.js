@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
     width: 100%;
     height: 200%;
     padding: 40px 0 1000px 0;
-    background: #000000;
+    background: #171717;
     overflow: auto;
 `;
 export const GameTitle = styled.h1`
