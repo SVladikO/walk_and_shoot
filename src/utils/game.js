@@ -106,8 +106,6 @@ class Game {
         loop();
 
         function loop() {
-            console.log('loop', 1)
-
             if (self?.user?.isDead()) {
                 self.stop();
             }
@@ -235,7 +233,7 @@ class Game {
         window.addEventListener("keypress", onKeyPressed);
         window.addEventListener('keyup', disableOppositeMove);
         window.addEventListener("mousemove", onMouseOver);
-        window.addEventListener("mousedown", onMouseDown);
+        window.canvas_game_board && window.canvas_game_board.addEventListener("mousedown", onMouseDown);
         window.addEventListener("mouseup", onMouseUp);
 
         const intervalId = setInterval(() => {
@@ -246,11 +244,12 @@ class Game {
         }, 1000)
 
         this.removeListeners = () => {
+            debugger
             console.log('removeListeners')
             window.removeEventListener("keypress", onKeyPressed);
             window.removeEventListener('keyup', disableOppositeMove);
             window.removeEventListener("mousemove", onMouseOver);
-            window.removeEventListener("mousedown", onMouseDown);
+            window.canvas_game_board && window.canvas_game_board.removeEventListener("mousedown", onMouseDown);
             window.removeEventListener("mouseup", onMouseUp);
             clearInterval(intervalId)
         }

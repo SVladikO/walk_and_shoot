@@ -36,6 +36,10 @@ export class Unit {
         this.visibilityRadius = 300;
         this.angle = 0;
 
+        this.sound = {
+            pickHealth: './sound/pick_health.mp3'
+        };
+
         this.moveDirection = {
             'w': false, //up
             's': false, //down
@@ -212,6 +216,34 @@ export class Unit {
         ctx.fillStyle = "blue";
         ctx.font = "12px Arial";
         ctx.fillText(`${this.bulletAmount}/${this.weapon.reloadBulletAmount} ${this.bulletAmount <= 0 ? ' - reload' : ''}`, x, y);
+    }
+
+    resetHealthByMedicine() {
+        const step = this.maxHealth / 4;
+        let counter = 4;
+
+        if (this.health === this.maxHealth) {
+            return;
+        }
+
+
+        const intervalId = setInterval(() => {
+            let newHealth = this.health + step;
+
+            if (newHealth >= this.maxHealth) {
+                newHealth = this.maxHealth;
+            }
+
+            playSound(this.sound.pickHealth)
+            this.health = newHealth;
+            console.log(1111, this.health);
+
+            if (!counter || newHealth >= this.maxHealth) {
+                clearInterval(intervalId);
+            }
+
+            counter--;
+        }, 1000)
     }
 
     renderHealth(ctx) {

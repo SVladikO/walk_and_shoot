@@ -1,5 +1,6 @@
 import {Wrapper} from './gun-list.style'
 
+import medicineImg from '../../img/medicine.webp';
 import gun1Img from '../../img/gun1_in_bag.webp';
 import gun2Img from '../../img/gun2_in_bag.webp';
 import gun3Img from '../../img/gun3_in_bag.webp';
@@ -14,8 +15,15 @@ export default function GunList({setUserBulletAmount}) {
         setUserBulletAmount(gun.bulletAmount)
     }
 
+    const onResetUserHealth = e => {
+        e.preventDefault();
+        e.stopPropagation();
+        game.user.resetHealthByMedicine()
+    }
+
     return (
         <Wrapper>
+            <img src={medicineImg} onClick={onResetUserHealth} alt="medicine image"/>
             <img src={gun1Img} onClick={() => setUserGun(weapon_gun1)} alt="pistol image"/>
             <img src={gun2Img} onClick={() => setUserGun(weapon_gun2)} alt="ak47 image"/>
             <img src={gun3Img} onClick={() => setUserGun(weapon_gun3)} alt="gun image"/>

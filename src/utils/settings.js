@@ -1,7 +1,7 @@
 export const style = {
     board: {
         bgColor: 'grey',
-        borderColor: "rgba(228,103,0,0.56)",
+        borderColor: "rgba(228,103,0,0.2)",
     },
     box: {
         bgColor: "rgba(228,103,0,0.68)",
@@ -22,7 +22,7 @@ export const style = {
 export const menuStyle = {
     board: {
         bgColor: 'black',
-        borderColor: "rgba(228,103,0,0.56)",
+        borderColor: "rgba(228,103,0,0.3)",
     },
     box: {
         bgColor: "white",

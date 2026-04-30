@@ -1,8 +1,5 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
-    overflow: hidden;
-`;
 
 export const SettingsWrapper = styled.div`
     position: absolute;
@@ -33,27 +30,29 @@ export const SettingsInnerWrapper = styled.div`
     }
 `;
 
+export const MoreLessWrapper = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    & > div {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    
+    & > div > button {
+        min-width: 40px !important;
+    }
+`;
+
 export const SettingsItemWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
 `;
 
-
 export const Title = styled.div`
     text-align: center;
     margin: 0 0 20px;
 `;
-
-export const CanvasBoardWrapper = styled.div`
-  position: relative;
-    height: 100vh;
-`;
-
-export const CanvasBoard = styled.canvas`
-    position: absolute;
-    top: 0;
-    left: 0;
-`;
-
-
